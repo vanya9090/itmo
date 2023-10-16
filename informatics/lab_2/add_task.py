@@ -1,4 +1,4 @@
-def decode(a: list) -> list :
+:code(a: list) -> list :
     s1 = (a[0] + a[2] + a[4] + a[6]) % 2
     s2 = (a[1] + a[2] + a[5] + a[6]) % 2
     s3 = (a[3] + a[4] + a[5] + a[6]) % 2
