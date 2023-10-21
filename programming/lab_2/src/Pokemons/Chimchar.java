@@ -2,6 +2,7 @@ package Pokemons;
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 
+
 public class Chimchar extends Pokemon{
     public Chimchar(String name, int level){
         super(name, level);

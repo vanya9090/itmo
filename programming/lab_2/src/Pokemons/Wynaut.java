@@ -2,6 +2,7 @@ package Pokemons;
 import ru.ifmo.se.pokemon.Pokemon;
 import ru.ifmo.se.pokemon.Type;
 
+
 public class Wynaut extends Pokemon{
     public Wynaut(String name, int level){
         super(name, level);

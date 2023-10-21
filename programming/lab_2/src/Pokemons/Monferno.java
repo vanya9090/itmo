@@ -1,6 +1,7 @@
 package Pokemons;
 import ru.ifmo.se.pokemon.*;
 
+
 public class Monferno extends Chimchar{
     public Monferno(String name, int level){
         super(name, level);

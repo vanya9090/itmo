@@ -1,5 +1,4 @@
 package Pokemons;
-import Moves.Special.MudSlap;
 import ru.ifmo.se.pokemon.*;
 
 public class Ivysaur extends Bulbasaur {

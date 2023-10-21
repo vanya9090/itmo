@@ -7,7 +7,7 @@ import Pokemons.Wynaut;
 
 import ru.ifmo.se.pokemon.*;
 
-public class Main extends Monferno {
+public class Main{
     public static void main(String[] args) {
         Battle b = new Battle();
         Bulbasaur p1 = new Bulbasaur("Vanya", 1);
