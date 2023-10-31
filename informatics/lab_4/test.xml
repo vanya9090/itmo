@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schedule>
+    <first>
+        <name>ИНФОРМАТИКА</name>
+        <datetime>
+            <weeks>3</weeks>
+            <weeks>5</weeks>
+            <weeks>9</weeks>
+            <weeks>11</weeks>
+            <weeks>13</weeks>
+            <weeks>15</weeks>
+            <weeks>17</weeks>
+            <day>среда</day>
+            <time>
+                <start>"8:20"</start>
+                <end>"9:50"</end>
+            <\time>
+        <\datetime>
+        <visit>Очно - дистанционный</visit>
+        <place>
+            <address>ул.Ломоносова, д.9, лит. М</address>
+            <audience>1216/0 (УСЛ) АУД.</audience>
+        <\place>
+        <lecturer>
+            <surname>Балакшин</surname>
+            <name>Павел</name>
+            <lastname>Валерьевич</lastname>
+        <\lecturer>
+    <\first>
+    <second>
+        <name>ПАРАЛЛЕЛЬНЫЕ ВЫЧИСЛЕНИЯ</name>
+        <datetime>
+            <weeks>3</weeks>
+            <weeks>7</weeks>
+            <weeks>9</weeks>
+            <weeks>11</weeks>
+            <weeks>13</weeks>
+            <weeks>15</weeks>
+            <day>суббота</day>
+            <time>
+                <start>"8:20"</start>
+                <end>"9:50"</end>
+            <\time>
+        <\datetime>
+        <visit>Очно - дистанционный</visit>
+        <place>
+            <address>Кронверкский пр., д.49, лит.А</address>
+            <audience>1324 АУД.</audience>
+        <\place>
+        <lecturer>
+            <surname>Балакшин</surname>
+            <name>Павел</name>
+            <lastname>Валерьевич</lastname>
+        <\lecturer>
+    <\second>
+    <third>
+        <name>ПАРАЛЛЕЛЬНЫЕ ВЫЧИСЛЕНИЯ</name>
+        <datetime>
+            <weeks>3</weeks>
+            <weeks>7</weeks>
+            <day>суббота</day>
+            <time>
+                <start>"10:00"</start>
+                <end>"11:30"</end>
+            <\time>
+        <\datetime>
+        <visit>Очно - дистанционный</visit>
+        <place>
+            <address>Кронверкский пр., д.49, лит.А</address>
+            <audience>1324 АУД.</audience>
+        <\place>
+        <lecturer>
+            <surname>Балакшин</surname>
+            <name>Павел</name>
+            <lastname>Валерьевич</lastname>
+        <\lecturer>
+    <\third>
+<\schedule>
