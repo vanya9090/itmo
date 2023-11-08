@@ -51,10 +51,9 @@ public class Main {
 
         for (Human human: humanArr){
             if (human instanceof Angry) {
-                System.out.print(human.getName() + " ");
+                ((Angry) human).tearingHair();
+                ((Adult) human).say();
             }
         }
-        System.out.print("готовы были " + Vorchyn.tearingHair());
-        System.out.print(" и сказали, что " + Vorchyn.say());
     }
 }

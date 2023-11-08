@@ -1,5 +1,5 @@
 package Humans;
 
 public interface Angry {
-    public String tearingHair();
+    public void tearingHair();
 }

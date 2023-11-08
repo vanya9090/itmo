@@ -30,7 +30,6 @@ public abstract class Readable {
     public String getText(Human human){
         if (human instanceof Adult){
             System.out.println("Персонаж " + human.getName() + " умеет читать");
-            System.out.println("Прочтен " + this.getName());
             return this.text;
         }
         System.out.println("Персонаж не умеет читать");

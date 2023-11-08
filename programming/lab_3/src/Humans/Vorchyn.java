@@ -10,8 +10,8 @@ public class Vorchyn extends Human implements Angry, Adult{
     }
 
     @Override
-    public String tearingHair() {
-        return "рвать волосы";
+    public void tearingHair() {
+        System.out.println("Персонаж " + this.getName() + " готов рвать волосы");
     }
 
     @Override
@@ -20,7 +20,7 @@ public class Vorchyn extends Human implements Angry, Adult{
     }
 
     @Override
-    public String say() {
-        return "что если к вечеру их не выпишут, то они устроят побег.";
+    public void say() {
+        System.out.println("Персонаж " + this.getName() + " сказал, что если к вечеру его не выпишут, то он устроит побег");
     }
 }

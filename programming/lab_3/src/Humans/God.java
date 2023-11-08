@@ -15,7 +15,6 @@ public class God extends Human implements Adult{
     }
 
     @Override
-    public String say() {
-        return null;
+    public void say() {
     }
 }
