@@ -14,7 +14,8 @@ public class Meduniza extends Human implements Adult{
     @Override
     public String read(Readable r) {
         String text = r.getText(this);
-        return this.getName() + " снова стала просматривать " + r.getName() + ".";
+        System.out.println(this.getName() + " снова стала просматривать " + r.getName() + ".");
+        return text;
     }
 
     @Override

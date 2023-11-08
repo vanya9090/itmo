@@ -13,6 +13,7 @@ public abstract class Human {
         this.name = name;
         this.disease = disease;
         this.location = location;
+        System.out.println("Создан персонаж " + this.name);
     }
     public String getName() {
         return this.name;
@@ -22,6 +23,7 @@ public abstract class Human {
     }
 
     public void setLocation(Place location) {
+        System.out.println("Местоположение " + this.getName() + " изменено на " + location.getName());
         this.location = location;
     }
 

@@ -10,7 +10,7 @@ public class Pulka extends Human implements Endured{
     }
 
     @Override
-    public String endure() {
-        return this.getName() + " молча терпел несправедливость";
+    public void endure() {
+        System.out.println("Персонаж " + this.getName() + " терпит несправедливость");
     }
 }

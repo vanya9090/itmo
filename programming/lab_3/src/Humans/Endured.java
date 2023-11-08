@@ -5,5 +5,5 @@ import Items.Readable;
 import Places.Place;
 
 public interface Endured {
-    public String endure();
+    public void endure();
 }

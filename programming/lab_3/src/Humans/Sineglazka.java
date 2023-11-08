@@ -14,6 +14,7 @@ public class Sineglazka extends Human implements AbleToImpact{
 
     @Override
     public String impact(Hospital hospital, Human human) {
+        System.out.println(this.getName() + " добилась того, что " + human.getName() + " выписали из " + hospital.getName());
         return hospital.Discharge(human);
     }
 }
