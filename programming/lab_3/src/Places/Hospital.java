@@ -1,15 +1,16 @@
 package Places;
 
+import Confines.Confines;
 import Humans.Human;
 
 public class Hospital extends Place{
 
     public Hospital(String name) {
-        super(PlaceType.HOSPITAL, name);
+        super(name);
     }
 
-    public String Discharge(Human h){
-        h.setLocation(new Freedom());
-        return h.getName() + " выписан из " + this.getName();
+    public void Discharge(Human human){
+        System.out.println(human.getName() + " выписан из " + this.getName());
+        human.setLocation(Confines.FREEDOM);
     }
 }

@@ -1,17 +1,16 @@
-package Places;
+package Health;
 
 import java.util.Objects;
 
-public abstract class Place {
+public abstract class Health {
     private final String name;
-    public Place(String name){
+    Health(String name){
         this.name = name;
     }
 
     public String getName() {
         return name;
     }
-
 
     @Override
     public int hashCode() {
@@ -23,14 +22,14 @@ public abstract class Place {
         if (o == this){
             return true;
         }
-        Place anotherPlace = (Place) o;
-        return Objects.equals(this.name, anotherPlace.name);
+        Health anotherDisease = (Health) o;
+        return Objects.equals(this.name, anotherDisease.name);
     }
 
     @Override
     public String toString() {
-        return "Place: {"
-                + "Name = " + this.getName() + '\''
+        return "Health: {"
+                + "Name = " + this.getName()
                 + "Hash = " + this.hashCode()
                 + '}';
     }

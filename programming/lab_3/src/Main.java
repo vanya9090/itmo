@@ -1,59 +1,70 @@
-import Humans.Adult;
-import Humans.*;
+import Actions.*;
+import Health.GoodHealth;
+import Health.LegDisease;
+import Humans.Human;
+import Confines.Confines;
 import Items.List;
 import Items.Readable;
-import Places.*;
-
-import java.util.Objects;
-
+import Places.Hospital;
+import Places.Place;
 
 public class Main {
     public static void main(String[] args) {
+
+        GoodHealth goodHealth = new GoodHealth("Здоров");
+        LegDisease legDisease = new LegDisease("Боль в ноге");
+
         Hospital hospital = new Hospital("Больница");
-        Freedom freedom = new Freedom();
 
-        Meduniza Meduniza = new Meduniza();
-        Sineglazka Sineglazka = new Sineglazka();
-        Neboska Neboska = new Neboska();
-        Rasteryayka Rasteryayka = new Rasteryayka();
-        Molchyn Molchyn = new Molchyn();
-        Ponchik Ponchik = new Ponchik();
-        Siropchik Siropchik = new Siropchik();
-        Pulka Pulka = new Pulka();
-        Vorchyn Vorchyn = new Vorchyn();
-        Pilulkin Pilulkin = new Pilulkin();
-        Human[] humanArr = {Meduniza, Sineglazka, Neboska, Rasteryayka, Molchyn, Ponchik, Siropchik, Pulka, Vorchyn, Pilulkin};
+        Readable list = new List("список", "какой-то список");
+
+        Human Meduniza = new Human("Медуница", goodHealth, Confines.FREEDOM);
+        Human Sineglazka = new Human("Синеглазка", goodHealth, Confines.FREEDOM);
+        Human Neboska = new Human("Небоська", goodHealth, Confines.FREEDOM);
+        Human Rasteryayka = new Human("Растеряйка", goodHealth, Confines.FREEDOM);
+        Human Molchyn = new Human("Молчун", goodHealth, Confines.FREEDOM);
+        Human Ponchik = new Human("Пончик", goodHealth, Confines.FREEDOM);
+        Human Siropchik = new Human("Сиропчик", goodHealth, Confines.FREEDOM);
+        Human Pulka = new Human("Пулька", legDisease, Confines.CONFINED);
+        Human Vorchyn = new Human("Ворчун", goodHealth, Confines.CONFINED);
+        Human Pilulkin = new Human("Пилюлькин", goodHealth, Confines.CONFINED);
+        Human[] allHumans = {Meduniza, Sineglazka, Neboska, Rasteryayka, Molchyn, Ponchik, Siropchik, Pulka, Vorchyn, Pilulkin};
         System.out.println();
 
-        Readable List = new List("Список", "Какой-то текст");
-        Meduniza.read(List);
+        System.out.print(Meduniza.getName() + " снова стала ");
+        Action readList = new Read("просматривать список", list);
+        Meduniza.applyAction(readList);
         System.out.println();
 
-        Sineglazka.impact(hospital, Neboska);
-        Sineglazka.impact(hospital, Rasteryayka);
-        Sineglazka.impact(hospital, Molchyn);
-        Sineglazka.impact(hospital, Ponchik);
-        Sineglazka.impact(hospital, Siropchik);
+        Human[] luckyHumans = {Neboska, Rasteryayka, Molchyn, Ponchik, Siropchik};
+        System.out.println(Sineglazka.getName() + " добилась от больницы чтобы: ");
+        Action impact = new Impact("добиваться от больницы", hospital, luckyHumans);
+        Sineglazka.applyAction(impact);
         System.out.println();
 
-        System.out.print("В " + hospital.getName() + " остались ");
-        for (Human human: humanArr){
-            if (Objects.equals(human.getLocation().getName(), hospital.getName())) {
+        System.out.print("В больнице остались: ");
+        for (Human human: allHumans){
+            if (human.getLocation() == Confines.CONFINED){
                 System.out.print(human.getName() + " ");
             }
         }
-        System.out.println();
-        System.out.println();
+        System.out.println("\n");
 
-        Pulka.endure();
-        System.out.println("так как " + Pulka.getDisease().getName());
-        System.out.println();
-
-        for (Human human: humanArr){
-            if (human instanceof Angry) {
-                ((Angry) human).tearingHair();
-                ((Adult) human).say();
+        for (Human human: allHumans){
+            if (human.getHealth() == legDisease){
+                legDisease.setLimits(human);
             }
         }
+        Action teatHair = new thinkAnnoyance("готов рвать волосы от досады");
+        System.out.print(Vorchyn.getName());
+        Vorchyn.applyAction(teatHair);
+        System.out.print(Pilulkin.getName());
+        Pilulkin.applyAction(teatHair);
+
+        Action thinkEscape = new thinkEscape("сказал, что устроит побег");
+        System.out.print(Vorchyn.getName());
+        Vorchyn.applyAction(thinkEscape);
+        System.out.print(Pilulkin.getName());
+        Pilulkin.applyAction(thinkEscape);
     }
 }
