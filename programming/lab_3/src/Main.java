@@ -3,10 +3,9 @@ import Health.GoodHealth;
 import Health.LegDisease;
 import Humans.Human;
 import Confines.Confines;
-import Items.List;
+import Items.PList;
 import Items.Readable;
 import Places.Hospital;
-import Places.Place;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,7 +15,7 @@ public class Main {
 
         Hospital hospital = new Hospital("Больница");
 
-        Readable list = new List("список", "какой-то список");
+        Readable list = new PList("список", "какой-то список");
 
         Human Meduniza = new Human("Медуница", goodHealth, Confines.FREEDOM);
         Human Sineglazka = new Human("Синеглазка", goodHealth, Confines.FREEDOM);
@@ -55,13 +54,13 @@ public class Main {
                 legDisease.setLimits(human);
             }
         }
-        Action teatHair = new thinkAnnoyance("готов рвать волосы от досады");
+        Action teatHair = new thinkAnnoyance("готов рвать волосы");
         System.out.print(Vorchyn.getName());
         Vorchyn.applyAction(teatHair);
         System.out.print(Pilulkin.getName());
         Pilulkin.applyAction(teatHair);
 
-        Action thinkEscape = new thinkEscape("сказал, что устроит побег");
+        Action thinkEscape = new thinkEscape("сказать о побеге");
         System.out.print(Vorchyn.getName());
         Vorchyn.applyAction(thinkEscape);
         System.out.print(Pilulkin.getName());

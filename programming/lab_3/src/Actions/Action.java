@@ -1,5 +1,9 @@
 package Actions;
 
+import Places.Place;
+
+import java.util.Objects;
+
 public abstract class Action {
     private final String name;
     private boolean isDone;
@@ -20,5 +24,28 @@ public abstract class Action {
 
     public boolean getDone(){
         return this.isDone;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this){
+            return true;
+        }
+        Action anotherAction = (Action) o;
+        return (Objects.equals(this.name, anotherAction.name) & (this.getDone() == anotherAction.getDone()));
+    }
+
+    @Override
+    public String toString() {
+        return "Place: {"
+                + "Name = " + this.getName() + '\''
+                + ", isDone = " + this.getDone() + '\''
+                + ", Hash = " + this.hashCode()
+                + '}';
     }
 }

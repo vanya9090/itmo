@@ -10,7 +10,8 @@ public class Read extends Action{
 
     @Override
     public void run() {
-        System.out.println(this.getName());
+        System.out.println(list.getText());
+        System.out.println("просматривать список");
         this.setDone(true);
     }
 }

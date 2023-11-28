@@ -2,7 +2,7 @@ package Places;
 
 import java.util.Objects;
 
-public abstract class Place {
+public class Place {
     private final String name;
     public Place(String name){
         this.name = name;
@@ -30,8 +30,8 @@ public abstract class Place {
     @Override
     public String toString() {
         return "Place: {"
-                + "Name = " + this.getName() + '\''
-                + "Hash = " + this.hashCode()
+                + ", Name = " + this.getName() + '\''
+                + ", Hash = " + this.hashCode()
                 + '}';
     }
 }

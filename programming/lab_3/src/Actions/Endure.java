@@ -14,6 +14,6 @@ public class Endure extends Action implements IThinks{
 
     @Override
     public void think() {
-        System.out.println(this.getName());
+        System.out.println("сказал, что устроит побег");
     }
 }

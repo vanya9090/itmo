@@ -15,9 +15,4 @@ public class LegDisease extends Health implements IPhysicalPain{
         Action endureInjustice = new Endure( "молча терпит несправедливость");
         human.applyAction(endureInjustice);
     }
-
-    @Override
-    public void aches() {
-        System.out.println("Боль в ноге");
-    }
 }

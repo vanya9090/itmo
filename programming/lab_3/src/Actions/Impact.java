@@ -7,7 +7,7 @@ import Places.Place;
 
 public class Impact extends Action{
     private final Human[] humans;
-    private Hospital hospital;
+    private final Hospital hospital;
     public Impact(String name, Hospital hospital, Human[] humans) {
         super(name, false);
         this.humans = humans;

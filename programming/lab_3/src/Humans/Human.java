@@ -3,6 +3,9 @@ package Humans;
 import Actions.Action;
 import Health.Health;
 import Confines.Confines;
+import Places.Place;
+
+import java.util.Objects;
 
 public class Human {
     private final String name;
@@ -37,5 +40,29 @@ public class Human {
 
     public void applyAction(Action action){
         action.run();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode() + this.location.hashCode() + this.health.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this){
+            return true;
+        }
+        Human anotherHuman = (Human) o;
+        return Objects.equals(this.name, anotherHuman.name);
+    }
+
+    @Override
+    public String toString() {
+        return "Human: {"
+                + "Name = " + this.getName() + '\''
+                + ", Health = " + this.getHealth() + '\''
+                + ", Location = " + this.getLocation() + '\''
+                + ", Hash = " + this.hashCode()
+                + '}';
     }
 }

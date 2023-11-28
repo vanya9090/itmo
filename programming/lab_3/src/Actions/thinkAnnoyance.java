@@ -14,6 +14,6 @@ public class thinkAnnoyance extends Action implements IThinks{
 
     @Override
     public void think() {
-        System.out.println(" готов рвать на себе волосы");
+        System.out.println(" готов рвать на себе волосы от досады");
     }
 }

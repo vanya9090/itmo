@@ -2,7 +2,7 @@ package Health;
 
 import java.util.Objects;
 
-public abstract class Health {
+public class Health {
     private final String name;
     Health(String name){
         this.name = name;
@@ -30,7 +30,7 @@ public abstract class Health {
     public String toString() {
         return "Health: {"
                 + "Name = " + this.getName()
-                + "Hash = " + this.hashCode()
+                + ", Hash = " + this.hashCode()
                 + '}';
     }
 }
