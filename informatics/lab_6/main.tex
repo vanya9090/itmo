@@ -1,0 +1,26 @@
+\documentclass[12pt, letterpaper]{article}
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{graphicx, caption}
+\usepackage[%  
+    colorlinks=true,
+    pdfborder={0 0 0},
+    linkcolor=red]{hyperref}
+\graphicspath{ {images/} }
+\usepackage[letterspace=150]{microtype}
+\usepackage[left=1.5cm,right=1cm,top=2cm,bottom=2cm,headheight=0.1cm]{geometry}
+
+\begin{document}
+
+\input{title}                                     % Титульник
+
+\newpage % Переходим на новую страницу
+
+\newpage
+\input{kvant}                                     % Первая глава
+
+\end{document}
