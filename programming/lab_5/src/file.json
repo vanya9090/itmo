@@ -1,0 +1,59 @@
+[
+  {
+    "id": 0,
+    "name": "john",
+    "coordinates": {
+      "x": 123,
+      "y": 1234.324
+    },
+    "creationDate": "2017-01-13",
+    "realHero": false,
+    "hasToothpick": true,
+    "impactSpeed": 1,
+    "minutesOfWaiting": 29.5,
+    "weaponType": "AXE",
+    "mood": "SADNESS",
+    "car": {
+      "name": "toyota",
+      "cool": true
+    }
+  },
+  {
+    "id": 1,
+    "name": "batman",
+    "coordinates": {
+      "x": 10,
+      "y": 987.234
+    },
+    "creationDate": "2024-02-19",
+    "realHero": true,
+    "hasToothpick": false,
+    "impactSpeed": 999,
+    "minutesOfWaiting": 29.534,
+    "weaponType": "AXE",
+    "mood": "SADNESS",
+    "car": {
+      "name": "batcar",
+      "cool": true
+    }
+  },
+  {
+    "id": 2,
+    "name": "karlson",
+    "coordinates": {
+      "x": 234,
+      "y": -12.0
+    },
+    "creationDate": "2024-02-26",
+    "realHero": true,
+    "hasToothpick": true,
+    "impactSpeed": 239,
+    "minutesOfWaiting": 1.0,
+    "weaponType": "SHOTGUN",
+    "mood": "RAGE",
+    "car": {
+      "name": "kia",
+      "cool": true
+    }
+  }
+]

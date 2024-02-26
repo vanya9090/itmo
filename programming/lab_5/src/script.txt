@@ -1,0 +1,4 @@
+show
+info
+remove_by_id 0
+show
