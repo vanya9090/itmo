@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[top=1cm,left=1cm,right=2cm, bottom=1cm]{geometry}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\graphicspath{ {.} }
+\begin{document}
+
+
+\begin{center}
+\quad Университет ИТМО, факультет программной инженерии и компьютерной техники \\
+\quad Двухнедельная отчётная работа по «Информатике»: аннотация к статье\\
+\quad Дата прошедшей лекции: \underline{12.10.2023} 	Номер прошедшей лекции: \underline{1}	Дата сдачи: \underline{25.10.2023}
+
+\bigskip
+
+\quad Выполнил(а) \underline{Миронов Иван Николаевич}, № группы \underline{ P3132 }, оценка \underline{\hspace{2cm}}
+
+
+\end{center}
+
+\begin{tabularx}{\textwidth} { 
+  | >{\raggedright\arraybackslash}X|}
+    \hline
+\textbf{Название статьи/главы книги/видеолекции}\\
+    \textit{Mojo может стать крупнейшим достижением в области разработки языков программирования за последние десятилетия}\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth} 
+{ 
+| >{\centering\arraybackslash}X
+| >{\centering\arraybackslash}X
+| >{\centering\arraybackslash}X 
+|}
+    \textbf{ФИО автора статьи \quad (или e-mail)} & \textbf{Дата публикации \qquad\qquad (не старше 2020 года)} & \textbf{Размер статьи \qquad\qquad (от 400 слов)} \\
+     \textit{ziyodulla-baykhanov} & <<\underline{08}>> \underline{мая} 2023 г. & \underline{3828 слов} \\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth} { 
+  | >{\raggedright\arraybackslash}X|}
+    \textbf{Прямая полная ссылка на источник или сокращённая ссылка (bit.ly, tr.im и т.п.)} 
+    \textit{https://habr.com/ru/articles/733896/}
+    \smallskip\\
+    \hline
+    \textbf{Теги, ключевые слова или словосочетания}\\
+    \textit{Python, Julia, Машинное обучение, Искусственный интеллект}
+    \smallskip\\
+    \hline
+    \textbf{Перечень фактов, упомянутых в статье}
+    \begin{enumerate}
+	\item На настоящий момент почти все модели и пайплайны машинного обучения разрабатываются на Python, используя Python-оболочки высокопроизводительного кода.
+    	\item Также чтобы создвавать высокопроизводительные блоки Python кода некоторые фреймворки используют компиляцию моделей машинного обучения.
+    	\item LLVM - программмная инфраструктура, который включает в себя создание промежуточного языка
+	\end{enumerate}
+    \\ \hline
+    \textbf{Позитивные следствия и/или достоинства описанной в статье технологии}
+    \begin{enumerate}
+    	\item  Mojo использует синтаксис Python с дополнительным функцианалом в виде типизации.
+    	\item В Mojo есть настоящая параллельная обработка.
+	\item Mojo - компилируемый язык, что позволяет писать быстрые многопоточные скрипты и пайплайны.
+    \end{enumerate}
+    \\ \hline
+    \textbf{Негативные следствия и/или достоинства описанной в статье технологии}
+    \begin{enumerate}
+    	\item У Mojo есть уже проверенная альтернатива: JAX - фреймворк машинного обучения на основе Python
+    	\item Уже готовые фреймворки машинного обучения для Python, такие как pytorch, sci-kit-learn и другие, придется переносить на Mojo.
+	\item Mojo до сих пор остается "сырым" языком программирования и пока что никто не занимается на нем промышленной разработкой. 
+    \end{enumerate}
+    \\ \hline
+    \textbf{Ваши замечания, пожелания преподавателю или анекдот о программистах}\footnote{Наличие этой графы не влияет на оценку}\\
+    \includegraphics[width=4cm]{meme.jpg}
+    \hline
+    
+\end{tabularx}
+
+
+\end{document}

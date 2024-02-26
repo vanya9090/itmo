@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schedule>
+  <tuesday>
+    <first>
+      <name>Иностранный язык</name>
+      <type>Практика</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>2</weeks>
+        <weeks>3</weeks>
+        <weeks>4</weeks>
+        <weeks>5</weeks>
+        <weeks>6</weeks>
+        <weeks>7</weeks>
+        <weeks>8</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"8:20"</start>
+          <end>"9:50"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>ул.Ломоносова, д.9, лит. Е</address>
+        <audience>Ауд. 3212</audience>
+      </place>
+      <lecturer>
+        <surname>Бревнова</surname>
+        <name>Татьяна</name>
+        <lastname>Сергеевна</lastname>
+      </lecturer>
+    </first>
+    <second>
+      <name>Иностранный язык</name>
+      <type>Практика</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>2</weeks>
+        <weeks>3</weeks>
+        <weeks>4</weeks>
+        <weeks>5</weeks>
+        <weeks>6</weeks>
+        <weeks>7</weeks>
+        <weeks>8</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"10:00"</start>
+          <end>"11:30"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>ул.Ломоносова, д.9, лит. Е</address>
+        <audience>Ауд. 3212</audience>
+      </place>
+      <lecturer>
+        <surname>Бревнова</surname>
+        <name>Татьяна</name>
+        <lastname>Сергеевна</lastname>
+      </lecturer>
+    </second>
+    <third>
+      <name>Основы дискретной математики</name>
+      <type>Лекция</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>2</weeks>
+        <weeks>3</weeks>
+        <weeks>4</weeks>
+        <weeks>5</weeks>
+        <weeks>6</weeks>
+        <weeks>7</weeks>
+        <weeks>8</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"17:00"</start>
+          <end>"18:30"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>Кронверкский пр., д.49, лит.А</address>
+        <audience>Ауд. Orange Classroom (1229)</audience>
+      </place>
+      <lecturer>
+        <surname>Карпов</surname>
+        <name>Дмитрий</name>
+        <lastname>Валерьевич</lastname>
+      </lecturer>
+    </third>
+    <fourth>
+      <name>Основы дискретной математики</name>
+      <type>Практика</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>2</weeks>
+        <weeks>3</weeks>
+        <weeks>4</weeks>
+        <weeks>5</weeks>
+        <weeks>6</weeks>
+        <weeks>7</weeks>
+        <weeks>8</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"18:40"</start>
+          <end>"20:10"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>Кронверкский пр., д.49, лит.А</address>
+        <audience>Ауд. 2316</audience>
+      </place>
+      <lecturer>
+        <surname>Карпов</surname>
+        <name>Дмитрий</name>
+        <lastname>Валерьевич</lastname>
+      </lecturer>
+    </fourth>
+  </tuesday>
+  <wednesday>
+    <first>
+      <name>Программирование</name>
+      <type>Лекция</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>3</weeks>
+        <weeks>5</weeks>
+        <weeks>7</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"10:00"</start>
+          <end>"11:30"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>ул.Ломоносова, д.9, лит. М</address>
+        <audience>Ауд. Актовый зал (1216/0 (усл))</audience>
+      </place>
+      <lecturer>
+        <surname>Письмак</surname>
+        <name>Алексей</name>
+        <lastname>Евгеньевич</lastname>
+      </lecturer>
+    </first>
+    <second>
+      <name>Основы профессиональной деятельности</name>
+      <type>Практика</type>
+      <datetime>
+        <weeks>1</weeks>
+        <weeks>3</weeks>
+        <weeks>5</weeks>
+        <weeks>7</weeks>
+        <weeks>9</weeks>
+        <time>
+          <start>"15:20"</start>
+          <end>"16:50"</end>
+        </time>
+      </datetime>
+      <visit>Очно</visit>
+      <place>
+        <address>Кронверкский пр., д.49, лит.А</address>
+        <audience>Ауд. 1327</audience>
+      </place>
+      <lecturer>
+        <surname>Остапенко</surname>
+        <name>О.</name>
+        <lastname>Д.</lastname>
+      </lecturer>
+    </second>
+  </wednesday>
+</schedule>

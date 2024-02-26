@@ -1,0 +1,190 @@
+@startuml
+
+package "Diseases"{
+enum DiseaseType{
+LEGILL
+}
+
+Disease -- DiseaseType
+abstract class Disease{
+# String name
+# DiseaseType type
+# int degree
++ Disease(DiseaseType type, int degree, String name)
++ DiseaseType getDiseaseType()
++ String getName()
++ int getDegree()
+}
+
+class LegIll extends Disease{
+# type = LEGILL
+# int degree
+# name = Нога
++ LegIll(int degree)
+}
+
+class Healthy extends Disease{
+# type = HEALTHY
+# degree = 0
+# name = Здоров
++ Healthy()
+}
+
+class Undefined extends Disease{
+# type = UNDEFINED
+# degree = 0
+# name = Не определено
++ Undefined()
+}
+}
+
+package "Items"{
+enum ReadableType{
+LIST
+}
+
+Readable -- ReadableType
+abstract class Readable{
+# ReadableType type
+# String name
+# String text
++ Readable(ReadableType type, String name, String text)
++ String getName()
++ String getText()
++ String getType()
+}
+
+class List extends Readable{
+# type = LIST
+# String name
+# String text
++ List(String name, String text)
+}
+}
+
+package "Places"{
+enum PlaceType{
+FREEDOM
+HOSPITAL
+}
+
+Place -- PlaceType
+
+abstract class Place{
+# PlaceType type
+# String name 
++ Place(PlaceType type, String name)
++ String getName()
++ String getType()
+
+}
+
+class Freedom extends Place{
+# type = FREEDOM
+# name = Свобода
++ Freedom()
+}
+
+class Hospital extends Place{
+# type = HOSPITAL
+# String name
++ Hospital()
++ Discharge(Human human)
+}
+}
+
+
+package "Humans"{
+abstract class Human{
+# String name
+# Place location
+# Disease disease
++ String toString()
++ Place getLocation()
++ setLocation()
++ Disease getDisease()
+}
+
+interface Angry{
++ tearingHair()
+}
+
+interface Adult{
++ String read(Readable target)
++ String say()
+}
+
+class Meduniza extends Human implements Adult{
+# name = Медуница
++ Place getLocation()
++ Disease getDisease()
++ String read(Readable target)
+}
+
+class Vorchyn extends Human implements Adult, Angry{
+# name = Ворчун
++ Place getLocation()
++ Disease getDisease()
++ String say()
+}
+
+class Pilulkin extends Human implements Adult, Angry{
+# name = Пилюлькин
++ Place getLocation()
++ Disease getDisease()
++ String say()
+}
+
+class Neboska extends Human{
+# name = Небоська
++ Place getLocation()
++ Disease getDisease()
+}
+
+class Rasteryayka extends Human{
+# name = Растеряйка
++ Place getLocation()
++ Disease getDisease()
+}
+
+class Molchyn extends Human{
+# name = Молчун
++ Place getLocation()
++ Disease getDisease()
+}
+
+class Ponchik extends Human{
+# name = Пончик
++ Place getLocation()
++ Disease getDisease()
+}
+
+class Siropchik extends Human{
+# name = Сиропчик
++ Place getLocation()
++ Disease getDisease()
+}
+
+interface Endured{
++ String endure()
+}
+
+class Pulka extends Human implements Endured{
+# name = Пулька
++ Place getLocation()
++ Disease getDisease()
++ String endure()
+}
+
+interface AbleToImpact{
++ String impact(Hospital target)
+}
+
+class Sineglazka extends Human implements AbleToImpact{
+# name = Синеглазка
++ Place getLocation()
++ Disease getDisease()
++ String impact(Hospital target)
+}
+}
+@enduml

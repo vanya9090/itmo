@@ -1,0 +1,75 @@
+# schedule
+## tuesday
+### first
+	name: Иностранный язык
+	type: Практика
+	weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	start: "8:20"
+	end: "9:50"
+	visit: Очно
+	address: ул.Ломоносова, д.9, лит. Е
+	audience: Ауд. 3212
+	surname: Бревнова
+	name: Татьяна
+	lastname: Сергеевна
+### second
+	name: Иностранный язык
+	type: Практика
+	weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	start: "10:00"
+	end: "11:30"
+	visit: Очно
+	address: ул.Ломоносова, д.9, лит. Е
+	audience: Ауд. 3212
+	surname: Бревнова
+	name: Татьяна
+	lastname: Сергеевна
+### third
+	name: Основы дискретной математики
+	type: Лекция
+	weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	start: "17:00"
+	end: "18:30"
+	visit: Очно
+	address: Кронверкский пр., д.49, лит.А
+	audience: Ауд. Orange Classroom (1229)
+	surname: Карпов
+	name: Дмитрий
+	lastname: Валерьевич
+### fourth
+	name: Основы дискретной математики
+	type: Практика
+	weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+	start: "18:40"
+	end: "20:10"
+	visit: Очно
+	address: Кронверкский пр., д.49, лит.А
+	audience: Ауд. 2316
+	surname: Карпов
+	name: Дмитрий
+	lastname: Валерьевич
+## wednesday
+### first
+	name: Программирование
+	type: Лекция
+	weeks: [1, 3, 5, 7, 9]
+	start: "10:00"
+	end: "11:30"
+	visit: Очно
+	address: ул.Ломоносова, д.9, лит. М
+	audience: Ауд. Актовый зал (1216/0 (усл))
+	surname: Письмак
+	name: Алексей
+	lastname: Евгеньевич
+### second
+	name: Основы профессиональной деятельности
+	type: Практика
+	weeks: [1, 3, 5, 7, 9]
+	start: "15:20"
+	end: "16:50"
+	visit: Очно
+	address: Кронверкский пр., д.49, лит.А
+	audience: Ауд. 1327
+	surname: Остапенко
+	name: О.
+	lastname: Д.

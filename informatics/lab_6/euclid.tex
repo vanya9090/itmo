@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, top=15mm, right=10mm, bottom=15mm, left=5mm, headsep=-5mm]{geometry}
+\usepackage[english,russian]{babel}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{lettrine} 
+\usepackage{GoudyIn}
+\usepackage{mathtools}
+\usepackage{amssymb}
+%\usepackage{graphicx, type1cm, lettrine}
+
+\usetikzlibrary{calc}
+
+
+\fancyheadoffset[R]{5cm}
+\fancyhead[C]{26\qquad КНИГА I ПРЕДЛ. II. ЗАДАЧА\\}
+\renewcommand{\footrulewidth}{0 mm}
+\renewcommand{\headrulewidth}{0 mm}
+\renewcommand\LettrineFontHook{\GoudyInfamily}
+\fancyfoot{}
+
+
+\begin{document}
+\thispagestyle{fancy}
+\begin{minipage}[H]{0.3\textwidth}
+\begin{tikzpicture}[line width=2pt]
+\coordinate (D) at (0, 0);
+\coordinate (B) at (7.5mm, -7.5mm);
+\coordinate (E) at ((22mm, -20mm);
+\coordinate (C) at (-13mm,-7mm);
+\coordinate (F) at (30mm,0mm);
+\coordinate (A) at (10mm, 0mm)
+
+% \draw (B) node [left]  {\scriptsize B} -- (D) node [below right]  {\scriptsize D};
+\draw[draw=yellow] (E) node [below right]  {\scriptsize E} -- (B) node [right]  {\scriptsize B};
+\draw[draw=black] (C) node [below right]  {\scriptsize C} -- (B) node [right]  {\scriptsize B};
+\draw[dashed, draw=black] (A) node [below right]  {\scriptsize A} -- (B) node [right]  {\scriptsize B};
+\draw[draw=red] (D) node [above]  {\scriptsize D} -- (A) node [below right]  {\scriptsize A};
+\draw[draw=blue] (A) node -- (F) node [right]  {\scriptsize F};
+\draw[draw=red] (0, 0) circle (30mm);
+\draw[draw=blue] (7mm, -7mm) circle (20mm);
+\draw[dashed, draw=red] (B) -- (D) node [above] {\scriptsize D};
+\end{tikzpicture}
+\end{minipage}
+\qquad\qquad
+\begin{minipage}[bs]{0.55\textwidth}
+\vspace{2cm}
+\lettrine[lines=4]{O}{} \textit{т данной точки\tikz\draw[line width=2pt] (0,0.2cm) -- node [above] {\scriptsize A} (1.5cm,0.2cm);отлосжить прямую равную прямой\tikz\draw[line width=2pt] (0,0.2cm) node [above] {\scriptsize B} -- (1.5cm,0.2cm) node [above]  {\scriptsize C};.}\\
+
+\begin{center}
+Проведем \tikz\draw[dashed, line width=2pt] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize B}; (Пост. I),\\
+построим  \tikz\draw[line width=2pt, draw=red, align=center] (0,17mm) node [above] {\scriptsize A} -- (15mm,15mm) node [above]  {\scriptsize B} -- (10mm, 5mm) node [below right] {\scriptsize C} -- (0, 17mm); (пр I.i)\\
+продлим \tikz\draw[dashed, line width=2pt, draw=red] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize B}; (пр.II)\\
+опишем \tikz\draw[draw=blue, line width=2pt] (0, 0) circle (6mm) (0, 0) node [above] {\scriptsize A} -- (-6mm, 0mm) node [left] {\scriptsize C}; (пост. III), и \tikz\draw[draw=red, line width=2pt] (0, 0) circle (11mm) (0, 0) node [above] {\scriptsize D} -- (8mm, -8mm) node [below right] {\scriptsize E}; (пост. III)\\
+продлим  \tikz\draw[draw=red, line width=2pt] (0,2mm) node [above] {\scriptsize D} -- (15mm,2mm) node [above]  {\scriptsize A}; (пост. II),\\
+тогда искомая пряма это \tikz\draw[draw=blue, line width=2pt] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize F};.\\
+\bigskip\\
+Поскольку \tikz\draw[draw=yellow, line width=2pt] (0,2mm) node [above] {\scriptsize E} -- (15mm,2mm) node [above]  {\scriptsize D}; = \tikz\draw[draw=blue, line width=2pt] (0,2mm) node [above] {\scriptsize D} -- (15mm,2mm) node [above]  {\scriptsize F}; (опр. 15),\\
+и \tikz\draw[dashed, draw=red, line width=2pt] (0,2mm) node [above] {\scriptsize B} -- (15mm,2mm) node [above]  {\scriptsize D}; = \tikz\draw[draw=red, line width=2pt] (0,2mm) node [above] {\scriptsize D} -- (15mm,2mm) node [above]  {\scriptsize A}; (постр.),\\
+$\therefore$ \tikz\draw[draw=yellow, line width=2pt] (0,2mm) node [above] {\scriptsize B} -- (15mm,2mm) node [above]  {\scriptsize E}; = \tikz\draw[draw=blue, line width=2pt] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize A}; (акс. III),\\
+но (опр.15) \tikz\draw[draw=black, line width=2pt] (0,2mm) node [above] {\scriptsize B} -- (15mm,2mm) node [above]  {\scriptsize C}; = \tikz\draw[draw=red, line width=2pt] (0,2mm) node [above] {\scriptsize B} -- (15mm,2mm) node [above]  {\scriptsize E}; = \tikz\draw[draw=red, line width=2pt] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize F};.\\
+\bigskip\\
+$\therefore$ \tikz\draw[draw=blue, line width=2pt] (0,2mm) node [above] {\scriptsize A} -- (15mm,2mm) node [above]  {\scriptsize F}; проведенная из данной точки\\
+(\tikz\draw[draw=red, line width=2pt] (0,2mm) -- node [above] {\scriptsize A} (15mm,2mm);) равна данной прямой \tikz\draw[draw=black, line width=2pt] (0,2mm) node [above] {\scriptsize B} -- (15mm,2mm) node [above]  {\scriptsize C}; (акс. I)
+
+
+\begin{flushright}
+ч. т. д.
+\end{flushright}
+\end{center}
+\end{minipage}
+\end{document}

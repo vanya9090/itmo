@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[top=1cm,left=1cm,right=2cm, bottom=1cm]{geometry}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\graphicspath{ {.} }
+\begin{document}
+
+
+\begin{center}
+\quad Университет ИТМО, факультет программной инженерии и компьютерной техники \\
+\quad Двухнедельная отчётная работа по «Информатике»: аннотация к статье\\
+\quad Дата прошедшей лекции: \underline{22.11.2023} 	Номер прошедшей лекции: \underline{6}	Дата сдачи: \underline{6.12.2023}
+
+\bigskip
+
+\quad Выполнил(а) \underline{Миронов Иван Николаевич}, № группы \underline{ P3132 }, оценка \underline{\hspace{2cm}}
+
+
+\end{center}
+
+\begin{tabularx}{\textwidth} { 
+  | >{\raggedright\arraybackslash}X|}
+    \hline
+\textbf{Название статьи/главы книги/видеолекции}\\
+    \textit{Typst — современная альтернатива LaTeX}\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth} 
+{ 
+| >{\centering\arraybackslash}X
+| >{\centering\arraybackslash}X
+| >{\centering\arraybackslash}X 
+|}
+    \textbf{ФИО автора статьи \quad (или e-mail)} & \textbf{Дата публикации \qquad\qquad (не старше 2020 года)} & \textbf{Размер статьи \qquad\qquad (от 400 слов)} \\
+     \textit{Albert\_Wesker} & <<\underline{20}>> \underline{июня} 2023 г. & \underline{1745 слов} \\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth} { 
+  | >{\raggedright\arraybackslash}X|}
+    \textbf{Прямая полная ссылка на источник или сокращённая ссылка (bit.ly, tr.im и т.п.)} 
+    \textit{https://habr.com/ru/companies/timeweb/articles/742756/}
+    \smallskip\\
+    \hline
+    \textbf{Теги, ключевые слова или словосочетания}\\
+    \textit{офисные пакеты, отечественное ПО, импортозамещение}
+    \smallskip\\
+    \hline
+    \textbf{Перечень фактов, упомянутых в статье}
+    \begin{enumerate}
+		\item Мотивации создания \LaTeX\ и Typst очень похожи, разработчиков Typst'a разочаровал \LaTeX\ и они решили разрабоать свой язык разметки текста
+		\item На данный простые языки разметки на подобие Markdown очень популярны
+		\item Именно \LaTeX\ привнес в \TeX\ идею описательной разметки
+	\end{enumerate}
+    \\ \hline
+    \textbf{Позитивные следствия и/или достоинства описанной в статье технологии}
+    \begin{enumerate}
+    	\item Typst имеет упрощенный синтаксис по сравнению с \LaTeX\ 
+		\item В Typst есть гибкая система стилей похожая на CSS
+		\item Скорость работы Typst превосходит скорость \LaTeX\, потому что Typst напсан на Rust
+		\item Typst имеет гораздо лучший пользовательский интерфейс с удобной отладкой, чего иногда не скажешь о \LaTeX\
+		\item Есть удобный онлайн редактор от разработчиков самого языка разметки
+    \end{enumerate}
+    \\ \hline
+    \textbf{Негативные следствия и/или достоинства описанной в статье технологии}
+    \begin{enumerate}
+		\item Из-за простого синтаксиса Typst нельзя выполнить технически сложную верстку
+	    \item Сложный переход от всем привычного \LaTeX\ к Typst
+		\item Маленькое комьюнити и соответсвенно малое количество ответов на вопросы на форумах
+    \end{enumerate}
+    \\ \hline
+    \textbf{Ваши замечания, пожелания преподавателю или анекдот о программистах}\footnote{Наличие этой графы не влияет на оценку}\\
+
+	 \raisebox{-\totalheight}{\includegraphics[width=5.5cm]{meme_6_ann.jpg}}\\
+	 \hline
+
+\end{tabularx}
+
+
+\end{document}
