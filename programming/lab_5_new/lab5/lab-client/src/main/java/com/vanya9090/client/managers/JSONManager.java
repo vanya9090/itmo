@@ -1,8 +1,7 @@
 package com.vanya9090.client.managers;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.utils.LocalDateTypeAdapter;
@@ -59,12 +58,15 @@ public class JSONManager implements FileManager {
             if (jsonString.isEmpty()) {
                 jsonString = new StringBuilder("[]");
             }
+            if (this.validate(HumanBeing.class, jsonString.toString())) {
+                System.out.println("some text");
+            };
             ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
             logger.info("коллекция успешна загружена");
             return collection;
         } catch (NoSuchElementException exception) {
             logger.error("файл пуст");
-        } catch (IllegalStateException | FileNotFoundException exception) {
+        } catch (FileNotFoundException exception) {
             logger.error("непредвиденная ошибка");
             System.exit(0);
         }
@@ -85,5 +87,23 @@ public class JSONManager implements FileManager {
                 System.out.println("загрузочный файл не может быть открыт");
             }
         }
+    }
+
+    public boolean validate(Class cls, String jsonString){
+        JsonParser parser = new JsonParser();
+
+        JsonArray jsonArr = parser.parse(jsonString).getAsJsonArray();
+        for (JsonElement jsonElement: jsonArr) {
+            jsonElement = jsonElement.getAsJsonObject();
+            System.out.println(jsonElement);
+        }
+        return true;
+//        if (jsonObj.entrySet().size() > cls.getDeclaredFields().length) { // if the json-string has more entries than class has fields, we're already out
+//            return false;
+//        }
+//        for(Field field : cls.getDeclaredFields()) {
+//            if (!jsonObj.has(field.getName())) { // if the json-string has a key that doesn't have a corresponding field in the class, we're out
+//                return false;
+//            }
     }
 }

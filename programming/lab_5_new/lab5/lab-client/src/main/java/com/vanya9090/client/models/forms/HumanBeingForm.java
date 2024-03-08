@@ -8,6 +8,7 @@ import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.models.Mood;
 import com.vanya9090.client.models.WeaponType;
 import com.vanya9090.client.utils.Logger;
+import com.vanya9090.client.validators.Validator;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -15,9 +16,11 @@ import java.util.Scanner;
 
 public class HumanBeingForm implements Form {
     private final Logger logger;
+    private final Validator validator;
 
     public HumanBeingForm(Logger logger) {
         this.logger = logger;
+        this.validator = new Validator(this.logger);
     }
 
     public HumanBeing create() {
@@ -48,6 +51,7 @@ public class HumanBeingForm implements Form {
                 this.logger.field("Введите настроение: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
+                validator.validateMood(field);
                 if (field.isEmpty()) {
                     throw new EmptyFieldException("настроение");
                 }

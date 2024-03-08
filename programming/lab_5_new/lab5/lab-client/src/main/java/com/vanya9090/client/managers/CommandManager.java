@@ -18,12 +18,4 @@ public class CommandManager {
     public Map<String, Command> getCommands() {
         return commands;
     }
-
-    public List<Command> getHistory() {
-        return history;
-    }
-
-    public void addToHistory(Command command) {
-        history.add(command);
-    }
 }
