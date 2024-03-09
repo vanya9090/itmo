@@ -1,8 +1,8 @@
 package vanya9090.server.managers;
 
-import java.util.Collection;
+import com.google.gson.JsonArray;
 
 public interface FileManager {
     public void write();
-    public void read();
+    public JsonArray read();
 }

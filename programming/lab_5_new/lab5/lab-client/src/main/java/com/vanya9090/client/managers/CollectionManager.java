@@ -1,5 +1,6 @@
 package com.vanya9090.client.managers;
 
+import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.models.HumanBeing;
 
 import java.time.LocalDateTime;
@@ -60,9 +61,17 @@ public class CollectionManager {
         return null;
     }
 
-    public void readCollection(String envKey) {
+    public void validate() throws WrongFieldsException {
+        for (HumanBeing humanBeing : this.collection) {
+            System.out.println(humanBeing.validate());
+            if (!humanBeing.validate()) throw new WrongFieldsException(humanBeing.getId());
+        }
+    }
+
+    public void readCollection(String envKey) throws WrongFieldsException {
         this.collection = (ArrayDeque<HumanBeing>) jsonManager.readFile(envKey);
         this.initDate = LocalDateTime.now();
+        this.validate();
     }
 
     public void writeCollection() {

@@ -8,6 +8,7 @@ import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.models.Mood;
 import com.vanya9090.client.models.WeaponType;
 import com.vanya9090.client.utils.Logger;
+import com.vanya9090.client.validators.MoodValidator;
 import com.vanya9090.client.validators.Validator;
 
 import java.time.LocalDate;
@@ -16,11 +17,8 @@ import java.util.Scanner;
 
 public class HumanBeingForm implements Form {
     private final Logger logger;
-    private final Validator validator;
-
     public HumanBeingForm(Logger logger) {
         this.logger = logger;
-        this.validator = new Validator(this.logger);
     }
 
     public HumanBeing create() {
@@ -45,17 +43,15 @@ public class HumanBeingForm implements Form {
 
     private Mood askMood() {
         Mood mood;
-        this.logger.info("Типы настрений: " + Arrays.toString(Mood.values()));
+        MoodValidator validator = new MoodValidator();
+        this.logger.info("Типы настроений: " + Arrays.toString(Mood.values()));
         while (true) {
             try {
                 this.logger.field("Введите настроение: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                validator.validateMood(field);
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("настроение");
-                }
-                mood = Mood.valueOf(field.toUpperCase());
+                validator.validate(field);
+                mood = validator.validateHandle(field);
                 break;
             } catch (IllegalArgumentException e) {
                 logger.error("Такого типа настроения нет");

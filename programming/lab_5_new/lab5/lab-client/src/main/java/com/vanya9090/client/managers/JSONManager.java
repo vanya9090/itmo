@@ -58,9 +58,9 @@ public class JSONManager implements FileManager {
             if (jsonString.isEmpty()) {
                 jsonString = new StringBuilder("[]");
             }
-            if (this.validate(HumanBeing.class, jsonString.toString())) {
-                System.out.println("some text");
-            };
+//            if (this.validate(HumanBeing.class, jsonString.toString())) {
+//                System.out.println("some text");
+//            };
             ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
             logger.info("коллекция успешна загружена");
             return collection;
@@ -69,8 +69,10 @@ public class JSONManager implements FileManager {
         } catch (FileNotFoundException exception) {
             logger.error("непредвиденная ошибка");
             System.exit(0);
+        } catch (JsonParseException exception) {
+            System.out.println("В загрузочном файле не обнаружена необходимая коллекция!");
         }
-        return new ArrayDeque<>();
+            return new ArrayDeque<>();
     }
 
     public void writeFile(Collection<HumanBeing> collection, String envKey) {
@@ -89,15 +91,15 @@ public class JSONManager implements FileManager {
         }
     }
 
-    public boolean validate(Class cls, String jsonString){
-        JsonParser parser = new JsonParser();
-
-        JsonArray jsonArr = parser.parse(jsonString).getAsJsonArray();
-        for (JsonElement jsonElement: jsonArr) {
-            jsonElement = jsonElement.getAsJsonObject();
-            System.out.println(jsonElement);
-        }
-        return true;
+//    public boolean validate(Class cls, String jsonString){
+//        JsonParser parser = new JsonParser();
+//
+//        JsonArray jsonArr = parser.parse(jsonString).getAsJsonArray();
+//        for (JsonElement jsonElement: jsonArr) {
+//            jsonElement = jsonElement.getAsJsonObject();
+//            System.out.println(jsonElement);
+//        }
+//        return true;
 //        if (jsonObj.entrySet().size() > cls.getDeclaredFields().length) { // if the json-string has more entries than class has fields, we're already out
 //            return false;
 //        }
@@ -105,5 +107,5 @@ public class JSONManager implements FileManager {
 //            if (!jsonObj.has(field.getName())) { // if the json-string has a key that doesn't have a corresponding field in the class, we're out
 //                return false;
 //            }
-    }
+//    }
 }

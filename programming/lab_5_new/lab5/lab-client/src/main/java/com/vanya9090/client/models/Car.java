@@ -1,6 +1,6 @@
 package com.vanya9090.client.models;
 
-public class Car {
+public class Car implements Validatable {
     private final Boolean cool; //Поле не может быть null
     private final String name; //Поле не может быть null
 
@@ -15,5 +15,11 @@ public class Car {
 
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public boolean validate() {
+        if (this.name.isEmpty()) return false;
+        return true;
     }
 }

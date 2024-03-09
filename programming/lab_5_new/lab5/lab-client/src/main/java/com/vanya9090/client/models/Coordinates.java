@@ -1,6 +1,6 @@
 package com.vanya9090.client.models;
 
-public class Coordinates {
+public class Coordinates implements Validatable{
     private final Integer x; //Максимальное значение поля: 925, Поле не может быть null
     private final Float y; //Значение поля должно быть больше -208, Поле не может быть null
 
@@ -16,5 +16,12 @@ public class Coordinates {
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y;
+    }
+
+    @Override
+    public boolean validate() {
+        if (this.x > 925) return false;
+        if (this.y <= -208) return false;
+        return true;
     }
 }

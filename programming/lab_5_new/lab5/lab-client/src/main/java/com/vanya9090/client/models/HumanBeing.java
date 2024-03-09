@@ -5,7 +5,7 @@ import com.vanya9090.client.managers.CollectionManager;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class HumanBeing implements Comparable<HumanBeing> {
+public class HumanBeing implements Comparable<HumanBeing>, Validatable{
     private static int nextId;
     private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -94,5 +94,19 @@ public class HumanBeing implements Comparable<HumanBeing> {
     @Override
     public int compareTo(HumanBeing humanBeing) {
         return (int) (this.getCoordinates().getDistance() - humanBeing.getCoordinates().getDistance());
+    }
+
+    @Override
+    public boolean validate() {
+        if (this.id <= 0) return false;
+        if (this.name.isEmpty()) return false;
+        if (!this.coordinates.validate()) return false;
+        if (this.creationDate == null) return false;
+        if (this.impactSpeed <= 0) return false;
+        if (this.minutesOfWaiting <= 0) return false;
+        if (!this.weaponType.validate()) return false;
+        if (!this.mood.validate()) return false;
+        if (!this.car.validate()) return false;
+        return true;
     }
 }

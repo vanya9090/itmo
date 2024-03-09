@@ -17,6 +17,7 @@ import com.vanya9090.client.commands.Help;
 import com.vanya9090.client.commands.Info;
 import com.vanya9090.client.commands.PrintFieldDescendingImpactSpeed;
 
+import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.managers.CommandManager;
 import com.vanya9090.client.managers.JSONManager;
@@ -33,8 +34,11 @@ public final class Client {
         JSONManager jsonManager = new JSONManager(logger);
         CollectionManager collectionManager = new CollectionManager(jsonManager);
 
-        collectionManager.readCollection(ENV_KEY);
-
+        try {
+            collectionManager.readCollection(ENV_KEY);
+        } catch (WrongFieldsException e) {
+            logger.error(e);
+        }
         commandManager.register("help", new Help(logger, commandManager.getCommands())); //done
         commandManager.register("info", new Info(logger, collectionManager)); //done
         commandManager.register("show", new Show(logger, collectionManager)); //done
