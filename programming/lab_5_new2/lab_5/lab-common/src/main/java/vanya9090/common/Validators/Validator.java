@@ -1,4 +1,4 @@
-package vanya9090.common.util.Validators;
+package vanya9090.common.Validators;
 
 public abstract class Validator<T> {
     public abstract boolean validate(String field);

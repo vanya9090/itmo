@@ -135,7 +135,7 @@ public class HumanBeingForm implements Form {
                 if (field.isEmpty()) {
                     throw new EmptyFieldException("зубочистка");
                 }
-                if (!"true".equals(field) && !"false".equals(field)) {
+                if `(!"true".equals(field) && !"false".equals(field))` {
                     throw new BooleanFormatException();
                 }
                 toothpick = Boolean.parseBoolean(field);

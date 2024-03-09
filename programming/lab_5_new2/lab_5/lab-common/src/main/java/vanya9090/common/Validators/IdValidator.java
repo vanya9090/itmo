@@ -1,6 +1,6 @@
-package vanya9090.common.util.Validators;
+package vanya9090.common.Validators;
 
-import vanya9090.common.util.exceptions.EmptyFieldException;
+import vanya9090.common.exceptions.EmptyFieldException;
 
 public class IdValidator extends Validator<Integer>{
     @Override
