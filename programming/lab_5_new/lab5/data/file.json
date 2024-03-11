@@ -7,7 +7,7 @@
       "y": 1234.324
     },
     "creationDate": "2017-01-13",
-    "realHero": null,
+    "realHero": true,
     "hasToothpick": true,
     "impactSpeed": 1,
     "minutesOfWaiting": 29.5,

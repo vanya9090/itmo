@@ -15,9 +15,11 @@ import java.util.Scanner;
 
 public class CarForm implements Form {
     private final Logger logger;
+    private final Scanner scanner;
 
-    public CarForm(Logger logger) {
+    public CarForm(Logger logger, Scanner scanner) {
         this.logger = logger;
+        this.scanner = scanner;
     }
 
     @Override
@@ -32,8 +34,8 @@ public class CarForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите имя машины: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 name = stringHandler.handle(field, "carName");
                 if (!nameCarValidator.validate(name)) throw new WrongFieldsException(0, "nameCar");
                 break;
@@ -51,8 +53,8 @@ public class CarForm implements Form {
         while (true) {
             try {
                 this.logger.field("Машина хорошая?(true/false): ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 cool = booleanHandler.handle(field, "coolCar");
                 if (!coolCarValidator.validate(cool)) throw new WrongFieldsException(0, "coolCar");
                 cool = Boolean.parseBoolean(field);

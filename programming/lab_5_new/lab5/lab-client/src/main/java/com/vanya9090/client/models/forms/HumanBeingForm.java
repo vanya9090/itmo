@@ -1,6 +1,5 @@
 package com.vanya9090.client.models.forms;
 
-import com.vanya9090.client.exceptions.BooleanFormatException;
 import com.vanya9090.client.exceptions.EmptyFieldException;
 import com.vanya9090.client.exceptions.ParseException;
 import com.vanya9090.client.exceptions.WrongFieldsException;
@@ -19,8 +18,10 @@ import java.util.Scanner;
 
 public class HumanBeingForm implements Form {
     private final Logger logger;
-    public HumanBeingForm(Logger logger) {
+    private final Scanner scanner;
+    public HumanBeingForm(Logger logger, Scanner scanner) {
         this.logger = logger;
+        this.scanner = scanner;
     }
 
     public HumanBeing create() {
@@ -39,7 +40,7 @@ public class HumanBeingForm implements Form {
     }
 
     private Car askCar() {
-        CarForm carForm = new CarForm(this.logger);
+        CarForm carForm = new CarForm(this.logger, this.scanner);
         return carForm.create();
     }
 
@@ -51,8 +52,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите настроение: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 mood = moodHandler.handle(field, "mood");
                 if (!moodValidator.validate(mood)) throw new WrongFieldsException(0, "mood");
                 break;
@@ -71,8 +72,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите оружие: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 weaponType = weaponTypeHandler.handle(field, "weaponType");
                 if (!weaponTypeValidator.validate(weaponType)) throw new WrongFieldsException(0, "weaponType");
                 break;
@@ -90,8 +91,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите время ожидания персонажа: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 minutesOfWaiting = floatHandler.handle(field, "minutesOfWaiting");
                 if (!minutesOfWaitingValidator.validate(minutesOfWaiting)) throw new WrongFieldsException(0, "minutesOfWaiting");
                 break;
@@ -109,8 +110,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите скорость удара: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 impactSpeed = intHandler.handle(field, "impactSpeed");
                 if (!impactSpeedValidator.validate(impactSpeed)) throw new WrongFieldsException(0, "impactSpeed");
                 break;
@@ -128,8 +129,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Есть ли зубочистка?(true/false): ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 hasToothpick = booleanHandler.handle(field, "hasToothpick");
                 if (!hasToothpickValidator.validate(hasToothpick)) throw new WrongFieldsException(0, "hasToothpick");
                 break;
@@ -147,8 +148,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Настоящий герой?(true/false): ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 realHero = booleanHandler.handle(field, "realHero");
                 if (!realHeroValidator.validate(realHero)) throw new WrongFieldsException(0, "realHero");
                 break;
@@ -160,7 +161,7 @@ public class HumanBeingForm implements Form {
     }
 
     private Coordinates askCoordinates() {
-        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger);
+        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger, this.scanner);
         return coordinatesForm.create();
     }
 
@@ -171,8 +172,8 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите имя: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 name = stringHandler.handle(field, "name");
                 if (!nameValidator.validate(name)) throw new WrongFieldsException(0, "name");
                 break;
@@ -182,5 +183,4 @@ public class HumanBeingForm implements Form {
         }
         return name;
     }
-
 }

@@ -1,6 +1,8 @@
 package com.vanya9090.client.utils;
 
+import com.vanya9090.client.commands.AddExecute;
 import com.vanya9090.client.commands.Command;
+import com.vanya9090.client.commands.UpdateExecute;
 import com.vanya9090.client.exceptions.RecursiveScriptException;
 import com.vanya9090.client.managers.CommandManager;
 
@@ -22,6 +24,7 @@ public class Runner {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
+            System.out.println(line);
             String[] tokens = line.split(" ");
             var command = commandManager.getCommands().get(tokens[0]);
             if (command == null) {
@@ -39,12 +42,20 @@ public class Runner {
             }
             while (fileReader.hasNext()) {
                 String line = fileReader.nextLine().trim();
+                System.out.println(line);
                 String[] tokens = line.split(" ");
                 Command command = commandManager.getCommands().get(tokens[0]);
-                if (command.getName().equals("execute_script")) {
-                    throw new RecursiveScriptException();
+                if (command.getName().equals("execute_script")) throw new RecursiveScriptException();
+                if (command.getName().equals("add")) {
+                    AddExecute addExecute = (AddExecute) commandManager.getCommands().get("addExecute");
+                    addExecute.apply(tokens, fileReader);
                 }
-                command.apply(tokens);
+                else if (command.getName().equals("update")) {
+                    UpdateExecute updateExecute = (UpdateExecute) commandManager.getCommands().get("updateExecute");
+                    updateExecute.apply(tokens, fileReader);
+                } else {
+                    command.apply(tokens);
+                }
             }
         } catch (FileNotFoundException e) {
             logger.error("нет файла с названием: " + name);

@@ -17,8 +17,10 @@ public class CoordinatesForm implements Form {
     private final static int LOWER_BOUND = 925;
     private final static int UPPER_BOUND = -208;
     private final Logger logger;
-    public CoordinatesForm(Logger logger) {
+    private final Scanner scanner;
+    public CoordinatesForm(Logger logger, Scanner scanner) {
         this.logger = logger;
+        this.scanner = scanner;
     }
 
     @Override
@@ -33,8 +35,8 @@ public class CoordinatesForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите x: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 x = intHandler.handle(field, "x");
                 if (!xValidator.validate(x)) throw new WrongFieldsException(0, "x");
                 break;
@@ -52,8 +54,8 @@ public class CoordinatesForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите y: ");
-                Scanner scanner = new Scanner(System.in);
-                String field = scanner.nextLine().trim();
+//                Scanner scanner = new Scanner(System.in);
+                String field = this.scanner.nextLine().trim();
                 y = floatHandler.handle(field, "y");
                 if (!yValidator.validate(y)) throw new WrongFieldsException(0, "y");
                 break;

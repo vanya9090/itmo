@@ -7,22 +7,26 @@ import com.vanya9090.client.utils.Logger;
 
 import java.util.Scanner;
 
-public class Add extends Command {
+public class AddExecute extends Command{
     private final Logger logger;
     private final CollectionManager collectionManager;
 
-    public Add(Logger logger, CollectionManager collectionManager) {
-        super("add", "добавить новый элемент в коллекцию");
+    public AddExecute(Logger logger, CollectionManager collectionManager) {
+        super("addExecute", "добавить новый элемент в коллекцию");
         this.logger = logger;
         this.collectionManager = collectionManager;
     }
 
-    @Override
-    public void apply(String[] args) {
+    public void apply(String[] args, Scanner fileReader) {
         HumanBeing.updateNextId(collectionManager);
-        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in));
+        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, fileReader);
         HumanBeing humanBeing = humanBeingForm.create();
         collectionManager.add(humanBeing);
         logger.success("Добавлено успешно");
+    }
+
+    @Override
+    public void apply(String[] args) {
+        logger.error("произошла непредвиденная ошибка");
     }
 }

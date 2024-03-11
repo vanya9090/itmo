@@ -6,6 +6,8 @@ import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.forms.HumanBeingForm;
 import com.vanya9090.client.utils.Logger;
 
+import java.util.Scanner;
+
 public class AddIfMin extends Command {
     private final Logger logger;
     private final CollectionManager collectionManager;
@@ -20,7 +22,7 @@ public class AddIfMin extends Command {
     public void apply(String[] args) {
         HumanBeing.updateNextId(collectionManager);
         logger.info("добавьте нового человека:");
-        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger);
+        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in));
         HumanBeing humanBeing = humanBeingForm.create();
         if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
             collectionManager.add(humanBeing);

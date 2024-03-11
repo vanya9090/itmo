@@ -9,6 +9,7 @@ import com.vanya9090.client.models.forms.HumanBeingForm;
 import com.vanya9090.client.utils.Logger;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Update extends Command {
     private final CollectionManager collectionManager;
@@ -35,7 +36,7 @@ public class Update extends Command {
                 throw new NotFoundException();
             }
 
-            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger);
+            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in));
             HumanBeing humanBeing = humanBeingForm.create();
 
             humanToUpdate.update(humanBeing);

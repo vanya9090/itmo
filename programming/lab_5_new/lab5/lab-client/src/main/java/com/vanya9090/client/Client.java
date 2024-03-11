@@ -1,21 +1,6 @@
 package com.vanya9090.client;
 
-import com.vanya9090.client.commands.RemoveFirst;
-import com.vanya9090.client.commands.RemoveHead;
-import com.vanya9090.client.commands.Save;
-import com.vanya9090.client.commands.Show;
-import com.vanya9090.client.commands.FilterByWeaponType;
-import com.vanya9090.client.commands.RemoveById;
-import com.vanya9090.client.commands.SumOfImpactSpeed;
-import com.vanya9090.client.commands.Update;
-import com.vanya9090.client.commands.Add;
-import com.vanya9090.client.commands.AddIfMin;
-import com.vanya9090.client.commands.Clear;
-import com.vanya9090.client.commands.ExecuteScript;
-import com.vanya9090.client.commands.Exit;
-import com.vanya9090.client.commands.Help;
-import com.vanya9090.client.commands.Info;
-import com.vanya9090.client.commands.PrintFieldDescendingImpactSpeed;
+import com.vanya9090.client.commands.*;
 import com.vanya9090.client.managers.CollectionManager;
 
 import com.vanya9090.client.exceptions.*;
@@ -57,6 +42,9 @@ public final class Client {
         commandManager.register("sum_of_impact_speed", new SumOfImpactSpeed(logger, collectionManager));
         commandManager.register("filter_by_weapon_type", new FilterByWeaponType(logger, collectionManager));
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(logger, collectionManager));
+
+        commandManager.register("addExecute", new AddExecute(logger, collectionManager));
+        commandManager.register("updateExecute", new UpdateExecute(logger, collectionManager));
         runner.run();
     }
 }
