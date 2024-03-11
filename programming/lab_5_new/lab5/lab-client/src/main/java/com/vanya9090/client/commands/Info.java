@@ -1,5 +1,6 @@
 package com.vanya9090.client.commands;
 
+import com.vanya9090.client.exceptions.EmptyCollectionException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.utils.Logger;
 
@@ -17,9 +18,16 @@ public class Info extends Command {
 
     @Override
     public void apply(String[] args) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        this.logger.info("Тип: " + this.collectionManager.getType());
-        this.logger.info("Дата инициализации: " + dtf.format(this.collectionManager.getInitDate()));
-        this.logger.info("Количество элементов: " + this.collectionManager.getSize());
+        try {
+            if (collectionManager.getCollection().isEmpty()) {
+                throw new EmptyCollectionException();
+            }
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            this.logger.info("Тип: " + this.collectionManager.getType());
+            this.logger.info("Дата инициализации: " + dtf.format(this.collectionManager.getInitDate()));
+            this.logger.info("Количество элементов: " + this.collectionManager.getSize());
+        } catch (EmptyCollectionException e) {
+            logger.warning(e);
+        }
     }
 }

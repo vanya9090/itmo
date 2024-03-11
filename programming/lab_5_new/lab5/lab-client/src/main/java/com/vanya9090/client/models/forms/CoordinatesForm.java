@@ -1,9 +1,15 @@
 package com.vanya9090.client.models.forms;
 
 import com.vanya9090.client.exceptions.EmptyFieldException;
+import com.vanya9090.client.exceptions.ParseException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.exceptions.WrongValueException;
+import com.vanya9090.client.handlers.FloatHandler;
+import com.vanya9090.client.handlers.IntHandler;
 import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.utils.Logger;
+import com.vanya9090.client.validators.XValidator;
+import com.vanya9090.client.validators.YValidator;
 
 import java.util.Scanner;
 
@@ -22,25 +28,18 @@ public class CoordinatesForm implements Form {
 
     public Integer askX() {
         int x;
+        IntHandler intHandler = new IntHandler();
+        XValidator xValidator = new XValidator();
         while (true) {
             try {
                 this.logger.field("Введите x: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("координата x");
-                }
-                x = Integer.parseInt(field);
-                if (x > LOWER_BOUND) {
-                    throw new WrongValueException();
-                }
+                x = intHandler.handle(field, "x");
+                if (!xValidator.validate(x)) throw new WrongFieldsException(0, "x");
                 break;
-            } catch (EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
-            } catch (NumberFormatException e) {
-                logger.error("Координата x должна быть представлена целым числом");
-            } catch (WrongValueException e) {
-                logger.error("Координата x должна быть меньше 926");
             }
         }
         return x;
@@ -48,25 +47,18 @@ public class CoordinatesForm implements Form {
 
     public Float askY() {
         float y;
+        FloatHandler floatHandler = new FloatHandler();
+        YValidator yValidator = new YValidator();
         while (true) {
             try {
                 this.logger.field("Введите y: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("координата y");
-                }
-                y = Float.parseFloat(field);
-                if (y < UPPER_BOUND) {
-                    throw new WrongValueException();
-                }
+                y = floatHandler.handle(field, "y");
+                if (!yValidator.validate(y)) throw new WrongFieldsException(0, "y");
                 break;
-            } catch (EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
-            } catch (NumberFormatException e) {
-                logger.error("Координата y должна быть представлена числом");
-            } catch (WrongValueException e) {
-                logger.error("Координата y должна быть больше -208");
             }
         }
         return y;

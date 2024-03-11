@@ -2,8 +2,14 @@ package com.vanya9090.client.models.forms;
 
 import com.vanya9090.client.exceptions.BooleanFormatException;
 import com.vanya9090.client.exceptions.EmptyFieldException;
+import com.vanya9090.client.exceptions.ParseException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
+import com.vanya9090.client.handlers.BooleanHandler;
+import com.vanya9090.client.handlers.StringHandler;
 import com.vanya9090.client.models.Car;
 import com.vanya9090.client.utils.Logger;
+import com.vanya9090.client.validators.CoolCarValidator;
+import com.vanya9090.client.validators.NameCarValidator;
 
 import java.util.Scanner;
 
@@ -21,16 +27,17 @@ public class CarForm implements Form {
 
     public String askName() {
         String name;
+        StringHandler stringHandler = new StringHandler();
+        NameCarValidator nameCarValidator = new NameCarValidator();
         while (true) {
             try {
                 this.logger.field("Введите имя машины: ");
                 Scanner scanner = new Scanner(System.in);
-                name = scanner.nextLine().trim();
-                if (name.isEmpty()) {
-                    throw new EmptyFieldException("имя");
-                }
+                String field = scanner.nextLine().trim();
+                name = stringHandler.handle(field, "carName");
+                if (!nameCarValidator.validate(name)) throw new WrongFieldsException(0, "nameCar");
                 break;
-            } catch (EmptyFieldException e) {
+            } catch (EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
@@ -39,20 +46,18 @@ public class CarForm implements Form {
 
     public Boolean askCool() {
         boolean cool;
+        BooleanHandler booleanHandler = new BooleanHandler();
+        CoolCarValidator coolCarValidator = new CoolCarValidator();
         while (true) {
             try {
                 this.logger.field("Машина хорошая?(true/false): ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("зубочистка");
-                }
-                if (!"true".equals(field) && !"false".equals(field)) {
-                    throw new BooleanFormatException();
-                }
+                cool = booleanHandler.handle(field, "coolCar");
+                if (!coolCarValidator.validate(cool)) throw new WrongFieldsException(0, "coolCar");
                 cool = Boolean.parseBoolean(field);
                 break;
-            } catch (BooleanFormatException | EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }

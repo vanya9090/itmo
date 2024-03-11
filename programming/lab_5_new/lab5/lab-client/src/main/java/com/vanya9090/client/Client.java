@@ -16,9 +16,9 @@ import com.vanya9090.client.commands.Exit;
 import com.vanya9090.client.commands.Help;
 import com.vanya9090.client.commands.Info;
 import com.vanya9090.client.commands.PrintFieldDescendingImpactSpeed;
-
-import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.managers.CollectionManager;
+
+import com.vanya9090.client.exceptions.*;
 import com.vanya9090.client.managers.CommandManager;
 import com.vanya9090.client.managers.JSONManager;
 import com.vanya9090.client.utils.Logger;
@@ -34,19 +34,21 @@ public final class Client {
         JSONManager jsonManager = new JSONManager(logger);
         CollectionManager collectionManager = new CollectionManager(jsonManager);
 
+
         try {
-            collectionManager.readCollection(ENV_KEY);
-        } catch (WrongFieldsException e) {
+            collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
+        } catch (WrongFieldsException | EmptyFieldException | WrongPathException | ReadException | ParseException | NullFieldException e) {
             logger.error(e);
         }
-        commandManager.register("help", new Help(logger, commandManager.getCommands())); //done
-        commandManager.register("info", new Info(logger, collectionManager)); //done
-        commandManager.register("show", new Show(logger, collectionManager)); //done
-        commandManager.register("add", new Add(logger, collectionManager)); //done
-        commandManager.register("update", new Update(logger, collectionManager)); //done
-        commandManager.register("remove_by_id", new RemoveById(logger, collectionManager)); //done
-        commandManager.register("clear", new Clear(logger, collectionManager)); //done
-        commandManager.register("save", new Save(collectionManager, jsonManager, ENV_KEY)); // done
+
+        commandManager.register("help", new Help(logger, commandManager.getCommands()));
+        commandManager.register("info", new Info(logger, collectionManager));
+        commandManager.register("show", new Show(logger, collectionManager));
+        commandManager.register("add", new Add(logger, collectionManager));
+        commandManager.register("update", new Update(logger, collectionManager));
+        commandManager.register("remove_by_id", new RemoveById(logger, collectionManager));
+        commandManager.register("clear", new Clear(logger, collectionManager));
+        commandManager.register("save", new Save(collectionManager, jsonManager, ENV_KEY));
         commandManager.register("execute_script", new ExecuteScript(runner, logger));
         commandManager.register("exit", new Exit(logger));
         commandManager.register("remove_first", new RemoveFirst(logger, collectionManager));

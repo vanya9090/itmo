@@ -35,6 +35,22 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable{
         this.car = car;
     }
 
+    public HumanBeing(Integer id, String name, Coordinates coordinates, LocalDate creationDate,
+                      boolean realHero, boolean hasToothpick, int impactSpeed,
+                      Float minutesOfWaiting, WeaponType weaponType, Mood mood, Car car) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.realHero = realHero;
+        this.hasToothpick = hasToothpick;
+        this.impactSpeed = impactSpeed;
+        this.minutesOfWaiting = minutesOfWaiting;
+        this.weaponType = weaponType;
+        this.mood = mood;
+        this.car = car;
+    }
+
     public static void updateNextId(CollectionManager collectionManager) {
         int maxId = collectionManager
                 .getCollection()

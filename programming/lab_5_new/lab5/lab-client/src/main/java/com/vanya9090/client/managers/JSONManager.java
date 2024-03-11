@@ -3,6 +3,9 @@ package com.vanya9090.client.managers;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import com.vanya9090.client.exceptions.ReadException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
+import com.vanya9090.client.exceptions.WrongPathException;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.utils.LocalDateTypeAdapter;
 import com.vanya9090.client.utils.Logger;
@@ -30,20 +33,10 @@ public class JSONManager implements FileManager {
         this.logger = logger;
     }
 
-    public Collection<HumanBeing> readFile(String envKey) {
+    public JsonArray readFile(String envKey) throws ReadException, WrongPathException {
         String path = System.getenv(envKey);
-        if (path == null || path.isEmpty()) {
-            logger.error("переменная окружения не найдена");
-            return new ArrayDeque<>();
-        }
-        if (!(new File(path).isFile())){
-            logger.error("файл не найден");
-            return new ArrayDeque<>();
-        }
-        if (!(new File(path).canRead())) {
-            logger.error("нет прав чтения файла");
-            return new ArrayDeque<>();
-        }
+        if (path == null || path.isEmpty() || !(new File(path).isFile())) throw new WrongPathException();
+        if (!(new File(path).canRead())) throw new ReadException();
         try (Scanner fileReader = new Scanner(new File(path))) {
             var collectionType = new TypeToken<ArrayDeque<HumanBeing>>() {
             }.getType();
@@ -58,12 +51,9 @@ public class JSONManager implements FileManager {
             if (jsonString.isEmpty()) {
                 jsonString = new StringBuilder("[]");
             }
-//            if (this.validate(HumanBeing.class, jsonString.toString())) {
-//                System.out.println("some text");
-//            };
-            ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
-            logger.info("коллекция успешна загружена");
-            return collection;
+            JsonElement jsonMap = JsonParser.parseString(String.valueOf(jsonString));
+            System.out.println(jsonMap);
+            return jsonMap.getAsJsonArray();
         } catch (NoSuchElementException exception) {
             logger.error("файл пуст");
         } catch (FileNotFoundException exception) {
@@ -72,7 +62,7 @@ public class JSONManager implements FileManager {
         } catch (JsonParseException exception) {
             System.out.println("В загрузочном файле не обнаружена необходимая коллекция!");
         }
-            return new ArrayDeque<>();
+            return new JsonArray();
     }
 
     public void writeFile(Collection<HumanBeing> collection, String envKey) {

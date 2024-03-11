@@ -2,8 +2,10 @@ package vanya9090.server.managers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import vanya9090.common.Handlers.IntHandler;
 import vanya9090.common.Validators.IdValidator;
 import vanya9090.common.Validators.Validator;
+import vanya9090.server.Logger;
 import vanya9090.server.models.HumanBeing;
 
 import java.time.LocalDateTime;
@@ -11,7 +13,9 @@ import java.util.ArrayDeque;
 
 public class CollectionManager extends ArrayDequeManager<HumanBeing>{
     private LocalDateTime initDate;
-    public CollectionManager() {
+    private final Logger logger;
+    public CollectionManager(Logger logger) {
+        this.logger = logger;
     }
     public LocalDateTime getInitDate() {
         return this.initDate;
@@ -30,12 +34,14 @@ public class CollectionManager extends ArrayDequeManager<HumanBeing>{
     }
 
     public void readCollection(JsonArray jsonElements) {
+        IntHandler intHandler = new IntHandler();
         for (JsonElement jsonElement: jsonElements) {
             Validator<Integer> idValidator = new IdValidator();
             String field = jsonElement.getAsJsonObject().get("id").getAsString();
             if (idValidator.validate(field)) {
                 int id = idValidator.handle(field);
             }
+
             String name = jsonElement.getAsJsonObject().get("name").getAsString();
             String x = jsonElement.getAsJsonObject().get("coordinates").getAsJsonObject().get("x").getAsString();
             String y = jsonElement.getAsJsonObject().get("coordinates").getAsJsonObject().get("x").getAsString();

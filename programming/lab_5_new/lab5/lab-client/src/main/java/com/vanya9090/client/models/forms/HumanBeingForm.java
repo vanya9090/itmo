@@ -2,14 +2,16 @@ package com.vanya9090.client.models.forms;
 
 import com.vanya9090.client.exceptions.BooleanFormatException;
 import com.vanya9090.client.exceptions.EmptyFieldException;
+import com.vanya9090.client.exceptions.ParseException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
+import com.vanya9090.client.handlers.*;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.Car;
 import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.models.Mood;
 import com.vanya9090.client.models.WeaponType;
 import com.vanya9090.client.utils.Logger;
-import com.vanya9090.client.validators.MoodValidator;
-import com.vanya9090.client.validators.Validator;
+import com.vanya9090.client.validators.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -43,19 +45,18 @@ public class HumanBeingForm implements Form {
 
     private Mood askMood() {
         Mood mood;
-        MoodValidator validator = new MoodValidator();
+        MoodHandler moodHandler = new MoodHandler();
+        MoodValidator moodValidator = new MoodValidator();
         this.logger.info("Типы настроений: " + Arrays.toString(Mood.values()));
         while (true) {
             try {
                 this.logger.field("Введите настроение: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                validator.validate(field);
-                mood = validator.validateHandle(field);
+                mood = moodHandler.handle(field, "mood");
+                if (!moodValidator.validate(mood)) throw new WrongFieldsException(0, "mood");
                 break;
-            } catch (IllegalArgumentException e) {
-                logger.error("Такого типа настроения нет");
-            } catch (EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
@@ -64,20 +65,18 @@ public class HumanBeingForm implements Form {
 
     private WeaponType askWeaponType() {
         WeaponType weaponType;
+        WeaponTypeHandler weaponTypeHandler = new WeaponTypeHandler();
+        WeaponTypeValidator weaponTypeValidator = new WeaponTypeValidator();
         this.logger.info("Типы оружий: " + Arrays.toString(WeaponType.values()));
         while (true) {
             try {
                 this.logger.field("Введите оружие: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("оружие");
-                }
-                weaponType = WeaponType.valueOf(field.toUpperCase());
+                weaponType = weaponTypeHandler.handle(field, "weaponType");
+                if (!weaponTypeValidator.validate(weaponType)) throw new WrongFieldsException(0, "weaponType");
                 break;
-            } catch (IllegalArgumentException e) {
-                logger.error("Такого типа оружия нет");
-            } catch (EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
@@ -85,88 +84,79 @@ public class HumanBeingForm implements Form {
     }
 
     private Float askMinutesOfWaiting() {
-        Float minutes;
+        Float minutesOfWaiting;
+        FloatHandler floatHandler = new FloatHandler();
+        MinutesOfWaitingValidator minutesOfWaitingValidator = new MinutesOfWaitingValidator();
         while (true) {
             try {
                 this.logger.field("Введите время ожидания персонажа: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    minutes = null;
-                } else {
-                    minutes = Float.parseFloat(field);
-                }
+                minutesOfWaiting = floatHandler.handle(field, "minutesOfWaiting");
+                if (!minutesOfWaitingValidator.validate(minutesOfWaiting)) throw new WrongFieldsException(0, "minutesOfWaiting");
                 break;
-            } catch (NumberFormatException e) {
-                logger.error("Минуты должны быть представлены числом");
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
+                logger.error(e);
             }
         }
-        return minutes;
+        return minutesOfWaiting;
     }
 
     private int askImpactSpeed() {
-        int speed;
+        int impactSpeed;
+        IntHandler intHandler = new IntHandler();
+        ImpactSpeedValidator impactSpeedValidator = new ImpactSpeedValidator();
         while (true) {
             try {
                 this.logger.field("Введите скорость удара: ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("скорость удара");
-                }
-                speed = Integer.parseInt(field);
+                impactSpeed = intHandler.handle(field, "impactSpeed");
+                if (!impactSpeedValidator.validate(impactSpeed)) throw new WrongFieldsException(0, "impactSpeed");
                 break;
-            } catch (NumberFormatException e) {
-                logger.error("Скорость удара должна быть представлена целым числом");
-            } catch (EmptyFieldException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
-        return speed;
+        return impactSpeed;
     }
 
     private boolean askHasToothpick() {
-        boolean toothpick;
+        boolean hasToothpick;
+        BooleanHandler booleanHandler = new BooleanHandler();
+        HasToothpickValidator hasToothpickValidator = new HasToothpickValidator();
         while (true) {
             try {
                 this.logger.field("Есть ли зубочистка?(true/false): ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("зубочистка");
-                }
-                if `(!"true".equals(field) && !"false".equals(field))` {
-                    throw new BooleanFormatException();
-                }
-                toothpick = Boolean.parseBoolean(field);
+                hasToothpick = booleanHandler.handle(field, "hasToothpick");
+                if (!hasToothpickValidator.validate(hasToothpick)) throw new WrongFieldsException(0, "hasToothpick");
                 break;
-            } catch (EmptyFieldException | BooleanFormatException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
-        return toothpick;
+        return hasToothpick;
     }
 
     private boolean askRealHero() {
-        boolean hero;
+        boolean realHero;
+        BooleanHandler booleanHandler = new BooleanHandler();
+        RealHeroValidator realHeroValidator = new RealHeroValidator();
         while (true) {
             try {
                 this.logger.field("Настоящий герой?(true/false): ");
                 Scanner scanner = new Scanner(System.in);
                 String field = scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    throw new EmptyFieldException("зубочистка");
-                }
-                if (!"true".equals(field) && !"false".equals(field)) {
-                    throw new BooleanFormatException();
-                }
-                hero = Boolean.parseBoolean(field);
+                realHero = booleanHandler.handle(field, "realHero");
+                if (!realHeroValidator.validate(realHero)) throw new WrongFieldsException(0, "realHero");
                 break;
-            } catch (EmptyFieldException | BooleanFormatException e) {
+            } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }
-        return hero;
+        return realHero;
     }
 
     private Coordinates askCoordinates() {
@@ -176,16 +166,17 @@ public class HumanBeingForm implements Form {
 
     public String askName() {
         String name;
+        StringHandler stringHandler = new StringHandler();
+        NameValidator nameValidator = new NameValidator();
         while (true) {
             try {
                 this.logger.field("Введите имя: ");
                 Scanner scanner = new Scanner(System.in);
-                name = scanner.nextLine().trim();
-                if (name.isEmpty()) {
-                    throw new EmptyFieldException("имя");
-                }
+                String field = scanner.nextLine().trim();
+                name = stringHandler.handle(field, "name");
+                if (!nameValidator.validate(name)) throw new WrongFieldsException(0, "name");
                 break;
-            } catch (EmptyFieldException e) {
+            } catch (EmptyFieldException | WrongFieldsException e) {
                 logger.error(e);
             }
         }

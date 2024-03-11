@@ -1,4 +1,4 @@
-package com.vanya9090.client.commands;
+package vanya9090.common.commands;
 
 import com.vanya9090.client.exceptions.EmptyCollectionException;
 import com.vanya9090.client.managers.CollectionManager;
@@ -26,7 +26,7 @@ public class Show extends Command {
                 logger.info("");
             }
         } catch (EmptyCollectionException e) {
-            logger.warning(e);
+            logger.error(e);
         }
     }
 }
