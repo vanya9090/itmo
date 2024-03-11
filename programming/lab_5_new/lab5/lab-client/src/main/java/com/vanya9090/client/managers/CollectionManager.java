@@ -2,8 +2,6 @@ package com.vanya9090.client.managers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonParseException;
 import com.vanya9090.client.exceptions.*;
 import com.vanya9090.client.handlers.*;
 import com.vanya9090.client.models.*;

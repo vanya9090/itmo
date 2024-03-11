@@ -4,7 +4,6 @@ package com.vanya9090.client.managers;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.vanya9090.client.exceptions.ReadException;
-import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.exceptions.WrongPathException;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.utils.LocalDateTypeAdapter;

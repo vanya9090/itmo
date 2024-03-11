@@ -1,8 +1,6 @@
 package com.vanya9090.client.commands;
 
 
-import java.util.Scanner;
-
 /**
  *
  * @author vanya

@@ -24,7 +24,6 @@ public class Runner {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
-            System.out.println(line);
             String[] tokens = line.split(" ");
             var command = commandManager.getCommands().get(tokens[0]);
             if (command == null) {
@@ -42,7 +41,6 @@ public class Runner {
             }
             while (fileReader.hasNext()) {
                 String line = fileReader.nextLine().trim();
-                System.out.println(line);
                 String[] tokens = line.split(" ");
                 Command command = commandManager.getCommands().get(tokens[0]);
                 if (command.getName().equals("execute_script")) throw new RecursiveScriptException();

@@ -1,14 +1,15 @@
 package com.vanya9090.client.commands;
 
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 import java.util.Map;
 
 public class Help extends Command {
     private final Map<String, Command> commands;
-    private final Logger logger;
+    private final ILogger logger;
 
-    public Help(Logger logger, Map<String, Command> commands) {
+    public Help(ILogger logger, Map<String, Command> commands) {
         super("help", "вывести справку по доступным командам");
         this.commands = commands;
         this.logger = logger;

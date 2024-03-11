@@ -6,6 +6,7 @@ import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.exceptions.*;
 import com.vanya9090.client.managers.CommandManager;
 import com.vanya9090.client.managers.JSONManager;
+import com.vanya9090.client.utils.ExecuteLogger;
 import com.vanya9090.client.utils.Logger;
 import com.vanya9090.client.utils.Runner;
 
@@ -14,6 +15,7 @@ public final class Client {
 
     public static void main(String[] args) {
         Logger logger = new Logger();
+        ExecuteLogger executeLoger = new ExecuteLogger();
         CommandManager commandManager = new CommandManager();
         Runner runner = new Runner(logger, commandManager);
         JSONManager jsonManager = new JSONManager(logger);
@@ -43,8 +45,8 @@ public final class Client {
         commandManager.register("filter_by_weapon_type", new FilterByWeaponType(logger, collectionManager));
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(logger, collectionManager));
 
-        commandManager.register("addExecute", new AddExecute(logger, collectionManager));
-        commandManager.register("updateExecute", new UpdateExecute(logger, collectionManager));
+        commandManager.register("addExecute", new AddExecute(executeLoger, collectionManager));
+        commandManager.register("updateExecute", new UpdateExecute(executeLoger, collectionManager));
         runner.run();
     }
 }

@@ -5,15 +5,16 @@ import com.vanya9090.client.exceptions.NotFoundException;
 import com.vanya9090.client.exceptions.WrongAmountOfElementsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 import java.util.Arrays;
 
 public class RemoveById extends Command {
     private final CollectionManager collectionManager;
-    private final Logger logger;
+    private final ILogger logger;
 
-    public RemoveById(Logger logger, CollectionManager collectionManager) {
+    public RemoveById(ILogger logger, CollectionManager collectionManager) {
         super("remove_by_id", "удалить элемент из коллекции по его id");
         this.logger = logger;
         this.collectionManager = collectionManager;

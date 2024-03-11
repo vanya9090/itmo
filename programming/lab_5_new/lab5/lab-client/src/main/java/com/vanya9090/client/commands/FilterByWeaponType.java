@@ -4,16 +4,17 @@ import com.vanya9090.client.exceptions.WrongAmountOfElementsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.WeaponType;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class FilterByWeaponType extends Command {
-    private final Logger logger;
+    private final ILogger logger;
     private final CollectionManager collectionManager;
 
-    public FilterByWeaponType(Logger logger, CollectionManager collectionManager) {
+    public FilterByWeaponType(ILogger logger, CollectionManager collectionManager) {
         super("filter_by_weapon_type", "вывести элементы, значение поля weaponType которых равно заданному");
         this.logger = logger;
         this.collectionManager = collectionManager;

@@ -2,15 +2,16 @@ package com.vanya9090.client.commands;
 
 import com.vanya9090.client.exceptions.EmptyCollectionException;
 import com.vanya9090.client.managers.CollectionManager;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 import java.time.format.DateTimeFormatter;
 
 public class Info extends Command {
-    private final Logger logger;
+    private final ILogger logger;
     private final CollectionManager collectionManager;
 
-    public Info(Logger logger, CollectionManager collectionManager) {
+    public Info(ILogger logger, CollectionManager collectionManager) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
         this.logger = logger;
         this.collectionManager = collectionManager;

@@ -2,13 +2,14 @@ package com.vanya9090.client.commands;
 
 import com.vanya9090.client.exceptions.CollectionIsEmptyException;
 import com.vanya9090.client.managers.CollectionManager;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 public class Clear extends Command {
-    private final Logger logger;
+    private final ILogger logger;
     private final CollectionManager collectionManager;
 
-    public Clear(Logger logger, CollectionManager collectionManager) {
+    public Clear(ILogger logger, CollectionManager collectionManager) {
         super("clear", "очистить коллекцию");
         this.logger = logger;
         this.collectionManager = collectionManager;

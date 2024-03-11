@@ -1,12 +1,12 @@
 package com.vanya9090.client.models.forms;
 
-import com.vanya9090.client.exceptions.BooleanFormatException;
 import com.vanya9090.client.exceptions.EmptyFieldException;
 import com.vanya9090.client.exceptions.ParseException;
 import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.handlers.BooleanHandler;
 import com.vanya9090.client.handlers.StringHandler;
 import com.vanya9090.client.models.Car;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 import com.vanya9090.client.validators.CoolCarValidator;
 import com.vanya9090.client.validators.NameCarValidator;
@@ -14,10 +14,10 @@ import com.vanya9090.client.validators.NameCarValidator;
 import java.util.Scanner;
 
 public class CarForm implements Form {
-    private final Logger logger;
+    private final ILogger logger;
     private final Scanner scanner;
 
-    public CarForm(Logger logger, Scanner scanner) {
+    public CarForm(ILogger logger, Scanner scanner) {
         this.logger = logger;
         this.scanner = scanner;
     }

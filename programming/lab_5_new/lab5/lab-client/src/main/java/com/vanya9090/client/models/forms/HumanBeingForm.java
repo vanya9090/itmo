@@ -9,6 +9,7 @@ import com.vanya9090.client.models.Car;
 import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.models.Mood;
 import com.vanya9090.client.models.WeaponType;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 import com.vanya9090.client.validators.*;
 
@@ -17,9 +18,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class HumanBeingForm implements Form {
-    private final Logger logger;
+    private final ILogger logger;
     private final Scanner scanner;
-    public HumanBeingForm(Logger logger, Scanner scanner) {
+    public HumanBeingForm(ILogger logger, Scanner scanner) {
         this.logger = logger;
         this.scanner = scanner;
     }

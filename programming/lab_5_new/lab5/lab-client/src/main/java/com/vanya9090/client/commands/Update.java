@@ -6,6 +6,7 @@ import com.vanya9090.client.exceptions.WrongAmountOfElementsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.forms.HumanBeingForm;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 import java.util.Arrays;
@@ -13,9 +14,9 @@ import java.util.Scanner;
 
 public class Update extends Command {
     private final CollectionManager collectionManager;
-    private final Logger logger;
+    private final ILogger logger;
 
-    public Update(Logger logger, CollectionManager collectionManager) {
+    public Update(ILogger logger, CollectionManager collectionManager) {
         super("update", "обновить значение элемента коллекции, id которого равен заданному");
         this.logger = logger;
         this.collectionManager = collectionManager;

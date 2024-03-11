@@ -3,13 +3,14 @@ package com.vanya9090.client.commands;
 import com.vanya9090.client.exceptions.EmptyCollectionException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 public class Show extends Command {
     private final CollectionManager collectionManager;
-    private final Logger logger;
+    private final ILogger logger;
 
-    public Show(Logger logger, CollectionManager collectionManager) {
+    public Show(ILogger logger, CollectionManager collectionManager) {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
         this.collectionManager = collectionManager;
         this.logger = logger;

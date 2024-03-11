@@ -3,10 +3,10 @@ package com.vanya9090.client.models.forms;
 import com.vanya9090.client.exceptions.EmptyFieldException;
 import com.vanya9090.client.exceptions.ParseException;
 import com.vanya9090.client.exceptions.WrongFieldsException;
-import com.vanya9090.client.exceptions.WrongValueException;
 import com.vanya9090.client.handlers.FloatHandler;
 import com.vanya9090.client.handlers.IntHandler;
 import com.vanya9090.client.models.Coordinates;
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 import com.vanya9090.client.validators.XValidator;
 import com.vanya9090.client.validators.YValidator;
@@ -14,11 +14,9 @@ import com.vanya9090.client.validators.YValidator;
 import java.util.Scanner;
 
 public class CoordinatesForm implements Form {
-    private final static int LOWER_BOUND = 925;
-    private final static int UPPER_BOUND = -208;
-    private final Logger logger;
+    private final ILogger logger;
     private final Scanner scanner;
-    public CoordinatesForm(Logger logger, Scanner scanner) {
+    public CoordinatesForm(ILogger logger, Scanner scanner) {
         this.logger = logger;
         this.scanner = scanner;
     }

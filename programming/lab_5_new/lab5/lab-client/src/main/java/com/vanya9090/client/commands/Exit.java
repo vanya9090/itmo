@@ -1,11 +1,12 @@
 package com.vanya9090.client.commands;
 
+import com.vanya9090.client.utils.ILogger;
 import com.vanya9090.client.utils.Logger;
 
 public class Exit extends Command {
-    private final Logger logger;
+    private final ILogger logger;
 
-    public Exit(Logger logger) {
+    public Exit(ILogger logger) {
         super("exit", "завершить программу (без сохранения в файл)");
         this.logger = logger;
     }
