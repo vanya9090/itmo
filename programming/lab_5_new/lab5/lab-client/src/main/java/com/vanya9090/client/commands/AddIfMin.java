@@ -1,5 +1,8 @@
 package com.vanya9090.client.commands;
 
+import com.vanya9090.client.exceptions.EmptyFieldException;
+import com.vanya9090.client.exceptions.ParseException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.Coordinates;
 import com.vanya9090.client.models.HumanBeing;
@@ -21,15 +24,19 @@ public class AddIfMin extends Command {
 
     @Override
     public void apply(String[] args) {
-        HumanBeing.updateNextId(collectionManager);
-        logger.info("добавьте нового человека:");
-        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in));
-        HumanBeing humanBeing = humanBeingForm.create();
-        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
-            collectionManager.add(humanBeing);
-            logger.info("добавлено успешно");
-        } else {
-            logger.warning("расстояние от начала координат не меньше, чем у наименьшего элемента этой коллекции");
+        try {
+            HumanBeing.updateNextId(collectionManager);
+            logger.info("добавьте нового человека:");
+            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
+            HumanBeing humanBeing = humanBeingForm.create();
+            if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+                collectionManager.add(humanBeing);
+                logger.info("добавлено успешно");
+            } else {
+                logger.warning("расстояние от начала координат не меньше, чем у наименьшего элемента этой коллекции");
+            }
+        }  catch (ParseException | EmptyFieldException | WrongFieldsException e) {
+            logger.error(e);
         }
     }
 

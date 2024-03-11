@@ -16,18 +16,19 @@ import java.util.Scanner;
 public class CarForm implements Form {
     private final ILogger logger;
     private final Scanner scanner;
-
-    public CarForm(ILogger logger, Scanner scanner) {
+    private final boolean isExecute;
+    public CarForm(ILogger logger, Scanner scanner, boolean isExecute) {
         this.logger = logger;
         this.scanner = scanner;
+        this.isExecute = isExecute;
     }
 
     @Override
-    public Car create() {
+    public Car create() throws WrongFieldsException, EmptyFieldException, ParseException {
         return new Car(this.askName(), this.askCool());
     }
 
-    public String askName() {
+    public String askName() throws WrongFieldsException, EmptyFieldException {
         String name;
         StringHandler stringHandler = new StringHandler();
         NameCarValidator nameCarValidator = new NameCarValidator();
@@ -40,13 +41,17 @@ public class CarForm implements Form {
                 if (!nameCarValidator.validate(name)) throw new WrongFieldsException(0, "nameCar");
                 break;
             } catch (EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return name;
     }
 
-    public Boolean askCool() {
+    public Boolean askCool() throws WrongFieldsException, ParseException, EmptyFieldException {
         boolean cool;
         BooleanHandler booleanHandler = new BooleanHandler();
         CoolCarValidator coolCarValidator = new CoolCarValidator();
@@ -60,7 +65,11 @@ public class CarForm implements Form {
                 cool = Boolean.parseBoolean(field);
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return cool;

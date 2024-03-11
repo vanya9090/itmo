@@ -1,5 +1,8 @@
 package com.vanya9090.client.commands;
 
+import com.vanya9090.client.exceptions.EmptyFieldException;
+import com.vanya9090.client.exceptions.ParseException;
+import com.vanya9090.client.exceptions.WrongFieldsException;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.forms.HumanBeingForm;
@@ -20,10 +23,14 @@ public class Add extends Command {
 
     @Override
     public void apply(String[] args) {
-        HumanBeing.updateNextId(collectionManager);
-        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in));
-        HumanBeing humanBeing = humanBeingForm.create();
-        collectionManager.add(humanBeing);
-        logger.success("Добавлено успешно");
+        try {
+            HumanBeing.updateNextId(collectionManager);
+            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
+            HumanBeing humanBeing = humanBeingForm.create();
+            collectionManager.add(humanBeing);
+            logger.success("Добавлено успешно");
+        } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
+            logger.error("непредвиденная ошибка");
+        }
     }
 }

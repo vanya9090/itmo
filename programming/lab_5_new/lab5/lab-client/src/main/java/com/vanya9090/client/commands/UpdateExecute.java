@@ -1,8 +1,6 @@
 package com.vanya9090.client.commands;
 
-import com.vanya9090.client.exceptions.CollectionIsEmptyException;
-import com.vanya9090.client.exceptions.NotFoundException;
-import com.vanya9090.client.exceptions.WrongAmountOfElementsException;
+import com.vanya9090.client.exceptions.*;
 import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.models.forms.HumanBeingForm;
@@ -36,7 +34,7 @@ public class UpdateExecute extends Command{
                 throw new NotFoundException();
             }
 
-            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, fileReader);
+            HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, fileReader, true);
             HumanBeing humanBeing = humanBeingForm.create();
 
             humanToUpdate.update(humanBeing);
@@ -51,6 +49,8 @@ public class UpdateExecute extends Command{
         } catch (NotFoundException e) {
             logger.error("нет записи с таким id");
             logger.info("доступные id: " + Arrays.toString(collectionManager.getCollection().stream().map(HumanBeing::getId).toArray()));
+        } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
+            logger.error(e);
         }
     }
 

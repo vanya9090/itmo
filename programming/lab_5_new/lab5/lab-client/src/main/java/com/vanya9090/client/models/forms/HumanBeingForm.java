@@ -20,12 +20,14 @@ import java.util.Scanner;
 public class HumanBeingForm implements Form {
     private final ILogger logger;
     private final Scanner scanner;
-    public HumanBeingForm(ILogger logger, Scanner scanner) {
+    boolean isExecute;
+    public HumanBeingForm(ILogger logger, Scanner scanner, boolean isExecute) {
         this.logger = logger;
         this.scanner = scanner;
+        this.isExecute = isExecute;
     }
 
-    public HumanBeing create() {
+    public HumanBeing create() throws WrongFieldsException, EmptyFieldException, ParseException {
 
         return new HumanBeing(
                 this.askName(),
@@ -40,12 +42,12 @@ public class HumanBeingForm implements Form {
                 this.askCar());
     }
 
-    private Car askCar() {
-        CarForm carForm = new CarForm(this.logger, this.scanner);
+    private Car askCar() throws WrongFieldsException, EmptyFieldException, ParseException {
+        CarForm carForm = new CarForm(this.logger, this.scanner, this.isExecute);
         return carForm.create();
     }
 
-    private Mood askMood() {
+    private Mood askMood() throws WrongFieldsException, ParseException, EmptyFieldException {
         Mood mood;
         MoodHandler moodHandler = new MoodHandler();
         MoodValidator moodValidator = new MoodValidator();
@@ -59,13 +61,17 @@ public class HumanBeingForm implements Form {
                 if (!moodValidator.validate(mood)) throw new WrongFieldsException(0, "mood");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return mood;
     }
 
-    private WeaponType askWeaponType() {
+    private WeaponType askWeaponType() throws WrongFieldsException, ParseException, EmptyFieldException {
         WeaponType weaponType;
         WeaponTypeHandler weaponTypeHandler = new WeaponTypeHandler();
         WeaponTypeValidator weaponTypeValidator = new WeaponTypeValidator();
@@ -79,13 +85,17 @@ public class HumanBeingForm implements Form {
                 if (!weaponTypeValidator.validate(weaponType)) throw new WrongFieldsException(0, "weaponType");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return weaponType;
     }
 
-    private Float askMinutesOfWaiting() {
+    private Float askMinutesOfWaiting() throws WrongFieldsException, ParseException, EmptyFieldException {
         Float minutesOfWaiting;
         FloatHandler floatHandler = new FloatHandler();
         MinutesOfWaitingValidator minutesOfWaitingValidator = new MinutesOfWaitingValidator();
@@ -98,13 +108,17 @@ public class HumanBeingForm implements Form {
                 if (!minutesOfWaitingValidator.validate(minutesOfWaiting)) throw new WrongFieldsException(0, "minutesOfWaiting");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return minutesOfWaiting;
     }
 
-    private int askImpactSpeed() {
+    private int askImpactSpeed() throws WrongFieldsException, ParseException, EmptyFieldException {
         int impactSpeed;
         IntHandler intHandler = new IntHandler();
         ImpactSpeedValidator impactSpeedValidator = new ImpactSpeedValidator();
@@ -117,13 +131,17 @@ public class HumanBeingForm implements Form {
                 if (!impactSpeedValidator.validate(impactSpeed)) throw new WrongFieldsException(0, "impactSpeed");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return impactSpeed;
     }
 
-    private boolean askHasToothpick() {
+    private boolean askHasToothpick() throws WrongFieldsException, ParseException, EmptyFieldException {
         boolean hasToothpick;
         BooleanHandler booleanHandler = new BooleanHandler();
         HasToothpickValidator hasToothpickValidator = new HasToothpickValidator();
@@ -136,13 +154,17 @@ public class HumanBeingForm implements Form {
                 if (!hasToothpickValidator.validate(hasToothpick)) throw new WrongFieldsException(0, "hasToothpick");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return hasToothpick;
     }
 
-    private boolean askRealHero() {
+    private boolean askRealHero() throws WrongFieldsException, ParseException, EmptyFieldException {
         boolean realHero;
         BooleanHandler booleanHandler = new BooleanHandler();
         RealHeroValidator realHeroValidator = new RealHeroValidator();
@@ -155,18 +177,22 @@ public class HumanBeingForm implements Form {
                 if (!realHeroValidator.validate(realHero)) throw new WrongFieldsException(0, "realHero");
                 break;
             } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return realHero;
     }
 
-    private Coordinates askCoordinates() {
-        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger, this.scanner);
+    private Coordinates askCoordinates() throws WrongFieldsException, ParseException, EmptyFieldException {
+        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger, this.scanner, this.isExecute);
         return coordinatesForm.create();
     }
 
-    public String askName() {
+    public String askName() throws WrongFieldsException, EmptyFieldException {
         String name;
         StringHandler stringHandler = new StringHandler();
         NameValidator nameValidator = new NameValidator();
@@ -179,7 +205,11 @@ public class HumanBeingForm implements Form {
                 if (!nameValidator.validate(name)) throw new WrongFieldsException(0, "name");
                 break;
             } catch (EmptyFieldException | WrongFieldsException e) {
-                logger.error(e);
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
             }
         }
         return name;
