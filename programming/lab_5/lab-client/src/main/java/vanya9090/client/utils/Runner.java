@@ -27,7 +27,7 @@ public class Runner {
                 this.logger.warning("команда " + tokens[0] + " не найдена, наберите help для справки");
             } else {
                 try {
-                    command.apply(tokens);
+                    logger.field(command.apply(tokens));
                     logger.success("команда " + command.getName() + " успешно выполнена");
                 } catch (Exception e) {
                     logger.error(e);

@@ -5,19 +5,17 @@ import vanya9090.client.models.HumanBeing;
 import vanya9090.client.utils.ILogger;
 
 public class SumOfImpactSpeed extends Command {
-    private final ILogger logger;
     private final CollectionManager collectionManager;
 
-    public SumOfImpactSpeed(ILogger logger, CollectionManager collectionManager) {
+    public SumOfImpactSpeed(CollectionManager collectionManager) {
         super("sum_of_impact_speed", "вывести сумму значений поля impactSpeed для всех элементов коллекции");
-        this.logger = logger;
         this.collectionManager = collectionManager;
     }
 
     @Override
-    public void apply(String[] args) {
+    public String apply(String[] args) {
         int result = this.getSumOfImpactSpeed();
-        logger.info("сумма значений поля impactSpeed для всех элементов коллекции: " + result);
+        return result + "\n";
     }
 
     private int getSumOfImpactSpeed() {

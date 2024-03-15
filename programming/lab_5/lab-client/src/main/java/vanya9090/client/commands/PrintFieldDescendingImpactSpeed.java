@@ -7,23 +7,23 @@ import vanya9090.client.models.HumanBeing;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PrintFieldDescendingImpactSpeed extends Command {
-    private final ILogger logger;
     private final CollectionManager collectionManager;
 
-    public PrintFieldDescendingImpactSpeed(ILogger logger, CollectionManager collectionManager) {
+    public PrintFieldDescendingImpactSpeed(CollectionManager collectionManager) {
         super("print_field_descending_impact_speed", "вывести значения поля impactSpeed всех элементов в порядке убывания");
-        this.logger = logger;
         this.collectionManager = collectionManager;
     }
 
     @Override
-    public void apply(String[] args) {
+    public String apply(String[] args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();
-        for (Integer i : result) {
-            logger.info(i);
-        }
+        return result.stream()
+                .map(Objects::toString)
+                .collect(Collectors.joining("\n")) + "\n";
     }
 
     private List<Integer> getFieldDescendingImpactSpeed() {

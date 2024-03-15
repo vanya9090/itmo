@@ -2,6 +2,7 @@ package vanya9090.client.commands;
 
 
 import vanya9090.common.exceptions.CollectionIsEmptyException;
+import vanya9090.common.exceptions.FormatException;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
 import vanya9090.client.managers.CollectionManager;
@@ -12,16 +13,14 @@ import java.util.Arrays;
 
 public class RemoveById extends Command {
     private final CollectionManager collectionManager;
-    private final ILogger logger;
 
-    public RemoveById(ILogger logger, CollectionManager collectionManager) {
+    public RemoveById(CollectionManager collectionManager) {
         super("remove_by_id", "удалить элемент из коллекции по его id");
-        this.logger = logger;
         this.collectionManager = collectionManager;
     }
 
     @Override
-    public void apply(String[] args) {
+    public String apply(String[] args) throws WrongAmountOfElementsException, CollectionIsEmptyException, NotFoundException, FormatException {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
             if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
@@ -32,18 +31,12 @@ public class RemoveById extends Command {
 
             collectionManager.remove(humanToDelete);
 
-            logger.info("Удалено успешно");
+            return "";
 
-        } catch (CollectionIsEmptyException e) {
-            logger.error("коллекция пуста");
-        } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException e) {
-            logger.error("пустой аргумент, введите id");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new WrongAmountOfElementsException("пустой аргумент, введите id");
         } catch (NumberFormatException e) {
-            logger.error("id должен быть представлен целым числом");
-        } catch (NotFoundException e) {
-            logger.error(e);
-            logger.info("доступные id: " + Arrays.toString(collectionManager.getCollection().stream().map(HumanBeing::getId).toArray()));
+            throw new FormatException("id должен быть представлен целым числом");
         }
-
     }
 }

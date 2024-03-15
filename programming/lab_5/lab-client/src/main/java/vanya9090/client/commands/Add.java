@@ -24,7 +24,7 @@ public class Add extends Command implements Executable{
     }
 
     @Override
-    public void apply(String[] args) throws BooleanFormatException, ParseException, EmptyFieldException, ValidateException {
+    public String apply(String[] args) throws BooleanFormatException, ParseException, EmptyFieldException, ValidateException {
         HumanBeing.updateNextId(collectionManager);
         HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
         HumanBeing humanBeing = humanBeingForm.create();
@@ -32,11 +32,13 @@ public class Add extends Command implements Executable{
             throw new ValidateException("некоторые поля не соответствуют синтетическим ограничениям");
         }
         collectionManager.add(humanBeing);
+        return "";
     }
-    public void apply(String[] args, Scanner fileReader) throws BooleanFormatException, ParseException, EmptyFieldException {
+    public String apply(String[] args, Scanner fileReader) throws BooleanFormatException, ParseException, EmptyFieldException {
         HumanBeing.updateNextId(collectionManager);
         HumanBeingForm humanBeingForm = new HumanBeingForm(new ExecuteLogger(), fileReader, true);
         HumanBeing humanBeing = humanBeingForm.create();
         collectionManager.add(humanBeing);
+        return "";
     }
 }

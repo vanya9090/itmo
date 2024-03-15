@@ -32,22 +32,22 @@ public final class Client {
             logger.error(e);
         }
 
-        commandManager.register("help", new Help(logger, commandManager.getCommands())); //done
-        commandManager.register("info", new Info(logger, collectionManager)); //done
-        commandManager.register("show", new Show(logger, collectionManager)); //done
+        commandManager.register("help", new Help(commandManager.getCommands())); //done
+        commandManager.register("info", new Info(collectionManager)); //done
+        commandManager.register("show", new Show(collectionManager)); //done
         commandManager.register("add", new Add(logger, collectionManager)); //done
         commandManager.register("update", new Update(logger, collectionManager)); //done
-        commandManager.register("remove_by_id", new RemoveById(logger, collectionManager)); //done
-        commandManager.register("clear", new Clear(logger, collectionManager)); //done
+        commandManager.register("remove_by_id", new RemoveById(collectionManager)); //done
+        commandManager.register("clear", new Clear(collectionManager)); //done
         commandManager.register("save", new Save(collectionManager, jsonManager)); // done
         commandManager.register("execute_script", new ExecuteScript(runner, logger));
         commandManager.register("exit", new Exit(logger));
-        commandManager.register("remove_first", new RemoveFirst(logger, collectionManager));
-        commandManager.register("remove_head", new RemoveHead(logger, collectionManager));
+        commandManager.register("remove_first", new RemoveFirst(collectionManager));
+        commandManager.register("remove_head", new RemoveHead(collectionManager));
         commandManager.register("add_if_min", new AddIfMin(logger, collectionManager));
-        commandManager.register("sum_of_impact_speed", new SumOfImpactSpeed(logger, collectionManager));
-        commandManager.register("filter_by_weapon_type", new FilterByWeaponType(logger, collectionManager));
-        commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(logger, collectionManager));
+        commandManager.register("sum_of_impact_speed", new SumOfImpactSpeed(collectionManager));
+        commandManager.register("filter_by_weapon_type", new FilterByWeaponType(collectionManager));
+        commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(collectionManager));
         runner.run();
     }
 }

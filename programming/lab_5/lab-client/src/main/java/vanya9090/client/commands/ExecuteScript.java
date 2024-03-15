@@ -17,12 +17,13 @@ public class ExecuteScript extends Command {
     }
 
     @Override
-    public void apply(String[] args) throws Exception {
+    public String apply(String[] args) throws Exception {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите название файла");
             this.runner.executeScript(args[1]);
         } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException | NotFoundException e) {
             throw new WrongAmountOfElementsException("пустой аргумент, введите название файла");
         }
+        return "";
     }
 }

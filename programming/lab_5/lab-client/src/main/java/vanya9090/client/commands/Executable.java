@@ -1,11 +1,9 @@
 package vanya9090.client.commands;
 
-import vanya9090.common.exceptions.BooleanFormatException;
-import vanya9090.common.exceptions.EmptyFieldException;
-import vanya9090.common.exceptions.ParseException;
+import vanya9090.common.exceptions.*;
 
 import java.util.Scanner;
 
 public interface Executable {
-    public void apply(String[] args, Scanner fileReader) throws BooleanFormatException, ParseException, EmptyFieldException;
+    public String apply(String[] args, Scanner fileReader) throws Exception;
 }

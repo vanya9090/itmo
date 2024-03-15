@@ -13,7 +13,7 @@ import vanya9090.client.utils.ILogger;
 
 import java.util.Scanner;
 
-public class AddIfMin extends Command {
+public class AddIfMin extends Command implements Executable{
     private final ILogger logger;
     private final CollectionManager collectionManager;
 
@@ -24,37 +24,27 @@ public class AddIfMin extends Command {
     }
 
     @Override
-    public void apply(String[] args) {
+    public String apply(String[] args) throws BooleanFormatException, ParseException, EmptyFieldException {
         HumanBeing.updateNextId(collectionManager);
-        logger.info("добавьте нового человека:");
         HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
-        try {
-            HumanBeing humanBeing = humanBeingForm.create();
-            if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
-                collectionManager.add(humanBeing);
-                logger.info("добавлено успешно");
-            } else {
-                logger.warning("расстояние от начала координат не меньше, чем у наименьшего элемента этой коллекции");
-            }
-        } catch (BooleanFormatException | ParseException | EmptyFieldException e) {
-            logger.error("непредвиденная ошибка");
+        HumanBeing humanBeing = humanBeingForm.create();
+        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+            collectionManager.add(humanBeing);
+            return "added\n";
+        } else {
+            return "not added\n";
         }
     }
-    public void apply(String[] args, Scanner fileReader) {
-//        try {
+    @Override
+    public String apply(String[] args, Scanner fileReader) throws BooleanFormatException, ParseException, EmptyFieldException {
         HumanBeing.updateNextId(collectionManager);
-        logger.info("добавьте нового человека:");
         HumanBeingForm humanBeingForm = new HumanBeingForm(new ExecuteLogger(), fileReader, true);
-        try {
-            HumanBeing humanBeing = humanBeingForm.create();
-            if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
-                collectionManager.add(humanBeing);
-                logger.success("добавлено успешно");
-            } else {
-                logger.warning("расстояние от начала координат не меньше, чем у наименьшего элемента этой коллекции");
-            }
-        } catch (BooleanFormatException | ParseException | EmptyFieldException e) {
-            logger.error(e);
+        HumanBeing humanBeing = humanBeingForm.create();
+        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+            collectionManager.add(humanBeing);
+            return "added\n";
+        } else {
+            return "not added\n";
         }
     }
     private Double getMin() {

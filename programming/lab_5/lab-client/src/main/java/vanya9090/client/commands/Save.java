@@ -16,7 +16,8 @@ public class Save extends Command {
     }
 
     @Override
-    public void apply(String[] args) throws AccessException, NotFoundException {
-        this.fileManager.writeFile(collectionManager.getCollection(), "src/file.json");
+    public String apply(String[] args) throws AccessException, NotFoundException {
+        this.fileManager.writeFile(collectionManager.getCollection(), args[0]);
+        return "";
     }
 }

@@ -10,7 +10,7 @@ import vanya9090.common.exceptions.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Update extends Command {
+public class Update extends Command implements Executable{
     private final CollectionManager collectionManager;
     private final ILogger logger;
 
@@ -20,7 +20,7 @@ public class Update extends Command {
         this.collectionManager = collectionManager;
     }
 
-    public void apply(String[] args) throws CollectionIsEmptyException, WrongAmountOfElementsException, NotFoundException {
+    public String apply(String[] args) throws Exception {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
             if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
@@ -33,51 +33,35 @@ public class Update extends Command {
             HumanBeing humanBeing = humanBeingForm.create();
 
             humanToUpdate.update(humanBeing);
-            logger.info("Обновлено успешно");
+            return "";
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            logger.error("пустой аргумент, введите id");
+            throw new WrongAmountOfElementsException("пустой аргумент, введите id");
         } catch (NumberFormatException e) {
-            logger.error("id должен быть представлен целым числом");
-        } catch (BooleanFormatException | ParseException | EmptyFieldException e) {
-            logger.error("непредвиденная ошибка");
+            throw new FormatException("id должен быть представлен целым числом");
         }
     }
 
-    public void apply(String[] args, Scanner fileReader) {
+    @Override
+    public String apply(String[] args, Scanner fileReader) throws Exception {
         try {
-            if (args[1].isEmpty()) {
-                throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-            }
-            if (collectionManager.getSize() == 0) {
-                throw new CollectionIsEmptyException("коллекция пуста");
-            }
+            if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
+            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
 
             Integer id = Integer.parseInt(args[1].trim());
             HumanBeing humanToUpdate = collectionManager.getById(id);
-            if (humanToUpdate == null) {
-                throw new NotFoundException("человек с таким id не найден");
-            }
+            if (humanToUpdate == null) throw new NotFoundException("человек с таким id не найден");
 
             HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, fileReader, true);
             HumanBeing humanBeing = humanBeingForm.create();
 
             humanToUpdate.update(humanBeing);
-            logger.success("Обновлено успешно");
+            return "";
 
-        } catch (CollectionIsEmptyException e) {
-            logger.error("коллекция пуста");
-        } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException e) {
-            logger.error("пустой аргумент, введите id");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new WrongAmountOfElementsException("пустой аргумент, введите id");
         } catch (NumberFormatException e) {
-            logger.error("id должен быть представлен целым числом");
-        } catch (NotFoundException e) {
-            logger.error(e);
-            logger.info("доступные id: " + Arrays.toString(collectionManager.getCollection().stream().map(HumanBeing::getId).toArray()));
-//        } catch (ParseException | EmptyFieldException | WrongFieldsException e) {
-//            logger.error(e);
-        } catch (BooleanFormatException | ParseException | EmptyFieldException e) {
-            logger.error(e);
+            throw new FormatException("id должен быть представлен целым числом");
         }
     }
 }

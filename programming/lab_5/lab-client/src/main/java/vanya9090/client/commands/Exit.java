@@ -12,8 +12,8 @@ public class Exit extends Command {
     }
 
     @Override
-    public void apply(String[] args) {
-        this.logger.info("программа успешно завершена");
+    public String apply(String[] args) {
         System.exit(0);
+        return "";
     }
 }
