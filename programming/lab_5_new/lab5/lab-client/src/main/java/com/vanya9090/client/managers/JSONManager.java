@@ -51,7 +51,6 @@ public class JSONManager implements FileManager {
                 jsonString = new StringBuilder("[]");
             }
             JsonElement jsonMap = JsonParser.parseString(String.valueOf(jsonString));
-            System.out.println(jsonMap);
             return jsonMap.getAsJsonArray();
         } catch (NoSuchElementException exception) {
             logger.error("файл пуст");

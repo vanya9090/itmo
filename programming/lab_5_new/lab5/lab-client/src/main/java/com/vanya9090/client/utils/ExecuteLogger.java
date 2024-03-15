@@ -3,6 +3,9 @@ package com.vanya9090.client.utils;
 public class ExecuteLogger implements ILogger{
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+
     @Override
     public void info(Object obj) {
 
@@ -10,12 +13,12 @@ public class ExecuteLogger implements ILogger{
 
     @Override
     public void success(Object obj) {
-
+        System.out.println(ANSI_GREEN + obj + ANSI_RESET);
     }
 
     @Override
     public void warning(Object obj) {
-
+        System.out.println(ANSI_YELLOW + obj + ANSI_RESET);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class UpdateExecute extends Command{
     private final ILogger logger;
 
     public UpdateExecute(ILogger logger, CollectionManager collectionManager) {
-        super("update", "обновить значение элемента коллекции, id которого равен заданному");
+        super("update_execute", "обновить значение элемента коллекции, id которого равен заданному");
         this.logger = logger;
         this.collectionManager = collectionManager;
     }
@@ -38,7 +38,7 @@ public class UpdateExecute extends Command{
             HumanBeing humanBeing = humanBeingForm.create();
 
             humanToUpdate.update(humanBeing);
-            logger.info("Обновлено успешно");
+            logger.success("Обновлено успешно");
 
         } catch (CollectionIsEmptyException e) {
             logger.error("коллекция пуста");

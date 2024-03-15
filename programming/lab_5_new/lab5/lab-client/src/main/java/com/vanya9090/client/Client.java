@@ -6,6 +6,7 @@ import com.vanya9090.client.managers.CollectionManager;
 import com.vanya9090.client.exceptions.*;
 import com.vanya9090.client.managers.CommandManager;
 import com.vanya9090.client.managers.JSONManager;
+import com.vanya9090.client.models.HumanBeing;
 import com.vanya9090.client.utils.ExecuteLogger;
 import com.vanya9090.client.utils.Logger;
 import com.vanya9090.client.utils.Runner;
@@ -21,11 +22,14 @@ public final class Client {
         JSONManager jsonManager = new JSONManager(logger);
         CollectionManager collectionManager = new CollectionManager(jsonManager);
 
-
         try {
             collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
         } catch (WrongFieldsException | EmptyFieldException | WrongPathException | ReadException | ParseException | NullFieldException e) {
             logger.error(e);
+        }
+
+        for(HumanBeing humanBeing: collectionManager.getCollection()){
+            
         }
 
         commandManager.register("help", new Help(logger, commandManager.getCommands()));
@@ -45,8 +49,9 @@ public final class Client {
         commandManager.register("filter_by_weapon_type", new FilterByWeaponType(logger, collectionManager));
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(logger, collectionManager));
 
-        commandManager.register("addExecute", new AddExecute(executeLoger, collectionManager));
-        commandManager.register("updateExecute", new UpdateExecute(executeLoger, collectionManager));
+        commandManager.register("add_execute", new AddExecute(executeLoger, collectionManager));
+        commandManager.register("update_execute", new UpdateExecute(executeLoger, collectionManager));
+        commandManager.register("add_if_min_execute", new AddIfMinExecute(executeLoger, collectionManager));
         runner.run();
     }
 }

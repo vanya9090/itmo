@@ -95,5 +95,4 @@ CREATE TABLE IF NOT EXISTS human_machine (
   part TEXT NOT NULL,
   PRIMARY KEY (human_passport, machine_num) 
 );
-
-
+-- add sequence

@@ -103,6 +103,7 @@ public class CollectionManager {
         String nameCar;
         Boolean coolCar;
 
+
         for (JsonElement jsonElement: jsonElements) {
             try {
                 String fieldId = jsonElement.getAsJsonObject().get("id").getAsString();

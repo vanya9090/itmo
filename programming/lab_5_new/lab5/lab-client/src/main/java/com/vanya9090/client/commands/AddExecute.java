@@ -15,7 +15,7 @@ public class AddExecute extends Command{
     private final CollectionManager collectionManager;
 
     public AddExecute(ILogger logger, CollectionManager collectionManager) {
-        super("addExecute", "добавить новый элемент в коллекцию");
+        super("add_execute", "добавить новый элемент в коллекцию");
         this.logger = logger;
         this.collectionManager = collectionManager;
     }

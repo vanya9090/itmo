@@ -1,8 +1,10 @@
 package com.vanya9090.client.utils;
 
 import com.vanya9090.client.commands.AddExecute;
+import com.vanya9090.client.commands.AddIfMinExecute;
 import com.vanya9090.client.commands.Command;
 import com.vanya9090.client.commands.UpdateExecute;
+import com.vanya9090.client.exceptions.CommandNotFound;
 import com.vanya9090.client.exceptions.RecursiveScriptException;
 import com.vanya9090.client.managers.CommandManager;
 
@@ -43,13 +45,17 @@ public class Runner {
                 String line = fileReader.nextLine().trim();
                 String[] tokens = line.split(" ");
                 Command command = commandManager.getCommands().get(tokens[0]);
+                if (command == null) throw new CommandNotFound();
+                System.out.println(command.getName());
                 if (command.getName().equals("execute_script")) throw new RecursiveScriptException();
                 if (command.getName().equals("add")) {
-                    AddExecute addExecute = (AddExecute) commandManager.getCommands().get("addExecute");
+                    AddExecute addExecute = (AddExecute) commandManager.getCommands().get("add_execute");
                     addExecute.apply(tokens, fileReader);
-                }
-                else if (command.getName().equals("update")) {
-                    UpdateExecute updateExecute = (UpdateExecute) commandManager.getCommands().get("updateExecute");
+                } else if (command.getName().equals("add_if_min")) {
+                    AddIfMinExecute addIfMinExecute = (AddIfMinExecute) commandManager.getCommands().get("add_if_min_execute");
+                    addIfMinExecute.apply(tokens, fileReader);
+                } else if (command.getName().equals("update")) {
+                    UpdateExecute updateExecute = (UpdateExecute) commandManager.getCommands().get("update_execute");
                     updateExecute.apply(tokens, fileReader);
                 } else {
                     command.apply(tokens);
@@ -61,6 +67,8 @@ public class Runner {
             logger.error("файл пустой");
         } catch (RecursiveScriptException e) {
             logger.error("скрипт рекурсивно себя запускает");
+        } catch (CommandNotFound e) {
+            logger.error("Комманды не существует");
         }
     }
 }
