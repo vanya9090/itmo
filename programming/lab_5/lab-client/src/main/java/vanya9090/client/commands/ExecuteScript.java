@@ -1,8 +1,10 @@
 package vanya9090.client.commands;
 
-import vanya9090.client.exceptions.WrongAmountOfElementsException;
+import vanya9090.common.exceptions.*;
 import vanya9090.client.utils.ILogger;
 import vanya9090.client.utils.Runner;
+
+import java.io.FileNotFoundException;
 
 public class ExecuteScript extends Command {
     private final Runner runner;
@@ -15,12 +17,12 @@ public class ExecuteScript extends Command {
     }
 
     @Override
-    public void apply(String[] args) {
+    public void apply(String[] args) throws Exception {
         try {
-            if (args[1].isEmpty()) throw new WrongAmountOfElementsException();
+            if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите название файла");
             this.runner.executeScript(args[1]);
-        } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException e) {
-            logger.error("пустой аргумент, введите название файла");
+        } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException | NotFoundException e) {
+            throw new WrongAmountOfElementsException("пустой аргумент, введите название файла");
         }
     }
 }

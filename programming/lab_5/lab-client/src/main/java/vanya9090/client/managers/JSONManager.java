@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import vanya9090.client.exceptions.ValidateException;
+import vanya9090.common.exceptions.*;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.client.utils.ILogger;
 import vanya9090.client.utils.LocalDateTypeAdapter;
@@ -32,14 +32,14 @@ public class JSONManager implements FileManager {
         this.logger = logger;
     }
 
-    public Collection<HumanBeing> readFile(String ENV_KEY) {
+    public Collection<HumanBeing> readFile(String ENV_KEY) throws ValidateException, JsonSyntaxException, EmptyFileException, NotFoundException, AccessException {
         String path = System.getenv(ENV_KEY);
         if (path != null && !path.isEmpty()) {
             if (new File(path).canRead()) {
                 try (Scanner fileReader = new Scanner(new File(path))) {
                     var collectionType = new TypeToken<ArrayDeque<HumanBeing>>() {
                     }.getType();
-                    var jsonString = new StringBuilder();
+                    StringBuilder jsonString = new StringBuilder();
                     String line;
                     while (fileReader.hasNext()) {
                         line = fileReader.nextLine().trim();
@@ -51,48 +51,38 @@ public class JSONManager implements FileManager {
                         jsonString = new StringBuilder("[]");
                     }
 
-                    try {
-                        ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
-
-                        for (HumanBeing humanBeing : collection) {
-                            if (!humanBeing.validate()) {
-                                throw new ValidateException();
-                            }
+                    ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
+                    for (HumanBeing humanBeing : collection) {
+                        if (!humanBeing.validate()) {
+                            throw new ValidateException("Некоторые поля не соответствуют описанию");
                         }
-
-                        logger.info("коллекция успешна загружена");
-                        return collection;
-                    } catch (JsonSyntaxException e) {
-                        logger.error("json файл содержит синтаксические ошибки");
-                    } catch (ValidateException e) {
-                        logger.error("файл содержит неправильные поля");
                     }
+                    return collection;
 
                 } catch (NoSuchElementException exception) {
-                    logger.error("файл пуст");
-                } catch (IllegalStateException | FileNotFoundException exception) {
-                    logger.error("непредвиденная ошибка");
-                    System.exit(0);
+                    throw new EmptyFileException("Файл " + path + " пуст");
+                } catch (FileNotFoundException exception) {
+                    throw new NotFoundException("файл не найден");
                 }
             } else {
-                logger.error("нет прав чтения файла");
+                throw new AccessException("нет прав доступа для чтения файла");
             }
         } else {
-            logger.error("переменная окружения не найдена");
+            throw new NotFoundException("переменная окружения не найдена");
         }
-        return new ArrayDeque<>();
+//        return new ArrayDeque<>();
     }
 
-    public void writeFile(Collection<HumanBeing> collection, String path) {
+    public boolean writeFile(Collection<HumanBeing> collection, String path) throws NotFoundException, AccessException {
         if (new File(path).canWrite()) {
             try (PrintWriter collectionPrintWriter = new PrintWriter(path)) {
                 collectionPrintWriter.println(gson.toJson(collection));
-                System.out.println("коллекция успешна сохранена в файл");
+                return true;
             } catch (IOException exception) {
-                System.out.println("загрузочный файл не может быть открыт");
+                throw new NotFoundException("загрузочный файл не может быть открыт");
             }
         } else {
-            logger.error("нет прав записи в файл");
+            throw new AccessException("нет прав доступа для записи в файл");
         }
     }
 }

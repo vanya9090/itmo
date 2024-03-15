@@ -1,7 +1,7 @@
 package vanya9090.client.commands;
 
 
-import vanya9090.client.exceptions.EmptyCollectionException;
+import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.utils.ILogger;
 

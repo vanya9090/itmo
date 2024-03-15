@@ -1,10 +1,11 @@
 package vanya9090.client.models.forms;
 
-import vanya9090.client.exceptions.BooleanFormatException;
-import vanya9090.client.exceptions.EmptyFieldException;
-import vanya9090.client.exceptions.ParseException;
 import vanya9090.client.models.*;
+import vanya9090.common.exceptions.BooleanFormatException;
+import vanya9090.common.exceptions.EmptyFieldException;
+import vanya9090.common.exceptions.ParseException;
 import vanya9090.client.utils.ILogger;
+//import vanya9090.server.models.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -146,7 +147,7 @@ public class HumanBeingForm implements Form {
         return speed;
     }
 
-    private boolean askHasToothpick() throws BooleanFormatException, ParseException, EmptyFieldException {
+    private boolean askHasToothpick() throws ParseException, EmptyFieldException {
         boolean toothpick;
         while (true) {
             try {
@@ -154,14 +155,14 @@ public class HumanBeingForm implements Form {
 //                Scanner scanner = new Scanner(System.in);
                 String field = this.scanner.nextLine().trim();
                 if (field.isEmpty()) throw new EmptyFieldException("зубочистка");
-                if (!field.equals("true") && !field.equals("false")) throw new BooleanFormatException();
+                if (!field.equals("true") && !field.equals("false")) throw new ParseException("hasToothPick", field);
                 try {
                     toothpick = Boolean.parseBoolean(field);
                 } catch (IllegalArgumentException e) {
                     throw new ParseException("toothpick", field);
                 }
                 break;
-            } catch (EmptyFieldException | BooleanFormatException | ParseException e) {
+            } catch (EmptyFieldException | ParseException e) {
                 if (this.isExecute) {
                     throw e;
                 } else {
@@ -172,7 +173,7 @@ public class HumanBeingForm implements Form {
         return toothpick;
     }
 
-    private boolean askRealHero() throws BooleanFormatException, ParseException, EmptyFieldException {
+    private boolean askRealHero() throws ParseException, EmptyFieldException {
         boolean hero;
         while (true) {
             try {
@@ -180,14 +181,14 @@ public class HumanBeingForm implements Form {
 //                Scanner scanner = new Scanner(System.in);
                 String field = this.scanner.nextLine().trim();
                 if (field.isEmpty()) throw new EmptyFieldException("зубочистка");
-                if (!field.equals("true") && !field.equals("false")) throw new BooleanFormatException();
+                if (!field.equals("true") && !field.equals("false")) throw new ParseException("realHero", field);
                 try {
                     hero = Boolean.parseBoolean(field);
                 } catch (IllegalArgumentException e) {
                     throw new ParseException("hero", field);
                 }
                 break;
-            } catch (EmptyFieldException | BooleanFormatException | ParseException e) {
+            } catch (EmptyFieldException | ParseException e) {
                 if (this.isExecute) {
                     throw e;
                 } else {

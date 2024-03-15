@@ -1,8 +1,8 @@
 package vanya9090.client.models.forms;
 
-import vanya9090.client.exceptions.BooleanFormatException;
-import vanya9090.client.exceptions.EmptyFieldException;
-import vanya9090.client.exceptions.ParseException;
+import vanya9090.common.exceptions.BooleanFormatException;
+import vanya9090.common.exceptions.EmptyFieldException;
+import vanya9090.common.exceptions.ParseException;
 import vanya9090.client.models.Car;
 
 import vanya9090.client.utils.ILogger;
@@ -45,7 +45,7 @@ public class CarForm implements Form {
         return name;
     }
 
-    public Boolean askCool() throws BooleanFormatException, ParseException, EmptyFieldException {
+    public Boolean askCool() throws ParseException, EmptyFieldException {
         boolean cool;
         while (true) {
             try {
@@ -53,14 +53,14 @@ public class CarForm implements Form {
 //                Scanner scanner = new Scanner(System.in);
                 String field = this.scanner.nextLine().trim();
                 if (field.isEmpty()) throw new EmptyFieldException("зубочистка");
-                if (!field.equals("true") && !field.equals("false")) throw new BooleanFormatException();
+                if (!field.equals("true") && !field.equals("false")) throw new ParseException("carCool", field);
                 try {
                     cool = Boolean.parseBoolean(field);
                 } catch (IllegalArgumentException e) {
                     throw new ParseException("cool", field);
                 }
                 break;
-            } catch (BooleanFormatException | EmptyFieldException | ParseException e) {
+            } catch (EmptyFieldException | ParseException e) {
                 if (this.isExecute) {
                     throw e;
                 } else {

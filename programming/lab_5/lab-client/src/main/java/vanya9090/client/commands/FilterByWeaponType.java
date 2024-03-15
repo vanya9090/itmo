@@ -1,6 +1,6 @@
 package vanya9090.client.commands;
 
-import vanya9090.client.exceptions.WrongAmountOfElementsException;
+import vanya9090.common.exceptions.WrongAmountOfElementsException;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.client.models.WeaponType;
 import vanya9090.client.utils.ILogger;
@@ -22,7 +22,7 @@ public class FilterByWeaponType extends Command {
     @Override
     public void apply(String[] args) {
         try {
-            if (args[1].isEmpty()) throw new WrongAmountOfElementsException();
+            if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
             WeaponType weaponType = WeaponType.valueOf(args[1].toUpperCase());
             List<HumanBeing> result = filterByWeaponType(weaponType);
             if (result.isEmpty()) logger.info("коллекция пуста");

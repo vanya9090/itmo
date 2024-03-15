@@ -1,9 +1,9 @@
 package vanya9090.client.commands;
 
 
-import vanya9090.client.exceptions.CollectionIsEmptyException;
-import vanya9090.client.exceptions.NotFoundException;
-import vanya9090.client.exceptions.WrongAmountOfElementsException;
+import vanya9090.common.exceptions.CollectionIsEmptyException;
+import vanya9090.common.exceptions.NotFoundException;
+import vanya9090.common.exceptions.WrongAmountOfElementsException;
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.utils.ILogger;
 import vanya9090.client.models.HumanBeing;
@@ -23,12 +23,12 @@ public class RemoveById extends Command {
     @Override
     public void apply(String[] args) {
         try {
-            if (args[1].isEmpty()) throw new WrongAmountOfElementsException();
-            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException();
+            if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
+            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
 
-            var id = Integer.parseInt(args[1]);
-            var humanToDelete = collectionManager.getById(id);
-            if (humanToDelete == null) throw new NotFoundException();
+            Integer id = Integer.parseInt(args[1]);
+            HumanBeing humanToDelete = collectionManager.getById(id);
+            if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
 
             collectionManager.remove(humanToDelete);
 
@@ -41,7 +41,7 @@ public class RemoveById extends Command {
         } catch (NumberFormatException e) {
             logger.error("id должен быть представлен целым числом");
         } catch (NotFoundException e) {
-            logger.error("нет записи с таким id");
+            logger.error(e);
             logger.info("доступные id: " + Arrays.toString(collectionManager.getCollection().stream().map(HumanBeing::getId).toArray()));
         }
 

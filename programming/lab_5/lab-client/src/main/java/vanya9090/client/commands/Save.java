@@ -2,6 +2,8 @@ package vanya9090.client.commands;
 
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.managers.FileManager;
+import vanya9090.common.exceptions.AccessException;
+import vanya9090.common.exceptions.NotFoundException;
 
 public class Save extends Command {
     private final CollectionManager collectionManager;
@@ -14,7 +16,7 @@ public class Save extends Command {
     }
 
     @Override
-    public void apply(String[] args) {
+    public void apply(String[] args) throws AccessException, NotFoundException {
         this.fileManager.writeFile(collectionManager.getCollection(), "src/file.json");
     }
 }

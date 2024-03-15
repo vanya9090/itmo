@@ -1,4 +1,4 @@
-package vanya9090.client.exceptions;
+package vanya9090.common.exceptions;
 
 public class WrongFieldsException extends Exception {
     private final int id;

@@ -1,9 +1,10 @@
 package vanya9090.client.commands;
 
 
-import vanya9090.client.exceptions.BooleanFormatException;
-import vanya9090.client.exceptions.EmptyFieldException;
-import vanya9090.client.exceptions.ParseException;
+import vanya9090.client.utils.ExecuteLogger;
+import vanya9090.common.exceptions.BooleanFormatException;
+import vanya9090.common.exceptions.EmptyFieldException;
+import vanya9090.common.exceptions.ParseException;
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.client.models.forms.HumanBeingForm;
@@ -39,7 +40,23 @@ public class AddIfMin extends Command {
             logger.error("непредвиденная ошибка");
         }
     }
-
+    public void apply(String[] args, Scanner fileReader) {
+//        try {
+        HumanBeing.updateNextId(collectionManager);
+        logger.info("добавьте нового человека:");
+        HumanBeingForm humanBeingForm = new HumanBeingForm(new ExecuteLogger(), fileReader, true);
+        try {
+            HumanBeing humanBeing = humanBeingForm.create();
+            if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+                collectionManager.add(humanBeing);
+                logger.success("добавлено успешно");
+            } else {
+                logger.warning("расстояние от начала координат не меньше, чем у наименьшего элемента этой коллекции");
+            }
+        } catch (BooleanFormatException | ParseException | EmptyFieldException e) {
+            logger.error(e);
+        }
+    }
     private Double getMin() {
         return this.collectionManager.getCollection().stream()
                 .map(HumanBeing::getCoordinates)
