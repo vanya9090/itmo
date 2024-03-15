@@ -1,0 +1,4 @@
+package vanya9090.client.exceptions;
+
+public class RecursiveScriptException extends Exception {
+}

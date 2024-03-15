@@ -1,7 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a4bff13-8240-4434-8a74-0208cb8f6cb3" name="Changes" comment="">
+    <list default="true" id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Add.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/AddExecute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/AddIfMin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/AddIfMinExecute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Clear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/ExecuteScript.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Exit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/FilterByWeaponType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Help.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/PrintFieldDescendingImpactSpeed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/RemoveById.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/RemoveFirst.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/RemoveHead.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Save.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Show.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/SumOfImpactSpeed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Update.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/UpdateExecute.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/data/file.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/data/script.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/BooleanFormatException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/CollectionIsEmptyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/CommandNotFound.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/EmptyCollectionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/EmptyFieldException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/ParseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/RecursiveScriptException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/ValidateException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/WrongAmountOfElementsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/WrongFieldsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/exceptions/WrongValueException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CollectionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/FileManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/JSONManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/Car.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/Coordinates.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/HumanBeing.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/Mood.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/Validatable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/WeaponType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CarForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CoordinatesForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/Form.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/HumanBeingForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ExecuteLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ILogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/LocalDateTypeAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Logger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/gson_2_10_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Add.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/AddIfMin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Clear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Command.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/ExecuteScript.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Exit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/FilterByWeaponType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Help.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/PrintFieldDescendingImpactSpeed.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/RemoveById.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/RemoveFirst.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/RemoveHead.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Save.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Show.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/SumOfImpactSpeed.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/Update.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/BooleanFormatException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/CollectionIsEmptyException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/EmptyFieldException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/NotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/WrongAmountOfElementsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/exceptions/WrongValueException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gson-2.10.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/CollectionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/CommandManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/FileManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/managers/JSONManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Car.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Coordinates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/HumanBeing.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Mood.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/WeaponType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/forms/CarForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/forms/CoordinatesForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/forms/Form.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/forms/HumanBeingForm.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/script.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/ILogger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/LocalDateTypeAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Logger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Runner.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab_5_new/lab5/lab-client/src/main/java/com/vanya9090/client/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lab_5_new/lab5/lab-client/src/main/java/com/vanya9090/client/managers/CollectionManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,21 +121,31 @@
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 7
 }]]></component>
-  <component name="ProjectId" id="2djQWqulTQfOAZeZ8g6hA6raGVY" />
+  <component name="ProjectId" id="2djWkDbliaN9okRj7eivMEz0WuN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Client.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/ivanmironov/Documents/itmo/programming/lab_5",
+    "last_opened_file_path": "/Users/ivanmironov/Documents/itmo/programming/lab_5/lab-client/src/main/java/vanya9090/client",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -40,12 +156,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1a4bff13-8240-4434-8a74-0208cb8f6cb3" name="Changes" comment="" />
-      <created>1710519041417</created>
+      <changelist id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="" />
+      <created>1710522108897</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1710519041417</updated>
-      <workItem from="1710519042589" duration="25000" />
+      <updated>1710522108897</updated>
+      <workItem from="1710522109972" duration="2099000" />
     </task>
     <servers />
   </component>
