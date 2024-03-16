@@ -28,10 +28,6 @@ public final class Client {
             logger.error(e);
         }
 
-        for(HumanBeing humanBeing: collectionManager.getCollection()){
-            
-        }
-
         commandManager.register("help", new Help(logger, commandManager.getCommands()));
         commandManager.register("info", new Info(logger, collectionManager));
         commandManager.register("show", new Show(logger, collectionManager));

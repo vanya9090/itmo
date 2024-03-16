@@ -2,7 +2,6 @@ show
 info
 add
 sdf
-dsfjkl
 120
 1200
 true
