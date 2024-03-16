@@ -11,6 +11,6 @@ public class WrongFieldsException extends Exception {
 
     @Override
     public String toString() {
-        return "человек с id=" + this.id + " имеет невалидное поле " + this.fieldName;
+        return "синтетически невалидное поле " + this.fieldName;
     }
 }

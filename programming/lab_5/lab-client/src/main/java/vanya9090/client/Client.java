@@ -1,6 +1,5 @@
 package vanya9090.client;
 
-import com.google.gson.JsonSyntaxException;
 import vanya9090.client.commands.*;
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.managers.CommandManager;
@@ -8,9 +7,10 @@ import vanya9090.client.managers.JSONManager;
 import vanya9090.client.utils.ILogger;
 import vanya9090.client.utils.Logger;
 import vanya9090.client.utils.Runner;
-import vanya9090.common.exceptions.*;
 
-import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class Client {
     private final static String ENV_KEY = "lab5";
@@ -23,12 +23,23 @@ public final class Client {
         CollectionManager collectionManager = new CollectionManager(jsonManager);
 
         try {
-            collectionManager.readCollection(ENV_KEY);
-            logger.info("коллекция успешно загружена");
-        } catch (ValidateException | JsonSyntaxException | EmptyFileException | NotFoundException | AccessException |
-                 FormatException | FileNotFoundException e) {
+            Map<Integer, List<Exception>> exceptionMap = collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
+            for(Map.Entry<Integer, List<Exception>> entry : exceptionMap.entrySet()) {
+                Integer key = entry.getKey();
+                List<Exception> value = entry.getValue();
+                logger.error("запись с номером " + key + " имеет ошибки: " + value.stream().map(Exception::toString).collect(Collectors.joining(", ")));
+            }
+        } catch (Exception e) {
             logger.error(e);
         }
+
+//        try {
+//            collectionManager.readCollection(ENV_KEY);
+//            logger.info("коллекция успешно загружена");
+//        } catch (ValidateException | JsonSyntaxException | EmptyFileException | NotFoundException | AccessException |
+//                 FormatException | FileNotFoundException e) {
+//            logger.error(e);
+//        }
 
         commandManager.register("help", new Help(commandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
