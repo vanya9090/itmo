@@ -1,17 +1,20 @@
 package vanya9090.client.commands;
 
-import vanya9090.common.exceptions.NotFoundException;
-import vanya9090.common.exceptions.WrongAmountOfElementsException;
+import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.client.models.WeaponType;
-import vanya9090.client.utils.ILogger;
-import vanya9090.client.managers.CollectionManager;
+import vanya9090.common.exceptions.NotFoundException;
+import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * фильтрация по типу оружия
+ *
+ * @author vanya9090
+ */
 public class FilterByWeaponType extends Command {
     private final CollectionManager collectionManager;
 
@@ -20,6 +23,14 @@ public class FilterByWeaponType extends Command {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * выполняет команду
+     *
+     * @param args аргументы, переданные в командной строке
+     * @return подходящие HumanBeing объекты
+     * @throws WrongAmountOfElementsException пустой аргумент
+     * @throws NotFoundException              нет такого типа оружия
+     */
     @Override
     public String apply(String[] args) throws WrongAmountOfElementsException, NotFoundException {
         List<HumanBeing> list = new ArrayList<HumanBeing>();

@@ -1,17 +1,18 @@
 package vanya9090.client.managers;
 
 
-import com.google.gson.JsonSyntaxException;
 import vanya9090.client.models.HumanBeing;
-import vanya9090.common.exceptions.AccessException;
-import vanya9090.common.exceptions.EmptyFileException;
-import vanya9090.common.exceptions.NotFoundException;
-import vanya9090.common.exceptions.ValidateException;
+import vanya9090.common.exceptions.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * менеджер коллекции
+ *
+ * @author vanya9090
+ */
 public class CollectionManager {
     private final JSONManager jsonManager;
     private Deque<HumanBeing> collection = new ArrayDeque<HumanBeing>();
@@ -64,12 +65,12 @@ public class CollectionManager {
         return null;
     }
 
-    public void readCollection(String ENV_KEY) throws JsonSyntaxException, EmptyFileException, ValidateException, AccessException, NotFoundException {
+    public void readCollection(String ENV_KEY) throws EmptyFileException, ValidateException, AccessException, NotFoundException, FormatException {
         this.collection = (ArrayDeque<HumanBeing>) jsonManager.readFile(ENV_KEY);
         this.initDate = LocalDateTime.now();
     }
 
-    public void writeCollection() {
-
+    public void writeCollection(String ENV_KEY) throws AccessException, NotFoundException {
+        jsonManager.writeFile(this.getCollection(), ENV_KEY);
     }
 }

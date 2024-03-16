@@ -1,21 +1,29 @@
 package vanya9090.client.commands;
 
-import vanya9090.common.exceptions.*;
-import vanya9090.client.utils.ILogger;
 import vanya9090.client.utils.Runner;
+import vanya9090.common.exceptions.NotFoundException;
+import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
-import java.io.FileNotFoundException;
-
+/**
+ * команда для запуска скрипта
+ *
+ * @author vanya9090
+ */
 public class ExecuteScript extends Command {
     private final Runner runner;
-    private final ILogger logger;
 
-    public ExecuteScript(Runner runner, ILogger logger) {
+    public ExecuteScript(Runner runner) {
         super("execute_script", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.");
         this.runner = runner;
-        this.logger = logger;
     }
 
+    /**
+     * запуск скрипта
+     *
+     * @param args аргументы, переданные в командной строке
+     * @return пустая строка
+     * @throws Exception ошибки
+     */
     @Override
     public String apply(String[] args) throws Exception {
         try {

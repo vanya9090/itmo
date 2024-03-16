@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="on exceptioning way">
-      <change afterPath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/FormatException.java" afterDir="false" />
+    <list default="true" id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="refactored commands, without printing in commands">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/file.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/file.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Add.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Add.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/AddIfMin.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/AddIfMin.java" afterDir="false" />
@@ -26,7 +27,25 @@
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Show.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Show.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/SumOfImpactSpeed.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/SumOfImpactSpeed.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/commands/Update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/connection/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/connection/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/connection/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/JSONManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/JSONManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CarForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CarForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CoordinatesForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/CoordinatesForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/Form.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/HumanBeingForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/forms/HumanBeingForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ExecuteLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ExecuteLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ILogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/ILogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/LocalDateTypeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/LocalDateTypeAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Logger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/utils/Runner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/eventBus/Callback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/eventBus/EventBus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/BooleanFormatException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,33 +66,33 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2djWkDbliaN9okRj7eivMEz0WuN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Client.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/ivanmironov/Documents/itmo/programming/lab_5/lab-client/src/main/java/vanya9090/client",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ivanmironov/Documents/itmo/programming/lab_5/lab-client/src/main/java/vanya9090/client&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client" />
@@ -114,7 +133,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1710522108897</updated>
-      <workItem from="1710522109972" duration="19055000" />
+      <workItem from="1710522109972" duration="19543000" />
+      <workItem from="1710543682221" duration="5285000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring 5th lab of programming">
       <option name="closed" value="true" />
@@ -132,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710535646236</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="refactored commands, without printing in commands">
+      <option name="closed" value="true" />
+      <created>1710543241641</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710543241641</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +169,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactoring 5th lab of programming" />
     <MESSAGE value="on exceptioning way" />
-    <option name="LAST_COMMIT_MESSAGE" value="on exceptioning way" />
+    <MESSAGE value="refactored commands, without printing in commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored commands, without printing in commands" />
   </component>
 </project>

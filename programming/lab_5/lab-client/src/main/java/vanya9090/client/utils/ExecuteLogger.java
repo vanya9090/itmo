@@ -1,5 +1,10 @@
 package vanya9090.client.utils;
 
+/**
+ * логер для работы со скриптом
+ *
+ * @author vanya9090
+ */
 public class ExecuteLogger implements ILogger {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";

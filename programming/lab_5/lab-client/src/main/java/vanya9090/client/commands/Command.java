@@ -1,5 +1,10 @@
 package vanya9090.client.commands;
 
+/**
+ * абстрактный класс для всех команд
+ *
+ * @author vanya9090
+ */
 public abstract class Command {
     private final String name;
     private final String description;

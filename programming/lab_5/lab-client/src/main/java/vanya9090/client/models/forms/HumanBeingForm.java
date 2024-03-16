@@ -1,16 +1,19 @@
 package vanya9090.client.models.forms;
 
 import vanya9090.client.models.*;
-import vanya9090.common.exceptions.BooleanFormatException;
+import vanya9090.client.utils.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
-import vanya9090.client.utils.ILogger;
-//import vanya9090.server.models.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * форма для ввода человека
+ *
+ * @author vanya9090
+ */
 public class HumanBeingForm implements Form {
     private final ILogger logger;
     private final Scanner scanner;
@@ -22,7 +25,7 @@ public class HumanBeingForm implements Form {
         this.isExecute = isExecute;
     }
 
-    public HumanBeing create() throws ParseException, EmptyFieldException, BooleanFormatException {
+    public HumanBeing create() throws ParseException, EmptyFieldException {
 
         return new HumanBeing(
                 this.askName(),
@@ -37,7 +40,7 @@ public class HumanBeingForm implements Form {
                 this.askCar());
     }
 
-    private Car askCar() throws BooleanFormatException, ParseException, EmptyFieldException {
+    private Car askCar() throws ParseException, EmptyFieldException {
         CarForm carForm = new CarForm(this.logger, this.scanner, this.isExecute);
         return carForm.create();
     }
@@ -48,7 +51,6 @@ public class HumanBeingForm implements Form {
         while (true) {
             try {
                 this.logger.field("Введите настроение: ");
-//                Scanner scanner = new Scanner(System.in);
                 String field = this.scanner.nextLine().trim();
                 if (field.isEmpty()) throw new EmptyFieldException("настроение");
                 try {

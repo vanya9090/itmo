@@ -7,10 +7,14 @@ import vanya9090.client.models.forms.HumanBeingForm;
 import vanya9090.client.utils.ILogger;
 import vanya9090.common.exceptions.*;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class Update extends Command implements Executable{
+/**
+ * обновление какого-то человека из коллекции
+ *
+ * @author vanya9090
+ */
+public class Update extends Command implements Executable {
     private final CollectionManager collectionManager;
     private final ILogger logger;
 
@@ -31,6 +35,9 @@ public class Update extends Command implements Executable{
 
             HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
             HumanBeing humanBeing = humanBeingForm.create();
+            if (!humanBeing.validate()) {
+                throw new ValidateException("некоторые поля не соответствуют синтетическим ограничениям");
+            }
 
             humanToUpdate.update(humanBeing);
             return "";
@@ -54,6 +61,9 @@ public class Update extends Command implements Executable{
 
             HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, fileReader, true);
             HumanBeing humanBeing = humanBeingForm.create();
+            if (!humanBeing.validate()) {
+                throw new ValidateException("некоторые поля не соответствуют синтетическим ограничениям");
+            }
 
             humanToUpdate.update(humanBeing);
             return "";

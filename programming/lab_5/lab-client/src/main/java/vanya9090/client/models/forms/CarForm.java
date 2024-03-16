@@ -1,14 +1,17 @@
 package vanya9090.client.models.forms;
 
-import vanya9090.common.exceptions.BooleanFormatException;
+import vanya9090.client.models.Car;
+import vanya9090.client.utils.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
-import vanya9090.client.models.Car;
-
-import vanya9090.client.utils.ILogger;
 
 import java.util.Scanner;
 
+/**
+ * форма для ввода машины
+ *
+ * @author vanya9090
+ */
 public class CarForm implements Form {
     private final ILogger logger;
     private final Scanner scanner;
@@ -21,7 +24,7 @@ public class CarForm implements Form {
     }
 
     @Override
-    public Car create() throws EmptyFieldException, BooleanFormatException, ParseException {
+    public Car create() throws EmptyFieldException, ParseException {
         return new Car(this.askName(), this.askCool());
     }
 

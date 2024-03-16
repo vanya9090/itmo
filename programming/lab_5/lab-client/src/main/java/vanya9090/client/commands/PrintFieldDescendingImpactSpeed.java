@@ -2,7 +2,6 @@ package vanya9090.client.commands;
 
 
 import vanya9090.client.managers.CollectionManager;
-import vanya9090.client.utils.ILogger;
 import vanya9090.client.models.HumanBeing;
 
 import java.util.Comparator;
@@ -10,6 +9,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * выводит значения поля impactSpeed всех элементов в порядке убывания
+ *
+ * @author vanya9090
+ */
 public class PrintFieldDescendingImpactSpeed extends Command {
     private final CollectionManager collectionManager;
 
@@ -18,6 +22,12 @@ public class PrintFieldDescendingImpactSpeed extends Command {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * выполняет команду
+     *
+     * @param args аргументы, переданные в командной строке
+     * @return значения поля impactSpeed всех элементов
+     */
     @Override
     public String apply(String[] args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();

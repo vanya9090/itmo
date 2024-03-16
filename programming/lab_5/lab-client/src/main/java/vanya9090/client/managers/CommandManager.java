@@ -8,6 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * командный менеджер
+ *
+ * @author vanya9090
+ */
 public class CommandManager {
     private static final Map<String, Command> commands = new HashMap<>();
     private final List<Command> history = new ArrayList<>();
@@ -18,13 +24,5 @@ public class CommandManager {
 
     public Map<String, Command> getCommands() {
         return commands;
-    }
-
-    public List<Command> getHistory() {
-        return history;
-    }
-
-    public void addToHistory(Command command) {
-        history.add(command);
     }
 }

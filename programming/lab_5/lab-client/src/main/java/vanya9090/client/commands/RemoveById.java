@@ -1,16 +1,18 @@
 package vanya9090.client.commands;
 
 
+import vanya9090.client.managers.CollectionManager;
+import vanya9090.client.models.HumanBeing;
 import vanya9090.common.exceptions.CollectionIsEmptyException;
 import vanya9090.common.exceptions.FormatException;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
-import vanya9090.client.managers.CollectionManager;
-import vanya9090.client.utils.ILogger;
-import vanya9090.client.models.HumanBeing;
 
-import java.util.Arrays;
-
+/**
+ * команда для удаления человека по id
+ *
+ * @author vanya9090
+ */
 public class RemoveById extends Command {
     private final CollectionManager collectionManager;
 

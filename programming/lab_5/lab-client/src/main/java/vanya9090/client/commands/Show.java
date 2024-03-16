@@ -1,13 +1,17 @@
 package vanya9090.client.commands;
 
 
-import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.models.HumanBeing;
-import vanya9090.client.utils.ILogger;
+import vanya9090.common.exceptions.EmptyCollectionException;
 
 import java.util.stream.Collectors;
 
+/**
+ * вывод всех элементов в коллекции
+ *
+ * @author vanya9090
+ */
 public class Show extends Command {
     private final CollectionManager collectionManager;
 

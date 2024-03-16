@@ -1,16 +1,16 @@
 package vanya9090.client.commands;
 
-import vanya9090.client.commands.Command;
-import vanya9090.client.utils.ILogger;
-
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * вывод всех доступных команд
+ *
+ * @author vanya9090
+ */
 public class Help extends Command {
     private final Map<String, Command> commands;
+
     public Help(Map<String, Command> commands) {
         super("help", "вывести справку по доступным командам");
         this.commands = commands;

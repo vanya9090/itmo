@@ -2,8 +2,12 @@ package vanya9090.client.commands;
 
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.models.HumanBeing;
-import vanya9090.client.utils.ILogger;
 
+/**
+ * вывод суммы значений поля impactSpeed
+ *
+ * @author vanya9090
+ */
 public class SumOfImpactSpeed extends Command {
     private final CollectionManager collectionManager;
 

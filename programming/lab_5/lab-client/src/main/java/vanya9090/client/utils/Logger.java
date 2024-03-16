@@ -1,7 +1,11 @@
 package vanya9090.client.utils;
 
-import vanya9090.client.utils.ILogger;
 
+/**
+ * класс для вывода в консоль
+ *
+ * @author vanya9090
+ */
 public class Logger implements ILogger {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";

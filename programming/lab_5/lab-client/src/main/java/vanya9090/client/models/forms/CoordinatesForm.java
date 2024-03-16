@@ -1,13 +1,18 @@
 package vanya9090.client.models.forms;
 
 
-import vanya9090.common.exceptions.EmptyFieldException;
-import vanya9090.common.exceptions.ParseException;
 import vanya9090.client.models.Coordinates;
 import vanya9090.client.utils.ILogger;
+import vanya9090.common.exceptions.EmptyFieldException;
+import vanya9090.common.exceptions.ParseException;
 
 import java.util.Scanner;
 
+/**
+ * форма для ввода координат
+ *
+ * @author vanya9090
+ */
 public class CoordinatesForm implements Form {
     private final ILogger logger;
     private final Scanner scanner;
