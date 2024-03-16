@@ -33,7 +33,6 @@ public class FilterByWeaponType extends Command {
      */
     @Override
     public String apply(String[] args) throws WrongAmountOfElementsException, NotFoundException {
-        List<HumanBeing> list = new ArrayList<HumanBeing>();
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
             WeaponType weaponType = WeaponType.valueOf(args[1].toUpperCase());

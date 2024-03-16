@@ -32,10 +32,10 @@ public class Logger implements ILogger {
         System.out.println(ANSI_RED + obj + ANSI_RESET);
     }
 
-    @Override
-    public void table(Object obj1, Object obj2) {
-        System.out.printf("%-36s%s%n", obj1, obj2);
-    }
+//    @Override
+//    public void table(Object obj1, Object obj2) {
+//        System.out.printf("%-36s%s%n", obj1, obj2);
+//    }
 
     @Override
     public void field(Object obj) {

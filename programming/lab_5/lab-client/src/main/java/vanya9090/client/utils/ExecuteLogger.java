@@ -31,10 +31,10 @@ public class ExecuteLogger implements ILogger {
         System.out.println(ANSI_RED + obj + ANSI_RESET);
     }
 
-    @Override
-    public void table(Object obj1, Object obj2) {
-
-    }
+//    @Override
+//    public void table(Object obj1, Object obj2) {
+//
+//    }
 
     @Override
     public void field(Object obj) {

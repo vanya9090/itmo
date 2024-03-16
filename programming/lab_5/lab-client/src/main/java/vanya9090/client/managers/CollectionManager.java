@@ -4,6 +4,7 @@ package vanya9090.client.managers;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.common.exceptions.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -15,7 +16,7 @@ import java.util.Deque;
  */
 public class CollectionManager {
     private final JSONManager jsonManager;
-    private Deque<HumanBeing> collection = new ArrayDeque<HumanBeing>();
+    private Deque<HumanBeing> collection = new ArrayDeque<>();
     private LocalDateTime initDate;
 
     public CollectionManager(JSONManager jsonManager) {
@@ -65,7 +66,7 @@ public class CollectionManager {
         return null;
     }
 
-    public void readCollection(String ENV_KEY) throws EmptyFileException, ValidateException, AccessException, NotFoundException, FormatException {
+    public void readCollection(String ENV_KEY) throws EmptyFileException, ValidateException, AccessException, NotFoundException, FormatException, FileNotFoundException {
         this.collection = (ArrayDeque<HumanBeing>) jsonManager.readFile(ENV_KEY);
         this.initDate = LocalDateTime.now();
     }

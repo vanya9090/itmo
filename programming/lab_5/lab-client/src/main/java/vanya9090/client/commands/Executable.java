@@ -8,5 +8,5 @@ import java.util.Scanner;
  * @author vanya9090
  */
 public interface Executable {
-    public String apply(String[] args, Scanner fileReader) throws Exception;
+    String apply(String[] args, Scanner fileReader) throws Exception;
 }

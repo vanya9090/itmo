@@ -40,61 +40,53 @@ public class JSONManager implements FileManager {
      * @throws AccessException    ошибка доступа
      * @throws FormatException    неправильная разметка файла
      */
-    public Collection<HumanBeing> readFile(String ENV_KEY) throws ValidateException, EmptyFileException, NotFoundException, AccessException, FormatException {
+    public Collection<HumanBeing> readFile(String ENV_KEY) throws ValidateException, EmptyFileException, NotFoundException, AccessException, FormatException, FileNotFoundException {
         String path = System.getenv(ENV_KEY);
-        if (path != null && !path.isEmpty()) {
-            if (new File(path).canRead()) {
-                try (Scanner fileReader = new Scanner(new File(path))) {
-                    var collectionType = new TypeToken<ArrayDeque<HumanBeing>>() {
-                    }.getType();
-                    StringBuilder jsonString = new StringBuilder();
-                    String line;
-                    while (fileReader.hasNext()) {
-                        line = fileReader.nextLine().trim();
-                        if (!line.isEmpty()) {
-                            jsonString.append(line);
-                        }
-                    }
-                    if (jsonString.isEmpty()) {
-                        jsonString = new StringBuilder("[]");
-                    }
-
-                    ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
-                    for (HumanBeing humanBeing : collection) {
-                        if (!humanBeing.validate()) {
-                            throw new ValidateException("некоторые поля не соответствуют синтетическому описанию");
-                        }
-                    }
-                    return collection;
-
-                } catch (NoSuchElementException e) {
-                    throw new EmptyFileException("файл " + path + " пуст");
-                } catch (FileNotFoundException e) {
-                    throw new NotFoundException("файл не найден");
-                } catch (JsonSyntaxException e) {
-                    throw new FormatException("неправильная разметка файла");
+        if (path == null || path.isEmpty()) throw new NotFoundException("переменная окружения не найдена");
+        if (!new File(path).exists()) throw new FileNotFoundException();
+        if (!new File(path).canRead()) throw new AccessException("нет прав доступа для чтения файла");
+        try (Scanner fileReader = new Scanner(new File(path))) {
+            var collectionType = new TypeToken<ArrayDeque<HumanBeing>>() {
+            }.getType();
+            StringBuilder jsonString = new StringBuilder();
+            String line;
+            while (fileReader.hasNext()) {
+                line = fileReader.nextLine().trim();
+                if (!line.isEmpty()) {
+                    jsonString.append(line);
                 }
-            } else {
-                throw new AccessException("нет прав доступа для чтения файла");
             }
-        } else {
-            throw new NotFoundException("переменная окружения не найдена");
+            if (jsonString.isEmpty()) {
+                jsonString = new StringBuilder("[]");
+            }
+            ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
+            for (HumanBeing humanBeing : collection) {
+                if (!humanBeing.validate()) {
+                    throw new ValidateException("некоторые поля не соответствуют синтетическому описанию");
+                }
+            }
+            return collection;
+        } catch (NoSuchElementException e) {
+            throw new EmptyFileException("файл " + path + " пуст");
+        } catch (FileNotFoundException e) {
+            throw new NotFoundException("файл не найден");
+        } catch (JsonSyntaxException e) {
+            throw new FormatException("неправильная разметка файла");
         }
     }
 
     /**
      * @param collection коллекция из HumanBeing
-     * @param path       путь
+     * @param ENV_KEY
      * @return true/false
      * @throws NotFoundException файл не может быть открыт
      * @throws AccessException   нет прав для записи
      */
-    public boolean writeFile(Collection<HumanBeing> collection, String ENV_KEY) throws NotFoundException, AccessException {
+    public void writeFile(Collection<HumanBeing> collection, String ENV_KEY) throws NotFoundException, AccessException {
         String path = System.getenv(ENV_KEY);
         if (new File(path).canWrite()) {
             try (PrintWriter collectionPrintWriter = new PrintWriter(path)) {
                 collectionPrintWriter.println(gson.toJson(collection));
-                return true;
             } catch (IOException exception) {
                 throw new NotFoundException("загрузочный файл не может быть открыт");
             }

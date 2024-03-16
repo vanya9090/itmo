@@ -10,6 +10,8 @@ import vanya9090.client.utils.Logger;
 import vanya9090.client.utils.Runner;
 import vanya9090.common.exceptions.*;
 
+import java.io.FileNotFoundException;
+
 public final class Client {
     private final static String ENV_KEY = "lab5";
 
@@ -24,7 +26,7 @@ public final class Client {
             collectionManager.readCollection(ENV_KEY);
             logger.info("коллекция успешно загружена");
         } catch (ValidateException | JsonSyntaxException | EmptyFileException | NotFoundException | AccessException |
-                 FormatException e) {
+                 FormatException | FileNotFoundException e) {
             logger.error(e);
         }
 

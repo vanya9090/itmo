@@ -14,7 +14,5 @@ public interface ILogger {
 
     void error(Object obj);
 
-    void table(Object obj1, Object obj2);
-
     void field(Object obj);
 }

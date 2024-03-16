@@ -2,7 +2,7 @@ package vanya9090.client.commands;
 
 
 import vanya9090.client.managers.CollectionManager;
-import vanya9090.common.exceptions.CollectionIsEmptyException;
+import vanya9090.common.exceptions.EmptyCollectionException;
 
 /**
  * удаляет все записи в коллекции
@@ -20,11 +20,11 @@ public class Clear extends Command {
     /**
      * @param args аргументы, переданные в командной строке
      * @return пустая строка
-     * @throws CollectionIsEmptyException пустая ли коллекция
+     * @throws EmptyCollectionException пустая ли коллекция
      */
     @Override
-    public String apply(String[] args) throws CollectionIsEmptyException {
-        if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
+    public String apply(String[] args) throws EmptyCollectionException {
+        if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         collectionManager.clear();
         return "";
     }

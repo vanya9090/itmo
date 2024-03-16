@@ -27,9 +27,9 @@ public class Update extends Command implements Executable {
     public String apply(String[] args) throws Exception {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
+            if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
 
-            Integer id = Integer.parseInt(args[1].trim());
+            int id = Integer.parseInt(args[1].trim());
             HumanBeing humanToUpdate = collectionManager.getById(id);
             if (humanToUpdate == null) throw new NotFoundException("человек с таким id не найден");
 
@@ -53,9 +53,9 @@ public class Update extends Command implements Executable {
     public String apply(String[] args, Scanner fileReader) throws Exception {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
+            if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
 
-            Integer id = Integer.parseInt(args[1].trim());
+            int id = Integer.parseInt(args[1].trim());
             HumanBeing humanToUpdate = collectionManager.getById(id);
             if (humanToUpdate == null) throw new NotFoundException("человек с таким id не найден");
 

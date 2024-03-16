@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public class CommandManager {
     private static final Map<String, Command> commands = new HashMap<>();
-    private final List<Command> history = new ArrayList<>();
 
     public void register(String commandName, Command command) {
         commands.put(commandName, command);

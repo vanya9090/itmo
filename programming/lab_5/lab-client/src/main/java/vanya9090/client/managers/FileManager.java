@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException;
 import vanya9090.client.models.HumanBeing;
 import vanya9090.common.exceptions.*;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Collection;
  * @author vanya9090
  */
 public interface FileManager {
-    public Collection<HumanBeing> readFile(String name) throws ValidateException, JsonSyntaxException, EmptyFileException, NotFoundException, AccessException, FormatException;
+    Collection<HumanBeing> readFile(String name) throws ValidateException, JsonSyntaxException, EmptyFileException, NotFoundException, AccessException, FormatException, FileNotFoundException;
 
-    public boolean writeFile(Collection<HumanBeing> collection, String name) throws NotFoundException, AccessException;
+    void writeFile(Collection<HumanBeing> collection, String name) throws NotFoundException, AccessException;
 }

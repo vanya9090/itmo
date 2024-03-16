@@ -1,13 +1,13 @@
 [
   {
-    "id": 0,
-    "name": "sdfaf",
+    "id": 12,
+    "name": "john",
     "coordinates": {
-      "x": 23,
+      "x": -23,
       "y": 1234.324
     },
     "creationDate": "2017-01-13",
-    "realHero": false,
+    "realHero": true,
     "hasToothpick": true,
     "impactSpeed": 1,
     "minutesOfWaiting": 29.5,

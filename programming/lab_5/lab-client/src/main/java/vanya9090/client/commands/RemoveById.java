@@ -3,7 +3,7 @@ package vanya9090.client.commands;
 
 import vanya9090.client.managers.CollectionManager;
 import vanya9090.client.models.HumanBeing;
-import vanya9090.common.exceptions.CollectionIsEmptyException;
+import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.common.exceptions.FormatException;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
@@ -22,10 +22,10 @@ public class RemoveById extends Command {
     }
 
     @Override
-    public String apply(String[] args) throws WrongAmountOfElementsException, CollectionIsEmptyException, NotFoundException, FormatException {
+    public String apply(String[] args) throws WrongAmountOfElementsException, EmptyCollectionException, NotFoundException, FormatException {
         try {
             if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-            if (collectionManager.getSize() == 0) throw new CollectionIsEmptyException("коллекция пуста");
+            if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
 
             Integer id = Integer.parseInt(args[1]);
             HumanBeing humanToDelete = collectionManager.getById(id);

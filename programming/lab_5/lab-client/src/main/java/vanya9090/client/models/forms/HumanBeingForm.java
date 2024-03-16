@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 /**
  * форма для ввода человека
- *
  * @author vanya9090
  */
 public class HumanBeingForm implements Form {
