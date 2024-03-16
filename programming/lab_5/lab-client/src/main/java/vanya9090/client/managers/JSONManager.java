@@ -19,7 +19,6 @@ import java.util.Scanner;
 
 /**
  * реализация файлового менеджера
- *
  * @author vanya9090
  */
 public class JSONManager implements FileManager {

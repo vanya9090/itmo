@@ -4,40 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="add needed files">
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/BooleanHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/FloatHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/Handler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/IntHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/LocalDateHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/MoodHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/StringHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/handlers/WeaponTypeHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/CoolCarValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/CreationDateValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/HasToothpickValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/IdValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/ImpactSpeedValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/MinutesOfWaitingValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/MoodValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/NameCarValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/NameValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/RealHeroValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/Validator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/WeaponTypeValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/XValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/validators/YValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/NullFieldException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/ReadException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/WrongPathException.java" afterDir="false" />
+    <list default="true" id="c88ccd55-1423-413c-80a6-ad55b2ea3d7e" name="Changes" comment="add validators and handlers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/file.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/file.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/CollectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/JSONManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/managers/JSONManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/HumanBeing.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-client/src/main/java/vanya9090/client/models/HumanBeing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/WrongFieldsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/lab-common/src/main/java/vanya9090/common/exceptions/WrongFieldsException.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1710522108897</updated>
       <workItem from="1710522109972" duration="19543000" />
-      <workItem from="1710543682221" duration="12844000" />
+      <workItem from="1710543682221" duration="15583000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring 5th lab of programming">
       <option name="closed" value="true" />
@@ -177,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710581994778</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add validators and handlers">
+      <option name="closed" value="true" />
+      <created>1710585548086</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710585548086</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +166,7 @@
     <MESSAGE value="refactored commands, without printing in commands" />
     <MESSAGE value="add javadoc" />
     <MESSAGE value="add needed files" />
-    <option name="LAST_COMMIT_MESSAGE" value="add needed files" />
+    <MESSAGE value="add validators and handlers" />
+    <option name="LAST_COMMIT_MESSAGE" value="add validators and handlers" />
   </component>
 </project>
