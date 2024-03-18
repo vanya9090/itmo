@@ -1,10 +1,10 @@
 DROP TABLE IF EXISTS scientist CASCADE;
-DROP TABLE IF EXISTS work CASCADE ;
+DROP TABLE IF EXISTS task CASCADE ;
 DROP TABLE IF EXISTS location CASCADE ;
 DROP TABLE IF EXISTS result CASCADE ;
 DROP TABLE IF EXISTS target CASCADE ;
-DROP TABLE IF EXISTS scientist_work CASCADE ;
-DROP TABLE IF EXISTS work_result CASCADE ;
+DROP TABLE IF EXISTS scientist_task CASCADE ;
+DROP TABLE IF EXISTS task_result CASCADE ;
 DROP TABLE IF EXISTS used_result CASCADE ;
 
 CREATE TABLE IF NOT EXISTS scientist (
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS target (
   description TEXT
 );
 
-CREATE TABLE IF NOT EXISTS work (
+CREATE TABLE IF NOT EXISTS task (
   id SERIAL PRIMARY KEY,
   industry TEXT,
   name TEXT NOT NULL,
@@ -52,26 +52,26 @@ CREATE TABLE IF NOT EXISTS result (
   UNIQUE (category, name)
 );
 
-CREATE TABLE IF NOT EXISTS scientist_work (
-  work_id INTEGER REFERENCES work(id) NOT NULL,
-  inn TEXT REFERENCES scientist(inn) NOT NULL,
+CREATE TABLE IF NOT EXISTS scientist_task (
+  task_id INTEGER REFERENCES task (id)     NOT NULL,
+  inn TEXT REFERENCES scientist(inn)       NOT NULL,
   start_date DATE,
   end_date DATE,
   part TEXT,
   location INTEGER REFERENCES location(id) NOT NULL,
   target INTEGER REFERENCES target(id),
-  PRIMARY KEY (work_id, inn),
+  PRIMARY KEY (task_id, inn),
   CHECK (end_date > start_date)
 );
 
-CREATE TABLE IF NOT EXISTS work_result (
-  work_id INTEGER REFERENCES work(id) NOT NULL,
+CREATE TABLE IF NOT EXISTS task_result (
+  task_id INTEGER REFERENCES task (id)    NOT NULL,
   result_id INTEGER REFERENCES result(id) NOT NULL,
-  PRIMARY KEY (work_id, result_id)
+  PRIMARY KEY (task_id, result_id)
 );
 
 CREATE TABLE IF NOT EXISTS used_result (
-  work_id INTEGER REFERENCES work(id) NOT NULL,
+  task_id INTEGER REFERENCES task (id)    NOT NULL,
   result_id INTEGER REFERENCES result(id) NOT NULL,
-  PRIMARY KEY (work_id, result_id)
+  PRIMARY KEY (task_id, result_id)
 );

@@ -8,7 +8,7 @@ INSERT INTO target (name, description) VALUES
 ('drilling machine', 'artesian action drill with the principle of a rotating hammer'),
 ('geological survey', 'geological survey ...');
 
-INSERT INTO work (industry, name, description, planned_start_date, planned_end_date, start_date, end_date, target_id) VALUES
+INSERT INTO task (industry, name, description, planned_start_date, planned_end_date, start_date, end_date, target_id) VALUES
 ('mining industry', 'obtain soil samples', 'obtain by drill machine', '2017-03-01', '2017-04-10', '2017-03-01', '2017-04-11', 1),
 ('engineering industry', 'drilling machine', 'creation of a drilling machine', '2016-03-01', '2017-01-01', '2016-03-01', '2017-01-01', 3);
 
@@ -23,13 +23,15 @@ INSERT INTO result (category, name, description) VALUES
 ('thing', 'soil samples', 'soil and rock samples from great depths'),
 ('conclusion', 'no soil samples', 'no land under the ice');
 
-INSERT INTO scientist_work (work_id, inn, start_date, end_date, part, location, target) VALUES
+INSERT INTO scientist_task (task_id, inn, start_date, end_date, part, location, target) VALUES
 (1, '1234567890', '2016-03-01', '2017-01-01', 'all drilling machine', 2, 3),
 (1, '1234567899', '2017-03-01', '2017-04-11', 'geologist', 1, 4);
 
-INSERT INTO work_result (work_id, result_id) VALUES
+INSERT INTO task_result (task_id, result_id) VALUES
 (1, 2),
 (2, 1);
 
-INSERT INTO used_result (work_id, result_id) VALUES
-(1, 2)
+INSERT INTO used_result (task_id, result_id) VALUES
+(1, 2);
+
+SELECT * FROM scientist_task;
