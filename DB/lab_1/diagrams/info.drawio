@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-18T09:59:39.223Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="cQxXZyXXlR1LFUwyQBsc" version="24.0.7" type="device">
+<mxfile host="app.diagrams.net" modified="2024-03-18T12:32:08.298Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="ZnxDgyVaR6FV23K9xHIE" version="24.0.7" type="device">
   <diagram name="Page-1" id="TJ-HzRM1d6BybIESM3n_">
-    <mxGraphModel dx="2796" dy="666" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2953" dy="888" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -288,6 +288,9 @@
               <mxPoint x="-1250" y="500" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="UxXEU7lJ8EeufSXeX_Pu-194" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;список сущностей и их классификация&lt;/h1&gt;&lt;p&gt;Стержневые: ученый, работа, результат, цель&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial;&quot; class=&quot;p1&quot;&gt;Характеристические: местоположение&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial;&quot; class=&quot;p1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial;&quot; class=&quot;p1&quot;&gt;Ассоциативные: работа ученого&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-780" y="220" width="260" height="220" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
