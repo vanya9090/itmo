@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS task (
   start_date DATE,
   end_date DATE,
   target_id INTEGER REFERENCES target(id) NOT NULL,
-  CHECK (planned_end_date > planned_start_date)
+  UNIQUE (industry, name, planned_start_date),
+  CHECK ((planned_end_date > planned_start_date) AND (end_date > start_date))
 );
 
 

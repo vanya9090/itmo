@@ -34,4 +34,4 @@ INSERT INTO task_result (task_id, result_id) VALUES
 INSERT INTO used_result (task_id, result_id) VALUES
 (1, 2);
 
-SELECT * FROM scientist_task;
+SELECT pg_typeof(location.latitude) from location;
