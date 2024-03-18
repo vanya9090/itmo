@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-18T09:18:02.094Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="HIHcPwwpYSHujf4ckXnG" version="24.0.7" type="device">
+<mxfile host="app.diagrams.net" modified="2024-03-18T09:35:57.966Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="vZ5r0dyxxtoUrQXYOae_" version="24.0.7" type="device">
   <diagram name="Page-1" id="Wi7dqSwYvB58Hg8DM3WX">
-    <mxGraphModel dx="1334" dy="810" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1136" dy="690" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -477,13 +477,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-119" value="ученый может уволиться поэтому надо предусмотреть случай отдельного времени работы одного ученого" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="338" y="250" width="264" height="30" as="geometry" />
+          <mxGeometry x="356" y="110" width="264" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-126" value="несколько таргетов у одной работы" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="860" y="230" width="220" height="30" as="geometry" />
+          <mxGeometry x="870" y="170" width="220" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-134" value="одна цель, несколько результатов" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="870" y="200" width="200" height="30" as="geometry" />
+          <mxGeometry x="880" y="140" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-136" value="Work_Result" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" vertex="1" parent="1">
           <mxGeometry x="860" y="270" width="180" height="150" as="geometry" />
@@ -546,17 +546,20 @@
             <mxPoint x="1100" y="460" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="RvjBhxacaygoqbKSii6B-151" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-53" target="RvjBhxacaygoqbKSii6B-146">
+        <mxCell id="RvjBhxacaygoqbKSii6B-151" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-53" target="RvjBhxacaygoqbKSii6B-146">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="1120" y="355" as="sourcePoint" />
             <mxPoint x="1050" y="415" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1060" y="430" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-152" value="каждый результат работы имеют свою цель" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="1310" y="405" width="150" height="30" as="geometry" />
+          <mxGeometry x="1380" y="360" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-153" value="пускай есть две работы с одной и той же целью, тогда их результаты должны отличаться&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;div&gt;пускай есть две работы с одним и тем же результатом тогда их цели должны отличаться (цель1: такой-то эксперимент, цель2: повторная проверка такого-то эксперимента)&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="1020" y="760" width="380" height="120" as="geometry" />
+          <mxGeometry x="1000" y="870" width="380" height="120" as="geometry" />
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-168" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-65" target="RvjBhxacaygoqbKSii6B-34">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
@@ -568,12 +571,15 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-169" value="работа может иметь несколько локаций?&lt;div&gt;пусть может иметь только одну, тогда несколько людей обязательно должны работать в одном месте&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;тогда лучше сделать локацию для каждого работающего саентиста&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="212" y="810" width="390" height="100" as="geometry" />
+          <mxGeometry x="212" y="880" width="390" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="RvjBhxacaygoqbKSii6B-183" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-15" target="RvjBhxacaygoqbKSii6B-180">
+        <mxCell id="RvjBhxacaygoqbKSii6B-183" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-15" target="RvjBhxacaygoqbKSii6B-180">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="160" y="460" as="sourcePoint" />
             <mxPoint x="260" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="600" y="610" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-184" value="Used_Result" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;" vertex="1" parent="1">
@@ -637,10 +643,13 @@
             <mxPoint x="870" y="355" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="RvjBhxacaygoqbKSii6B-212" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-53" target="RvjBhxacaygoqbKSii6B-191">
+        <mxCell id="RvjBhxacaygoqbKSii6B-212" value="" style="edgeStyle=elbowEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-53" target="RvjBhxacaygoqbKSii6B-191">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
             <mxPoint x="1260" y="240" as="sourcePoint" />
             <mxPoint x="1040" y="505" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1060" y="500" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="RvjBhxacaygoqbKSii6B-213" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RvjBhxacaygoqbKSii6B-53" target="RvjBhxacaygoqbKSii6B-194">
@@ -666,7 +675,7 @@
             <mxPoint x="580" y="557" as="sourcePoint" />
             <mxPoint x="640" y="620" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="590" y="590" />
+              <mxPoint x="610" y="590" />
             </Array>
           </mxGeometry>
         </mxCell>
