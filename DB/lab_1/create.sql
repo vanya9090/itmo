@@ -1,98 +1,77 @@
-DROP TYPE IF EXISTS status_m CASCADE;
-DROP TYPE IF EXISTS status_u CASCADE;
-DROP TYPE IF EXISTS status_s CASCADE;
+DROP TABLE IF EXISTS scientist CASCADE;
+DROP TABLE IF EXISTS work CASCADE ;
+DROP TABLE IF EXISTS location CASCADE ;
+DROP TABLE IF EXISTS result CASCADE ;
+DROP TABLE IF EXISTS target CASCADE ;
+DROP TABLE IF EXISTS scientist_work CASCADE ;
+DROP TABLE IF EXISTS work_result CASCADE ;
+DROP TABLE IF EXISTS used_result CASCADE ;
 
-DROP TABLE IF EXISTS human CASCADE;
-DROP TABLE IF EXISTS machine CASCADE;
-DROP TABLE IF EXISTS university CASCADE;
-DROP TABLE IF EXISTS location CASCADE;
-DROP TABLE IF EXISTS mission CASCADE;
-DROP TABLE IF EXISTS mission_machine CASCADE;
-DROP TABLE IF EXISTS human_mission CASCADE;
-DROP TABLE IF EXISTS human_university CASCADE;
-DROP TABLE IF EXISTS human_machine CASCADE;
-DROP TABLE IF EXISTS speciality CASCADE;
-DROP TABLE IF EXISTS speciality_human;
-
-
-CREATE TYPE status_m AS ENUM ('successed', 'failed', 'planned', 'continues');
-CREATE TYPE status_s AS ENUM ('working', 'fired', 'leaved');
-CREATE TYPE status_u AS ENUM ('expelled', 'successed', 'planned', 'studying');
-
-CREATE TABLE IF NOT EXISTS human (
-  passport VARCHAR(10) NOT NULL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS scientist (
+  inn TEXT NOT NULL PRIMARY KEY,
   name TEXT NOT NULL,
   lastname TEXT NOT NULL,
-  hope TEXT
+  CHECK (LENGTH(inn)=10)
 );
 
-CREATE TABLE IF NOT EXISTS machine (
-  serial_number INTEGER PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS target (
+  id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  purpose TEXT NOT NULL
+  description TEXT
 );
 
-CREATE TABLE IF NOT EXISTS university (
-  id SERIAL PRIMARY KEY, name TEXT NOT NULL,
-  type_u TEXT NOT NULL,
-  UNIQUE(name, type_u)
+CREATE TABLE IF NOT EXISTS work (
+  id SERIAL PRIMARY KEY,
+  industry TEXT,
+  name TEXT NOT NULL,
+  description TEXT,
+  planned_start_date DATE NOT NULL,
+  planned_end_date DATE NOT NULL,
+  start_date DATE,
+  end_date DATE,
+  target_id INTEGER REFERENCES target(id) NOT NULL,
+  CHECK (planned_end_date > planned_start_date)
 );
+
 
 CREATE TABLE IF NOT EXISTS location (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
-  coordinates POINT NOT NULL
+  latitude DECIMAL NOT NULL,
+  longitude DECIMAL NOT NULL,
+  UNIQUE (name, longitude, latitude),
+  CHECK ((longitude between 0 AND 180) AND (latitude BETWEEN 0 AND 90))
 );
 
-CREATE TABLE IF NOT EXISTS mission (
+CREATE TABLE IF NOT EXISTS result (
   id SERIAL PRIMARY KEY,
+  category TEXT NOT NULL,
+  name TEXT NOT NULL,
+  description TEXT,
+  target_id INTEGER REFERENCES target(id),
+  UNIQUE (category, name)
+);
+
+CREATE TABLE IF NOT EXISTS scientist_work (
+  work_id INTEGER REFERENCES work(id) NOT NULL,
+  inn TEXT REFERENCES scientist(inn) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL ,
+  part TEXT,
   location INTEGER REFERENCES location(id) NOT NULL,
-  university INTEGER REFERENCES university(id) NOT NULL,
-  purpose TEXT NOT NULL,
-  start_date DATE,
-  end_date DATE,
-  status status_m NOT NULL
+  target INTEGER REFERENCES target(id),
+  PRIMARY KEY (work_id, inn),
+  CHECK (end_date > start_date)
 );
 
-CREATE TABLE IF NOT EXISTS speciality (
-  speciality_code INTEGER NOT NULL PRIMARY KEY,
-  name TEXT UNIQUE NOT NULL 
+CREATE TABLE IF NOT EXISTS work_result (
+  work_id INTEGER REFERENCES work(id) NOT NULL,
+  result_id INTEGER REFERENCES result(id) NOT NULL,
+  PRIMARY KEY (work_id, result_id)
 );
 
-CREATE TABLE IF NOT EXISTS speciality_human (
-  speciality_code INTEGER REFERENCES speciality(speciality_code) NOT NULL,
-  human_passport VARCHAR(10) REFERENCES human(passport) NOT NULL,
-  start_date DATE,
-  end_date DATE,
-  status status_s,
-  PRIMARY KEY (speciality_code, human_passport)
+CREATE TABLE IF NOT EXISTS used_result (
+  work_id INTEGER REFERENCES work(id) NOT NULL,
+  result_id INTEGER REFERENCES result(id) NOT NULL,
+  PRIMARY KEY (work_id, result_id)
 );
-
-CREATE TABLE IF NOT EXISTS mission_machine (
-  mission_id INTEGER REFERENCES mission(id) NOT NULL,
-  machine_num INTEGER REFERENCES machine(serial_number) NOT NULL,
-  PRIMARY KEY (mission_id, machine_num)
-);
-
-CREATE TABLE IF NOT EXISTS human_mission (
-  mission_id INTEGER REFERENCES mission(id) NOT NULL,
-  human_passport VARCHAR(10) REFERENCES human(passport) NOT NULL,
-  PRIMARY KEY (mission_id, human_passport)
-);
-
-CREATE TABLE IF NOT EXISTS human_university (
-  human_passport VARCHAR(10) REFERENCES human(passport) NOT NULL,
-  university_id INTEGER REFERENCES university(id) NOT NULL, 
-  start_date DATE,
-  end_date DATE,
-  status status_u NOT NULL,
-  PRIMARY KEY (human_passport, university_id)
-);
-
-CREATE TABLE IF NOT EXISTS human_machine (
-  human_passport VARCHAR(10) REFERENCES human(passport) NOT NULL,
-  machine_num INTEGER REFERENCES machine(serial_number) NOT NULL,
-  part TEXT NOT NULL,
-  PRIMARY KEY (human_passport, machine_num) 
-);
--- add sequence
