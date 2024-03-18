@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS result (
 CREATE TABLE IF NOT EXISTS scientist_work (
   work_id INTEGER REFERENCES work(id) NOT NULL,
   inn TEXT REFERENCES scientist(inn) NOT NULL,
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL ,
+  start_date DATE,
+  end_date DATE,
   part TEXT,
   location INTEGER REFERENCES location(id) NOT NULL,
   target INTEGER REFERENCES target(id),
