@@ -11,6 +11,6 @@ public class CommandExecutor {
         Command command = CommandManager.getCommands().get(request.getCommandName());
         Object out = command.apply(request.getArgument());
 
-        return new Response(out.toString(), Status.OK);
+        return new Response(out, Status.OK);
     }
 }

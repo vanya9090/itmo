@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -23,10 +25,12 @@ import java.util.Scanner;
 public class Runner {
     private final ILogger logger;
     private final UDPClient client;
+    private final Map<String, String> commands;
 
-    public Runner(UDPClient client) {
+    public Runner(UDPClient client, Map<String, String> commands) {
         this.logger = Client.logger;
         this.client = client;
+        this.commands = commands;
     }
 
     public void run() throws IOException, ClassNotFoundException {
@@ -34,10 +38,16 @@ public class Runner {
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
             String[] tokens = line.split(" ");
+            if (!this.commands.containsKey(tokens[0])) {
+                this.logger.warning("команда " + tokens[0] + " не найдена, наберите help для справки");
+            } else {
+                if (Objects.equals(tokens[0], "add")) {
+
+                }
+                Response response = client.request(new Request(tokens[0], tokens));
+                logger.info(response.getBody());
+            }
 //            try {
-            Response response = client.request(new Request(tokens[0], tokens));
-            logger.info(response);
-            logger.info(response.getMessage());
 //            } catch (Exception e) {
 //                logger.error(e);
 //            }

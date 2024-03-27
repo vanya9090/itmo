@@ -65,7 +65,7 @@ public class UDPConnection extends ConnectionManager{
 
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
-                        System.out.println(response.getMessage());
+                        System.out.println(response.getBody());
                         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
                         buffer.clear();
                         client.send(buffer, this.clientAddress);
@@ -74,9 +74,7 @@ public class UDPConnection extends ConnectionManager{
                     }
                     iter.remove();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (Exception e) {
                 System.out.println(e);

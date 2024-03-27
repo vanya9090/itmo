@@ -45,7 +45,7 @@ public final class Server {
 //        commandManager.register("update", new Update(logger, collectionManager));
         commandManager.register("remove_by_id", new RemoveById(collectionManager));
         commandManager.register("clear", new Clear(collectionManager));
-        commandManager.register("save", new Save(collectionManager, ENV_KEY));
+//        commandManager.register("save", new Save(collectionManager, ENV_KEY));
 //        commandManager.register("execute_script", new ExecuteScript(runner));
         commandManager.register("exit", new Exit());
         commandManager.register("remove_first", new RemoveFirst(collectionManager));

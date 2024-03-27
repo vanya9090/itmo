@@ -5,8 +5,6 @@ public class Response  extends Connection {
     private String message = "";
     public  Status code = Status.OK;
 
-    public Response() {}
-
     public Response withMessage(String message) {
         this.message = message;
         return this;

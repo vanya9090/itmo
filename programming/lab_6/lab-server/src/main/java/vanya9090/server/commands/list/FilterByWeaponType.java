@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 /**
  * фильтрация по типу оружия
- *
  * @author vanya9090
  */
 public class FilterByWeaponType extends Command {

@@ -2,12 +2,12 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * вывод всех доступных команд
- *
  * @author vanya9090
  */
 public class Help extends Command {
@@ -19,9 +19,12 @@ public class Help extends Command {
     }
 
     @Override
-    public String apply(String[] args) {
-        return this.commands.values().stream()
-                .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
-                .collect(Collectors.joining());
+    public Map<String, String> apply(String[] args) {
+        return this.commands.values().
+                stream().
+                collect(Collectors.toMap(Command::getName, Command::getDescription));
+//        return this.commands.values().stream()
+//                .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
+//                .collect(Collectors.joining());
     }
 }

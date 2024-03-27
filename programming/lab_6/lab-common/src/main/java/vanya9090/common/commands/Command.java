@@ -1,10 +1,13 @@
 package vanya9090.common.commands;
+
+import java.io.Serializable;
+
 /**
  * абстрактный класс для всех команд
  *
  * @author vanya9090
  */
-public abstract class Command {
+public abstract class Command implements Serializable {
     private final String name;
     private final String description;
 

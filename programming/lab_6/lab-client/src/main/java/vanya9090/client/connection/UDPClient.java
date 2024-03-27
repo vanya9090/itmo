@@ -46,7 +46,6 @@ public class UDPClient {
             address = this.client.receive(buffer1);
         }
 
-        System.out.println(Arrays.toString(buffer1.array()));
         return (Response) ObjectIO.readObject(buffer1.array());
     }
 
