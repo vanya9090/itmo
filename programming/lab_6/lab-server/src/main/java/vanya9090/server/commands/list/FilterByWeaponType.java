@@ -1,9 +1,10 @@
 package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
-import vanya9090.server.models.HumanBeing;
-import vanya9090.server.models.WeaponType;
+import vanya9090.common.models.HumanBeing;
+import vanya9090.common.models.WeaponType;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
@@ -31,10 +32,10 @@ public class FilterByWeaponType extends Command {
      * @throws NotFoundException              нет такого типа оружия
      */
     @Override
-    public String apply(String[] args) throws WrongAmountOfElementsException, NotFoundException {
+    public String apply(CommandArgument args) throws WrongAmountOfElementsException, NotFoundException {
         try {
-            if (args[1].isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
-            WeaponType weaponType = WeaponType.valueOf(args[1].toUpperCase());
+            if (args.getStringArg().isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
+            WeaponType weaponType = WeaponType.valueOf(args.getStringArg().toUpperCase());
             List<HumanBeing> result = filterByWeaponType(weaponType);
             if (result.isEmpty()) return "no results\n";
             return result.stream().map(HumanBeing::toString).collect(Collectors.joining("\n")) + "\n";

@@ -1,5 +1,6 @@
 package vanya9090.server.commands.list;
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.AccessException;
@@ -21,7 +22,7 @@ public class Save extends Command {
     }
 
     @Override
-    public String apply(String[] args) throws AccessException, NotFoundException {
+    public String apply(CommandArgument args) throws AccessException, NotFoundException {
         this.collectionManager.writeCollection(this.envKey);
         return "";
     }

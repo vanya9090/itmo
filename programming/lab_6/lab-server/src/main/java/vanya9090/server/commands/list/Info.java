@@ -1,6 +1,7 @@
 package vanya9090.server.commands.list;
 
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 
@@ -20,7 +21,7 @@ public class Info extends Command {
     }
 
     @Override
-    public String apply(String[] args) {
+    public String apply(CommandArgument args) {
         StringBuilder stringBuilder = new StringBuilder();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         stringBuilder.append("Тип: ").

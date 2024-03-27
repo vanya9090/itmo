@@ -3,6 +3,7 @@ package vanya9090.client.forms;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
+import vanya9090.common.models.Car;
 
 import java.util.Scanner;
 

@@ -1,6 +1,8 @@
-package vanya9090.server.models;
+package vanya9090.common.models;
 
-public class Car implements Validatable {
+import java.io.Serializable;
+
+public class Car implements Validatable, Serializable {
     private final Boolean cool; //Поле не может быть null
     private String name; //Поле не может быть null
 

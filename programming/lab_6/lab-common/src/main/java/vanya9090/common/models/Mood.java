@@ -1,4 +1,4 @@
-package vanya9090.server.models;
+package vanya9090.common.models;
 
 public enum Mood {
     SADNESS,

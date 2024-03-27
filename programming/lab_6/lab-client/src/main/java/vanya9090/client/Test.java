@@ -1,5 +1,6 @@
 package vanya9090.client;
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.connection.ObjectIO;
 import vanya9090.common.connection.Request;
 
@@ -18,7 +19,7 @@ public class Test {
             channel.configureBlocking(false);
 
             ByteBuffer buffer;
-            buffer = ByteBuffer.wrap(ObjectIO.writeObject(new Request("test", new String[]{"test"})).toByteArray());
+            buffer = ByteBuffer.wrap(ObjectIO.writeObject(new Request("test", new CommandArgument())).toByteArray());
             InetSocketAddress serverAddress = new InetSocketAddress(SERVER_IP, SERVER_PORT);
             channel.send(buffer, serverAddress);
 

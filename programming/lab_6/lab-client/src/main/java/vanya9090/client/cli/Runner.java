@@ -2,9 +2,12 @@ package vanya9090.client.cli;
 
 import vanya9090.client.Client;
 import vanya9090.client.connection.UDPClient;
+import vanya9090.client.forms.HumanBeingForm;
 import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
+import vanya9090.common.models.HumanBeing;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.*;
 
@@ -33,7 +36,7 @@ public class Runner {
         this.commands = commands;
     }
 
-    public void run() throws IOException, ClassNotFoundException {
+    public void run() throws IOException, ClassNotFoundException, ParseException, EmptyFieldException {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
@@ -41,10 +44,13 @@ public class Runner {
             if (!this.commands.containsKey(tokens[0])) {
                 this.logger.warning("команда " + tokens[0] + " не найдена, наберите help для справки");
             } else {
+                Response response = null;
                 if (Objects.equals(tokens[0], "add")) {
-
+                    HumanBeing humanBeing = new HumanBeingForm(this.logger, new Scanner(System.in), false).create();
+                    response = client.request(new Request(tokens[0], new CommandArgument().withModelArg(humanBeing)));
+                } else {
+                    response = client.request(new Request(tokens[0], new CommandArgument().withStringArg(tokens[0])));
                 }
-                Response response = client.request(new Request(tokens[0], tokens));
                 logger.info(response.getBody());
             }
 //            try {

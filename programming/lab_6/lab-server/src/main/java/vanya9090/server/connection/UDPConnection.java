@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -49,17 +50,16 @@ public class UDPConnection extends ConnectionManager{
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
 
-                        ByteBuffer buffer = ByteBuffer.allocate(1024);
+                        ByteBuffer buffer = ByteBuffer.allocate(4096);
                         this.clientAddress = (InetSocketAddress) client.receive(buffer);
                         buffer.flip();
-
+                        System.out.println(Arrays.toString(buffer.array()));
                         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
                         ObjectInputStream oi = new ObjectInputStream(bi);
                         Request request = (Request) oi.readObject();
                         System.out.println(request.getCommandName());
                         response = this.requestCallback.call(request);
                         key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
-                        System.out.println(key.isWritable() + " " + key.isReadable() + " " + key.isValid());
                     } if (key.isWritable() && key.isValid()) {
                         System.out.println("writing");
 
@@ -70,7 +70,6 @@ public class UDPConnection extends ConnectionManager{
                         buffer.clear();
                         client.send(buffer, this.clientAddress);
                         client.register(selector, SelectionKey.OP_READ);
-                        System.out.println(key.isWritable() + " " + key.isReadable() + " " + key.isValid());
                     }
                     iter.remove();
                 }

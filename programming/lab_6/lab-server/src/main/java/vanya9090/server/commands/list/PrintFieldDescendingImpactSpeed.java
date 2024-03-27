@@ -2,8 +2,9 @@ package vanya9090.server.commands.list;
 
 
 import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
-import vanya9090.server.models.HumanBeing;
+import vanya9090.common.models.HumanBeing;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,7 +31,7 @@ public class PrintFieldDescendingImpactSpeed extends Command {
      * @return значения поля impactSpeed всех элементов
      */
     @Override
-    public String apply(String[] args) {
+    public String apply(CommandArgument args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();
         return result.stream()
                 .map(Objects::toString)

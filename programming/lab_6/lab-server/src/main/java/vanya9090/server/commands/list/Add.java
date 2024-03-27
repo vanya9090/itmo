@@ -3,12 +3,13 @@
 //
 //
 //import vanya9090.common.commands.Command;
+//import vanya9090.common.commands.CommandArgument;
 //import vanya9090.common.exceptions.EmptyFieldException;
 //import vanya9090.common.exceptions.ParseException;
 //import vanya9090.common.exceptions.ValidateException;
 //import vanya9090.server.commands.Executable;
 //import vanya9090.server.managers.CollectionManager;
-//import vanya9090.server.models.HumanBeing;
+//import vanya9090.common.models.HumanBeing;
 //
 //import java.util.Scanner;
 //
@@ -58,7 +59,7 @@
 //     * @throws EmptyFieldException пустое поле
 //     * @throws ValidateException   ошибка синтетических ограничений
 //     */
-//    public String apply(String[] args, Scanner fileReader) throws ParseException, EmptyFieldException, ValidateException {
+//    public String apply(CommandArgument[] args, Scanner fileReader) throws ParseException, EmptyFieldException, ValidateException {
 //        HumanBeing.updateNextId(collectionManager);
 //        HumanBeingForm humanBeingForm = new HumanBeingForm(new ExecuteLogger(), fileReader, true);
 //        HumanBeing humanBeing = humanBeingForm.create();

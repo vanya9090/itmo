@@ -1,12 +1,12 @@
 package vanya9090.client.forms;
 
+import vanya9090.common.models.*;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -24,51 +24,50 @@ public class HumanBeingForm implements Form {
         this.isExecute = isExecute;
     }
 
-    public Map<String, Object> create() throws ParseException, EmptyFieldException {
-        HashMap<String, Object> form = new HashMap<>(); // пока что возвращаю Object, а дальше как пойдет
-        form.put("name", this.askName());
-        form.put("coordinates", this.askCoordinates());
-        form.put("date", LocalDate.now());
-        form.put("realHero", this.askRealHero());
-        form.put("hasToothpick", this.askHasToothpick());
-        form.put("impactSpeed", this.askImpactSpeed());
-        form.put("minutesOfWaiting", this.askMinutesOfWaiting());
-        form.put("weaponType", this.askWeaponType());
-        form.put("mood", this.askMood());
-        form.put("car", this.askCar());
+    public HumanBeing create() throws ParseException, EmptyFieldException {
 
-        return form;
+        return new HumanBeing(
+                this.askName(),
+                this.askCoordinates(),
+                LocalDate.now(),
+                this.askRealHero(),
+                this.askHasToothpick(),
+                this.askImpactSpeed(),
+                this.askMinutesOfWaiting(),
+                this.askWeaponType(),
+                this.askMood(),
+                this.askCar());
     }
 
-//    private Car askCar() throws ParseException, EmptyFieldException {
-//        CarForm carForm = new CarForm(this.logger, this.scanner, this.isExecute);
-//        return carForm.create();
-//    }
+    private Car askCar() throws ParseException, EmptyFieldException {
+        CarForm carForm = new CarForm(this.logger, this.scanner, this.isExecute);
+        return carForm.create();
+    }
 
-//    private Mood askMood() throws ParseException, EmptyFieldException {
-//        Mood mood;
-//        this.logger.info("Типы настрений: " + Arrays.toString(Mood.values()));
-//        while (true) {
-//            try {
-//                this.logger.field("Введите настроение: ");
-//                String field = this.scanner.nextLine().trim();
-//                if (field.isEmpty()) throw new EmptyFieldException("настроение");
-//                try {
-//                    mood = Mood.valueOf(field.toUpperCase());
-//                } catch (IllegalArgumentException e) {
-//                    throw new ParseException("mood", field);
-//                }
-//                break;
-//            } catch (EmptyFieldException | ParseException e) {
-//                if (this.isExecute) {
-//                    throw e;
-//                } else {
-//                    logger.error(e);
-//                }
-//            }
-//        }
-//        return mood;
-//    }
+    private Mood askMood() throws ParseException, EmptyFieldException {
+        Mood mood;
+        this.logger.info("Типы настрений: " + Arrays.toString(Mood.values()));
+        while (true) {
+            try {
+                this.logger.field("Введите настроение: ");
+                String field = this.scanner.nextLine().trim();
+                if (field.isEmpty()) throw new EmptyFieldException("настроение");
+                try {
+                    mood = Mood.valueOf(field.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    throw new ParseException("mood", field);
+                }
+                break;
+            } catch (EmptyFieldException | ParseException e) {
+                if (this.isExecute) {
+                    throw e;
+                } else {
+                    logger.error(e);
+                }
+            }
+        }
+        return mood;
+    }
 
     private WeaponType askWeaponType() throws ParseException, EmptyFieldException {
         WeaponType weaponType;
@@ -201,10 +200,10 @@ public class HumanBeingForm implements Form {
         return hero;
     }
 
-//    private Coordinates askCoordinates() throws ParseException, EmptyFieldException {
-//        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger, this.scanner, this.isExecute);
-//        return coordinatesForm.create();
-//    }
+    private Coordinates askCoordinates() throws ParseException, EmptyFieldException {
+        CoordinatesForm coordinatesForm = new CoordinatesForm(this.logger, this.scanner, this.isExecute);
+        return coordinatesForm.create();
+    }
 
     public String askName() throws EmptyFieldException {
         String name;

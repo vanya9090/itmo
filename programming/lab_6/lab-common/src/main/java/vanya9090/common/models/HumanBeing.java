@@ -1,11 +1,11 @@
-package vanya9090.server.models;
+package vanya9090.common.models;
 
-import vanya9090.server.managers.CollectionManager;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class HumanBeing implements Comparable<HumanBeing>, Validatable {
+public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializable {
     static int nextId;
     private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -51,13 +51,14 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable {
         this.car = car;
     }
 
-    public static void updateNextId(CollectionManager collectionManager) {
-        int maxId = collectionManager
-                .getCollection()
-                .stream().filter(Objects::nonNull)
-                .map(HumanBeing::getId)
-                .mapToInt(Integer::intValue).max().orElse(0);
-        nextId = maxId + 1;
+    public static void updateNextId() {
+        nextId = 0;
+//        int maxId = collectionManager
+//                .getCollection()
+//                .stream().filter(Objects::nonNull)
+//                .map(HumanBeing::getId)
+//                .mapToInt(Integer::intValue).max().orElse(0);
+//        nextId = maxId + 1;
     }
 
     public int getId() {

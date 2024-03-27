@@ -1,6 +1,7 @@
 package vanya9090.server.commands.list;
 
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
@@ -24,7 +25,7 @@ public class Clear extends Command {
      * @throws EmptyCollectionException пустая ли коллекция
      */
     @Override
-    public String apply(String[] args) throws EmptyCollectionException {
+    public String apply(CommandArgument args) throws EmptyCollectionException {
         if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         collectionManager.clear();
         return "";

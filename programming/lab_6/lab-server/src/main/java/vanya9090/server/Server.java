@@ -41,7 +41,7 @@ public final class Server {
         commandManager.register("help", new Help(commandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));
-//        commandManager.register("add", new Add(logger, collectionManager));
+        commandManager.register("add", new AddNew(collectionManager));
 //        commandManager.register("update", new Update(logger, collectionManager));
         commandManager.register("remove_by_id", new RemoveById(collectionManager));
         commandManager.register("clear", new Clear(collectionManager));

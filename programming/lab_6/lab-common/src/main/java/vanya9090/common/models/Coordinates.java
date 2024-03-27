@@ -1,6 +1,8 @@
-package vanya9090.server.models;
+package vanya9090.common.models;
 
-public class Coordinates implements Validatable {
+import java.io.Serializable;
+
+public class Coordinates implements Validatable, Serializable {
     private final Integer x; //Максимальное значение поля: 925, Поле не может быть null
     private final Float y; //Значение поля должно быть больше -208, Поле не может быть null
 

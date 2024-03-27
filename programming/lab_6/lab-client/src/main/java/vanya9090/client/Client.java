@@ -3,6 +3,7 @@ package vanya9090.client;
 import vanya9090.client.cli.Runner;
 import vanya9090.client.connection.UDPClient;
 import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
 import vanya9090.common.util.ILogger;
@@ -19,7 +20,7 @@ public final class Client {
     public static void main(String[] args){
         try {
             UDPClient client = new UDPClient(InetAddress.getLocalHost(), PORT);
-            Response help = client.request(new Request("help", new String[]{""}));
+            Response help = client.request(new Request("help", new CommandArgument()));
             HashMap<String, String> commands = (HashMap<String, String>) help.getBody();
             System.out.println(commands);
             Runner runner = new Runner(client, commands);

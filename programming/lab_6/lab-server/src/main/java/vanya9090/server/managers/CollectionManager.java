@@ -4,10 +4,10 @@ package vanya9090.server.managers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import vanya9090.common.handlers.*;
+import vanya9090.common.models.*;
 import vanya9090.common.validators.*;
-import vanya9090.server.models.*;
+import vanya9090.common.models.*;
 import vanya9090.common.exceptions.*;
-import vanya9090.server.models.HumanBeing;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

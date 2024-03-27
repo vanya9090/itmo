@@ -1,8 +1,9 @@
 package vanya9090.server.commands.list;
 
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
-import vanya9090.server.models.HumanBeing;
+import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
 
@@ -22,7 +23,7 @@ public class Show extends Command {
     }
 
     @Override
-    public String apply(String[] args) throws EmptyCollectionException {
+    public String apply(CommandArgument args) throws EmptyCollectionException {
         if (collectionManager.getCollection().isEmpty()) throw new EmptyCollectionException();
         return collectionManager.getCollection().stream()
                 .map(HumanBeing::toString)

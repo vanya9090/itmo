@@ -1,8 +1,8 @@
 package vanya9090.client.forms;
 
 
-import vanya9090.client.models.Coordinates;
-import vanya9090.client.utils.ILogger;
+import vanya9090.common.models.Coordinates;
+import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
 

@@ -1,6 +1,7 @@
 package vanya9090.server.commands.list;
 
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
@@ -20,7 +21,7 @@ public class RemoveHead extends Command {
     }
 
     @Override
-    public String apply(String[] args) throws EmptyFieldException, EmptyCollectionException {
+    public String apply(CommandArgument args) throws EmptyFieldException, EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         return collectionManager.removeHead().toString() + "\n";
     }

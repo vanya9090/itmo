@@ -1,7 +1,8 @@
 package vanya9090.server.commands.list;
 
+import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
-import vanya9090.server.models.HumanBeing;
+import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
 
 /**
@@ -18,7 +19,7 @@ public class SumOfImpactSpeed extends Command {
     }
 
     @Override
-    public String apply(String[] args) {
+    public String apply(CommandArgument args) {
         int result = this.getSumOfImpactSpeed();
         return result + "\n";
     }

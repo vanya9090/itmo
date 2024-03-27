@@ -1,10 +1,12 @@
 package vanya9090.common.connection;
 
+import vanya9090.common.commands.CommandArgument;
+
 public class Request extends Connection {
     private final String commandName;
-    private String[] argument;
+    private CommandArgument argument;
 
-    public Request(String commandName,  String[] argument) {
+    public Request(String commandName,  CommandArgument argument) {
         this.commandName = commandName;
         this.argument = argument;
     }
@@ -12,10 +14,10 @@ public class Request extends Connection {
     public String getCommandName() {
         return this.commandName;
     }
-    public String[] getArgument() {
+    public CommandArgument getArgument() {
         return this.argument;
     }
-    public void setArgument(String[] argument) {
+    public void setArgument(CommandArgument argument) {
         this.argument = argument;
     }
 }

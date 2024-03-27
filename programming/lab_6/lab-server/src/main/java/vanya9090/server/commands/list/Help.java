@@ -1,6 +1,7 @@
 package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Help extends Command {
     }
 
     @Override
-    public Map<String, String> apply(String[] args) {
+    public Map<String, String> apply(CommandArgument args) {
         return this.commands.values().
                 stream().
                 collect(Collectors.toMap(Command::getName, Command::getDescription));
