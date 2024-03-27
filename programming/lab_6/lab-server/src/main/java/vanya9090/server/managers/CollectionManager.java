@@ -1,19 +1,17 @@
-package vanya9090.client.managers;
+package vanya9090.server.managers;
 
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import vanya9090.client.models.*;
+import vanya9090.common.handlers.*;
+import vanya9090.common.validators.*;
+import vanya9090.server.models.*;
 import vanya9090.common.exceptions.*;
-import vanya9090.client.handlers.*;
-import vanya9090.client.validators.*;
+import vanya9090.server.models.HumanBeing;
 
-import java.io.FileNotFoundException;
-import java.security.spec.ECField;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * менеджер коллекции
@@ -83,8 +81,8 @@ public class CollectionManager {
         Handler<String> stringHandler = new StringHandler();
         Handler<Float> floatHandler = new FloatHandler();
         Handler<LocalDate> localDateHandler = new LocalDateHandler();
-        Handler<WeaponType> weaponTypeHandler = new WeaponTypeHandler();
-        Handler<Mood> moodHandler = new MoodHandler();
+//        Handler<WeaponType> weaponTypeHandler = new WeaponTypeHandler();
+//        Handler<Mood> moodHandler = new MoodHandler();
 
         Validator<Integer> idValidator = new IdValidator();
         Validator<String> nameValidator = new NameValidator();
@@ -95,8 +93,8 @@ public class CollectionManager {
         Validator<Boolean> hasToothpickValidator = new HasToothpickValidator();
         Validator<Integer> impactSpeedValidator = new ImpactSpeedValidator();
         Validator<Float> minutesOfWaitingValidator = new MinutesOfWaitingValidator();
-        Validator<WeaponType> weaponTypeValidator = new WeaponTypeValidator();
-        Validator<Mood> moodValidator = new MoodValidator();
+//        Validator<WeaponType> weaponTypeValidator = new WeaponTypeValidator();
+//        Validator<Mood> moodValidator = new MoodValidator();
         Validator<String> nameCarValidator = new NameCarValidator();
         Validator<Boolean> coolCarValidator = new CoolCarValidator();
 
@@ -217,26 +215,27 @@ public class CollectionManager {
                 exceptionList.add(e);
             }
 
-            try {
-                String fieldWeaponType = jsonElement.getAsJsonObject().get("weaponType").getAsString();
-                weaponType = weaponTypeHandler.handle(fieldWeaponType, "weaponType");
-                if (!weaponTypeValidator.validate(weaponType)) exceptionList.add(new WrongFieldsException(id, "weaponType"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "weaponType"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
+            weaponType = WeaponType.HAMMER;
+//            try {
+//                String fieldWeaponType = jsonElement.getAsJsonObject().get("weaponType").getAsString();
+//                weaponType = weaponTypeHandler.handle(fieldWeaponType, "weaponType");
+//                if (!weaponTypeValidator.validate(weaponType)) exceptionList.add(new WrongFieldsException(id, "weaponType"));
+//            } catch (UnsupportedOperationException e) {
+//                exceptionList.add(new NullFieldException(id, "weaponType"));
+//            } catch (ParseException e) {
+//                exceptionList.add(e);
+//            }
 
-
-            try {
-                String fieldMood = jsonElement.getAsJsonObject().get("mood").getAsString();
-                mood = moodHandler.handle(fieldMood, "mood");
-                if (!moodValidator.validate(mood)) exceptionList.add(new WrongFieldsException(id, "mood"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "mood"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
+            mood = Mood.SADNESS;
+//            try {
+//                String fieldMood = jsonElement.getAsJsonObject().get("mood").getAsString();
+//                mood = moodHandler.handle(fieldMood, "mood");
+//                if (!moodValidator.validate(mood)) exceptionList.add(new WrongFieldsException(id, "mood"));
+//            } catch (UnsupportedOperationException e) {
+//                exceptionList.add(new NullFieldException(id, "mood"));
+//            } catch (ParseException e) {
+//                exceptionList.add(e);
+//            }
 
 
             try {

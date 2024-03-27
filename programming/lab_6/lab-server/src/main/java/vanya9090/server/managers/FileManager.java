@@ -1,9 +1,9 @@
-package vanya9090.client.managers;
+package vanya9090.server.managers;
 
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
-import vanya9090.client.models.HumanBeing;
+import vanya9090.server.models.HumanBeing;
 import vanya9090.common.exceptions.*;
 
 import java.io.FileNotFoundException;

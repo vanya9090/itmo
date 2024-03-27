@@ -1,12 +1,12 @@
-package vanya9090.client.commands;
+package vanya9090.server.commands.list;
 
-import vanya9090.client.managers.CollectionManager;
-import vanya9090.client.models.HumanBeing;
-import vanya9090.client.models.WeaponType;
+import vanya9090.common.commands.Command;
+import vanya9090.server.managers.CollectionManager;
+import vanya9090.server.models.HumanBeing;
+import vanya9090.server.models.WeaponType;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

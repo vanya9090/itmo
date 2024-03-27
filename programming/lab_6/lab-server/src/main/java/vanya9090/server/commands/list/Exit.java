@@ -1,4 +1,6 @@
-package vanya9090.client.commands;
+package vanya9090.server.commands.list;
+
+import vanya9090.common.commands.Command;
 
 /**
  * выход из программы

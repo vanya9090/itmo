@@ -1,4 +1,4 @@
-package vanya9090.client.models;
+package vanya9090.server.models;
 
 public class Coordinates implements Validatable {
     private final Integer x; //Максимальное значение поля: 925, Поле не может быть null

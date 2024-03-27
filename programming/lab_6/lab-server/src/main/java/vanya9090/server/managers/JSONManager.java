@@ -1,10 +1,10 @@
-package vanya9090.client.managers;
+package vanya9090.server.managers;
 
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import vanya9090.client.models.HumanBeing;
-import vanya9090.client.utils.LocalDateTypeAdapter;
+import vanya9090.server.models.HumanBeing;
+import vanya9090.server.utils.LocalDateTypeAdapter;
 import vanya9090.common.exceptions.*;
 
 import java.io.File;
@@ -104,13 +104,13 @@ public class JSONManager implements FileManager {
     }
 
 
-    /**
-     * @param collection коллекция из HumanBeing
-     * @param ENV_KEY
-     * @return true/false
-     * @throws NotFoundException файл не может быть открыт
-     * @throws AccessException   нет прав для записи
-     */
+//    /**
+//     * @param collection коллекция из HumanBeing
+//     * @param ENV_KEY
+//     * @return true/false
+//     * @throws NotFoundException файл не может быть открыт
+//     * @throws AccessException   нет прав для записи
+//     */
     public void writeFile(Collection<HumanBeing> collection, String ENV_KEY) throws NotFoundException, AccessException {
         String path = System.getenv(ENV_KEY);
         if (new File(path).canWrite()) {

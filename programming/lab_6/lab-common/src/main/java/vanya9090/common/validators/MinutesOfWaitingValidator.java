@@ -1,4 +1,4 @@
-package vanya9090.client.validators;
+package vanya9090.common.validators;
 
 public class MinutesOfWaitingValidator extends Validator<Float>{
     @Override

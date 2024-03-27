@@ -1,4 +1,4 @@
-package vanya9090.client.validators;
+package vanya9090.common.validators;
 
 import java.time.LocalDate;
 

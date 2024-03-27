@@ -1,4 +1,4 @@
-package vanya9090.client.validators;
+package vanya9090.common.validators;
 
 public class XValidator extends Validator<Integer>{
     private final static int LOWER_BOUND = 925;

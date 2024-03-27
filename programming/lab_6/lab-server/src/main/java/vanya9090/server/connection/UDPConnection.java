@@ -3,6 +3,7 @@ package vanya9090.server.connection;
 import vanya9090.common.connection.ObjectIO;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
+import vanya9090.common.connection.Status;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -32,8 +33,8 @@ public class UDPConnection extends ConnectionManager{
     }
     @Override
     public void run() {
+        Response response = null;
         while (true) {
-            Response response = null;
             try {
                 if (selector.select(3000) == 0) continue;
                 Set<SelectionKey> keys = selector.selectedKeys();
@@ -41,7 +42,6 @@ public class UDPConnection extends ConnectionManager{
 
                 while (iter.hasNext()) {
                     SelectionKey key = iter.next();
-                    iter.remove();
 
                     if (key.isReadable()) {
                         System.out.println("reading");
@@ -56,21 +56,23 @@ public class UDPConnection extends ConnectionManager{
                         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
                         ObjectInputStream oi = new ObjectInputStream(bi);
                         Request request = (Request) oi.readObject();
-
+                        System.out.println(request.getCommandName());
                         response = this.requestCallback.call(request);
-                        System.out.println(response);
-                        key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-                    } else if (key.isWritable() && key.isValid()) {
+                        key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+                        System.out.println(key.isWritable() + " " + key.isReadable() + " " + key.isValid());
+                    } if (key.isWritable() && key.isValid()) {
                         System.out.println("writing");
 
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
-
-                        ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject("received").toByteArray());
+                        System.out.println(response.getMessage());
+                        ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
                         buffer.clear();
                         client.send(buffer, this.clientAddress);
                         client.register(selector, SelectionKey.OP_READ);
+                        System.out.println(key.isWritable() + " " + key.isReadable() + " " + key.isValid());
                     }
+                    iter.remove();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -18,7 +18,7 @@ public class Test {
             channel.configureBlocking(false);
 
             ByteBuffer buffer;
-            buffer = ByteBuffer.wrap(ObjectIO.writeObject(new Request("some text")).toByteArray());
+            buffer = ByteBuffer.wrap(ObjectIO.writeObject(new Request("test", new String[]{"test"})).toByteArray());
             InetSocketAddress serverAddress = new InetSocketAddress(SERVER_IP, SERVER_PORT);
             channel.send(buffer, serverAddress);
 

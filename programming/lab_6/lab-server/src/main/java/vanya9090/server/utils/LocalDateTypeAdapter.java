@@ -1,4 +1,4 @@
-package vanya9090.client.utils;
+package vanya9090.server.utils;
 
 import com.google.gson.*;
 

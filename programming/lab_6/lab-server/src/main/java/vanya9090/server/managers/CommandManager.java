@@ -1,7 +1,7 @@
 package vanya9090.server.managers;
 
 
-import vanya9090.server.commands.Command;
+import vanya9090.common.commands.Command;
 
 import java.util.HashMap;
 import java.util.Map;

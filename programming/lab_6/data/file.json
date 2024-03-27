@@ -3,12 +3,12 @@
     "id": 0,
     "name": "john",
     "coordinates": {
-      "x": 23874,
+      "x": 32,
       "y": 1234.324
     },
     "creationDate": "2017-01-13",
     "realHero": true,
-    "hasToothpick": 234234,
+    "hasToothpick": true,
     "impactSpeed": 1,
     "minutesOfWaiting": 29.5,
     "weaponType": "AXE",
@@ -22,7 +22,7 @@
     "id": 1,
     "name": "batman",
     "coordinates": {
-      "x": "sdfdsf",
+      "x": 123,
       "y": 987.234
     },
     "creationDate": "2024-02-19",
@@ -44,7 +44,7 @@
       "x": 234,
       "y": -12.0
     },
-    "creationDate": "2024-02-26",
+    "creationDate": "2023-02-26",
     "realHero": true,
     "hasToothpick": true,
     "impactSpeed": 239,

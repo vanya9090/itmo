@@ -1,8 +1,9 @@
-package vanya9090.client.commands;
+package vanya9090.server.commands.list;
 
 
-import vanya9090.client.managers.CollectionManager;
-import vanya9090.client.models.HumanBeing;
+import vanya9090.common.commands.Command;
+import vanya9090.server.managers.CollectionManager;
+import vanya9090.server.models.HumanBeing;
 
 import java.util.Comparator;
 import java.util.List;

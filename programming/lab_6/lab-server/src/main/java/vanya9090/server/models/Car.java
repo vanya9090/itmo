@@ -1,4 +1,4 @@
-package vanya9090.client.models;
+package vanya9090.server.models;
 
 public class Car implements Validatable {
     private final Boolean cool; //Поле не может быть null
