@@ -1,0 +1,15 @@
+show
+info
+add
+sdf
+120
+1200
+true
+true
+23
+23
+axe
+sadness
+sdkfjl
+true
+show
