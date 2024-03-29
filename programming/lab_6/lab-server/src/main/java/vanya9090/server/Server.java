@@ -24,7 +24,6 @@ public final class Server {
 //        Runner runner = new Runner(logger, commandManager);
         JSONManager jsonManager = new JSONManager();
         CollectionManager collectionManager = new CollectionManager(jsonManager);
-        collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
 
         try {
             Map<Integer, List<Exception>> exceptionMap = collectionManager.readCollection(jsonManager.readFile(ENV_KEY));

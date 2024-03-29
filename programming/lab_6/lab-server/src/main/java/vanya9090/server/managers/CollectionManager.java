@@ -74,7 +74,7 @@ public class CollectionManager {
 //        this.initDate = LocalDateTime.now();
 //    }
 
-
+// todo: iterate by Model fields
     public Map<Integer, List<Exception>> readCollection(JsonArray jsonElements) throws WrongFieldsException, ReadException, WrongPathException, EmptyFieldException, ParseException, NullFieldException {
         Handler<Integer> intHandler = new IntHandler();
         Handler<Boolean> booleanHandler = new BooleanHandler();

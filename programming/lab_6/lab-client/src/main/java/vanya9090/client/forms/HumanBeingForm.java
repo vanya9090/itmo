@@ -1,13 +1,19 @@
 package vanya9090.client.forms;
 
+import vanya9090.common.exceptions.NullFieldException;
+import vanya9090.common.exceptions.WrongFieldsException;
+import vanya9090.common.handlers.FloatHandler;
+import vanya9090.common.handlers.StringHandler;
 import vanya9090.common.models.*;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
+import vanya9090.common.validators.MinutesOfWaitingValidator;
+import vanya9090.common.validators.Validator;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * форма для ввода человека
@@ -25,7 +31,6 @@ public class HumanBeingForm implements Form {
     }
 
     public HumanBeing create() throws ParseException, EmptyFieldException {
-
         return new HumanBeing(
                 this.askName(),
                 this.askCoordinates(),
@@ -95,32 +100,22 @@ public class HumanBeingForm implements Form {
         return weaponType;
     }
 
-    private Float askMinutesOfWaiting() throws ParseException {
-        Float minutes;
+    private Float askMinutesOfWaiting() {
+        FloatHandler floatHandler = new FloatHandler();
+        Validator<Float> minutesOfWaitingValidator = new MinutesOfWaitingValidator();
+        Float minutesOfWaiting;
         while (true) {
             try {
                 this.logger.field("Введите время ожидания персонажа: ");
-//                Scanner scanner = new Scanner(System.in);
                 String field = this.scanner.nextLine().trim();
-                if (field.isEmpty()) {
-                    minutes = null;
-                } else {
-                    try {
-                        minutes = Float.parseFloat(field);
-                    } catch (IllegalArgumentException e) {
-                        throw new ParseException("minutes", field);
-                    }
-                }
+                minutesOfWaiting = floatHandler.handle(field, "minutesOfWaiting");
+                if (!minutesOfWaitingValidator.validate(minutesOfWaiting)) throw new WrongFieldsException(0, "minutesOfWaiting");
                 break;
-            } catch (ParseException e) {
-                if (this.isExecute) {
-                    throw e;
-                } else {
-                    logger.error(e);
-                }
+            } catch (WrongFieldsException | ParseException | EmptyFieldException e) {
+                this.logger.error(e);
             }
         }
-        return minutes;
+        return minutesOfWaiting;
     }
 
     private int askImpactSpeed() throws ParseException, EmptyFieldException {

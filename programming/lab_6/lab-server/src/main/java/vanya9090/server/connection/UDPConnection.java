@@ -53,7 +53,6 @@ public class UDPConnection extends ConnectionManager{
                         ByteBuffer buffer = ByteBuffer.allocate(4096);
                         this.clientAddress = (InetSocketAddress) client.receive(buffer);
                         buffer.flip();
-                        System.out.println(Arrays.toString(buffer.array()));
                         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
                         ObjectInputStream oi = new ObjectInputStream(bi);
                         Request request = (Request) oi.readObject();
