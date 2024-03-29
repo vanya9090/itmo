@@ -25,9 +25,9 @@ public class Clear extends Command {
      * @throws EmptyCollectionException пустая ли коллекция
      */
     @Override
-    public String apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
         if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         collectionManager.clear();
-        return "";
+        return new String[]{""};
     }
 }

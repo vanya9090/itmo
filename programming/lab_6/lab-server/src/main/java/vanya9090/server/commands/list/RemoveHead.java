@@ -21,8 +21,8 @@ public class RemoveHead extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) throws EmptyFieldException, EmptyCollectionException {
+    public Object[] apply(CommandArgument args) throws EmptyFieldException, EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
-        return collectionManager.removeHead().toString() + "\n";
+        return new String[]{collectionManager.removeHead().toString()};
     }
 }

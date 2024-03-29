@@ -19,9 +19,9 @@ public class SumOfImpactSpeed extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) {
+    public Object[] apply(CommandArgument args) {
         int result = this.getSumOfImpactSpeed();
-        return result + "\n";
+        return new String[]{result + "\n"};
     }
 
     private int getSumOfImpactSpeed() {

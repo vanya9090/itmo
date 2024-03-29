@@ -20,9 +20,9 @@ public class RemoveFirst extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         this.collectionManager.removeFirst();
-        return "done";
+        return new String[]{""};
     }
 }

@@ -1,7 +1,7 @@
 package vanya9090.common.connection;
 
 public class Response  extends Connection {
-    private Object body = "";
+    private Object[] body = new String[]{""};
     private String message = "";
     public  Status code = Status.OK;
 
@@ -15,12 +15,12 @@ public class Response  extends Connection {
         this.code = code;
     }
 
-    public Response(Object body, Status code) {
+    public Response(Object[] body, Status code) {
         this.body = body;
         this.code = code;
     }
 
-    public void setBody(Object body) {
+    public void setBody(Object[] body) {
         this.body = body;
     }
 
@@ -28,7 +28,10 @@ public class Response  extends Connection {
         return message;
     }
 
-    public Object getBody() {
+    public Object[] getBody() {
         return this.body;
+    }
+    public Object getCode() {
+        return this.code;
     }
 }

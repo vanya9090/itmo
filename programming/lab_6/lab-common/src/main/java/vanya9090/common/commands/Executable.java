@@ -1,4 +1,4 @@
-package vanya9090.server.commands;
+package vanya9090.common.commands;
 
 import java.util.Scanner;
 

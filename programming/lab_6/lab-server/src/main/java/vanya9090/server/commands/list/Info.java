@@ -21,7 +21,7 @@ public class Info extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) {
+    public Object[] apply(CommandArgument args) {
         StringBuilder stringBuilder = new StringBuilder();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         stringBuilder.append("Тип: ").
@@ -31,6 +31,6 @@ public class Info extends Command {
                 append("\nКоличество элементов: ").
                 append(this.collectionManager.getSize())
                 .append("\n");
-        return stringBuilder.toString();
+        return new String[]{stringBuilder.toString()};
     }
 }

@@ -7,7 +7,7 @@
 //import vanya9090.common.exceptions.EmptyFieldException;
 //import vanya9090.common.exceptions.ParseException;
 //import vanya9090.common.exceptions.ValidateException;
-//import vanya9090.server.commands.Executable;
+//import vanya9090.common.commands.Executable;
 //import vanya9090.server.managers.CollectionManager;
 //import vanya9090.common.models.HumanBeing;
 //

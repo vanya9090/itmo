@@ -1,7 +1,7 @@
 //package vanya9090.server.commands.list;
 //
 //import vanya9090.common.util.ILogger;
-//import vanya9090.server.commands.Executable;
+//import vanya9090.common.commands.Executable;
 //import vanya9090.server.managers.CollectionManager;
 //import vanya9090.common.exceptions.*;
 //import vanya9090.server.models.*;

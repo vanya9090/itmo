@@ -8,7 +8,7 @@ import vanya9090.server.commands.CommandExecutor;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.util.Logger;
 import vanya9090.server.managers.CollectionManager;
-import vanya9090.server.managers.CommandManager;
+import vanya9090.common.commands.CommandManager;
 import vanya9090.server.managers.JSONManager;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ public final class Server {
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));
         commandManager.register("add", new AddNew(collectionManager));
-//        commandManager.register("update", new Update(logger, collectionManager));
+        commandManager.register("update", new UpdateNew(collectionManager));
         commandManager.register("remove_by_id", new RemoveById(collectionManager));
         commandManager.register("clear", new Clear(collectionManager));
 //        commandManager.register("save", new Save(collectionManager, ENV_KEY));
@@ -49,7 +49,7 @@ public final class Server {
         commandManager.register("exit", new Exit());
         commandManager.register("remove_first", new RemoveFirst(collectionManager));
         commandManager.register("remove_head", new RemoveHead(collectionManager));
-//        commandManager.register("add_if_min", new AddIfMin(logger, collectionManager));
+        commandManager.register("add_if_min", new AddIfMinNew(collectionManager));
         commandManager.register("sum_of_impact_speed", new SumOfImpactSpeed(collectionManager));
         commandManager.register("filter_by_weapon_type", new FilterByWeaponType(collectionManager));
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(collectionManager));

@@ -1,4 +1,4 @@
-package vanya9090.server.managers;
+package vanya9090.common.commands;
 
 
 import vanya9090.common.commands.Command;

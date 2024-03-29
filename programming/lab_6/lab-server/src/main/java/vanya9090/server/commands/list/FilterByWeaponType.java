@@ -32,13 +32,13 @@ public class FilterByWeaponType extends Command {
      * @throws NotFoundException              нет такого типа оружия
      */
     @Override
-    public String apply(CommandArgument args) throws WrongAmountOfElementsException, NotFoundException {
+    public Object[] apply(CommandArgument args) throws WrongAmountOfElementsException, NotFoundException {
         try {
-            if (args.getStringArg().isEmpty()) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
-            WeaponType weaponType = WeaponType.valueOf(args.getStringArg().toUpperCase());
+            if (args.getStringArg().length == 0) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
+            WeaponType weaponType = WeaponType.valueOf(args.getStringArg()[0].toUpperCase());
             List<HumanBeing> result = filterByWeaponType(weaponType);
-            if (result.isEmpty()) return "no results\n";
-            return result.stream().map(HumanBeing::toString).collect(Collectors.joining("\n")) + "\n";
+            if (result.isEmpty()) return new String[]{"no results\n"};
+            return result.stream().map(HumanBeing::toString).toArray();
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
         } catch (IllegalArgumentException e) {

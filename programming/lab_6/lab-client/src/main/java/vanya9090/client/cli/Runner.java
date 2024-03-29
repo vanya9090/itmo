@@ -5,8 +5,10 @@ import vanya9090.client.connection.UDPClient;
 import vanya9090.client.forms.HumanBeingForm;
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandManager;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
+import vanya9090.common.connection.Status;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.*;
@@ -16,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
@@ -41,17 +44,32 @@ public class Runner {
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
             String[] tokens = line.split(" ");
-            if (!this.commands.containsKey(tokens[0])) {
-                this.logger.warning("команда " + tokens[0] + " не найдена, наберите help для справки");
+            String commandName = tokens[0];
+            String[] args = Arrays.copyOfRange(tokens, 1, tokens.length);
+
+            if (!this.commands.containsKey(commandName)) {
+                this.logger.warning("команда " + commandName + " не найдена, наберите help для справки");
             } else {
                 Response response = null;
-                if (Objects.equals(tokens[0], "add")) {
+//                Command command = CommandManager.getCommands().get(commandName);
+//                response = client.request(new Request(command, new CommandArgument()))
+                if (Objects.equals(tokens[0], "add") || Objects.equals(tokens[0], "add_if_min")) {
                     HumanBeing humanBeing = new HumanBeingForm(this.logger, new Scanner(System.in), false).create();
                     response = client.request(new Request(tokens[0], new CommandArgument().withModelArg(humanBeing)));
+                } else if (Objects.equals(tokens[0], "update")) {
+                    HumanBeing humanBeing = new HumanBeingForm(this.logger, new Scanner(System.in), false).create();
+                    response = client.request(new Request(tokens[0], new CommandArgument().withModelArg(humanBeing).withStringArg(args)));
                 } else {
-                    response = client.request(new Request(tokens[0], new CommandArgument().withStringArg(tokens[0])));
+                    response = client.request(new Request(tokens[0], new CommandArgument().withStringArg(args)));
                 }
-                logger.info(response.getBody());
+                if (response.getCode() == Status.OK) {
+                    for (Object object: response.getBody()) {
+                        logger.info(object);
+                    }
+                } else {
+                    logger.error(response.getMessage());
+                }
+
             }
 //            try {
 //            } catch (Exception e) {

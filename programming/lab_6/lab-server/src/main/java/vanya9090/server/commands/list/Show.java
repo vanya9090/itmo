@@ -23,10 +23,9 @@ public class Show extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
         if (collectionManager.getCollection().isEmpty()) throw new EmptyCollectionException();
         return collectionManager.getCollection().stream()
-                .map(HumanBeing::toString)
-                .collect(Collectors.joining("\n")) + "\n";
+                .map(HumanBeing::toString).toArray();
     }
 }

@@ -31,11 +31,10 @@ public class PrintFieldDescendingImpactSpeed extends Command {
      * @return значения поля impactSpeed всех элементов
      */
     @Override
-    public String apply(CommandArgument args) {
+    public Object[] apply(CommandArgument args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();
         return result.stream()
-                .map(Objects::toString)
-                .collect(Collectors.joining("\n")) + "\n";
+                .map(Objects::toString).toArray();
     }
 
     private List<Integer> getFieldDescendingImpactSpeed() {

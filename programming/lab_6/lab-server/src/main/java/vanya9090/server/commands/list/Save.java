@@ -22,8 +22,8 @@ public class Save extends Command {
     }
 
     @Override
-    public String apply(CommandArgument args) throws AccessException, NotFoundException {
+    public Object[] apply(CommandArgument args) throws AccessException, NotFoundException {
         this.collectionManager.writeCollection(this.envKey);
-        return "";
+        return new String[]{""};
     }
 }

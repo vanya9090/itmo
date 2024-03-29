@@ -21,8 +21,8 @@ public class Exit extends Command {
      * @return пустая строка
      */
     @Override
-    public String apply(CommandArgument args) {
+    public Object[] apply(CommandArgument args) {
         System.exit(0);
-        return "";
+        return new String[]{""};
     }
 }

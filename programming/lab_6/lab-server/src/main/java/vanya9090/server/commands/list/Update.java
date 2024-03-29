@@ -6,7 +6,7 @@
 //import vanya9090.client.models.forms.HumanBeingForm;
 //import vanya9090.client.utils.ILogger;
 //import vanya9090.common.exceptions.*;
-//import vanya9090.server.commands.Executable;
+//import vanya9090.common.commands.Executable;
 //
 //import java.util.Scanner;
 //

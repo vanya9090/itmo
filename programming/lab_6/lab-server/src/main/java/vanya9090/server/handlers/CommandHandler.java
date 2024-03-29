@@ -4,7 +4,7 @@
 //import vanya9090.common.connection.Response;
 //import vanya9090.common.connection.Status;
 //import vanya9090.common.commands.Command;
-//import vanya9090.server.managers.CommandManager;
+//import vanya9090.common.commands.CommandManager;
 //
 //public class CommandHandler {
 //    private final CommandManager commandManager;

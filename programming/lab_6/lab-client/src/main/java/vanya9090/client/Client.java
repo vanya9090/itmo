@@ -21,7 +21,7 @@ public final class Client {
         try {
             UDPClient client = new UDPClient(InetAddress.getLocalHost(), PORT);
             Response help = client.request(new Request("help", new CommandArgument()));
-            HashMap<String, String> commands = (HashMap<String, String>) help.getBody();
+            HashMap<String, String> commands = (HashMap<String, String>) help.getBody()[0];
             System.out.println(commands);
             Runner runner = new Runner(client, commands);
 //            Response response = client.request(new Request("remove_head", ""));

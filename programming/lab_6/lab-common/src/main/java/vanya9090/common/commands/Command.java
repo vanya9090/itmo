@@ -24,5 +24,5 @@ public abstract class Command implements Serializable {
         return this.description;
     }
 
-    abstract public Object apply(CommandArgument arg) throws Exception;
+    abstract public Object[] apply(CommandArgument arg) throws Exception;
 }
