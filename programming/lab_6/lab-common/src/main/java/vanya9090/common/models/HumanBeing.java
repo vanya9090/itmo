@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializable {
     static int nextId;
-    private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
@@ -51,15 +51,18 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
         this.car = car;
     }
 
-    public static void updateNextId() {
-        nextId = 0;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+//    public static void updateNextId() {
 //        int maxId = collectionManager
 //                .getCollection()
 //                .stream().filter(Objects::nonNull)
 //                .map(HumanBeing::getId)
 //                .mapToInt(Integer::intValue).max().orElse(0);
 //        nextId = maxId + 1;
-    }
+//    }
 
     public int getId() {
         return this.id;

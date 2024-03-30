@@ -17,8 +17,8 @@ public class AddIfMinNew extends Command implements Formable {
     @Override
     public Object[] apply(CommandArgument arg) throws Exception {
         HumanBeing humanBeing = arg.getModelArg();
-        collectionManager.add(humanBeing);
         if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+            humanBeing.setId(collectionManager.getNextId());
             collectionManager.add(humanBeing);
             return new String[]{"added\n"};
         } else {

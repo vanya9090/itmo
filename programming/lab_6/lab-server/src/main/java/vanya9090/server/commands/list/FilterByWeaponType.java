@@ -37,7 +37,7 @@ public class FilterByWeaponType extends Command {
             if (args.getStringArg().length == 0) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
             WeaponType weaponType = WeaponType.valueOf(args.getStringArg()[0].toUpperCase());
             List<HumanBeing> result = filterByWeaponType(weaponType);
-            if (result.isEmpty()) return new String[]{"no results\n"};
+            if (result.isEmpty()) return new String[]{"no results"};
             return result.stream().map(HumanBeing::toString).toArray();
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");

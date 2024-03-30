@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandManager;
 
 /**
  * выход из программы
@@ -21,7 +22,8 @@ public class Exit extends Command {
      * @return пустая строка
      */
     @Override
-    public Object[] apply(CommandArgument args) {
+    public Object[] apply(CommandArgument args) throws Exception {
+        CommandManager.getCommands().get("save").apply(new CommandArgument().withStringArg(new String[]{""}));
         System.exit(0);
         return new String[]{""};
     }

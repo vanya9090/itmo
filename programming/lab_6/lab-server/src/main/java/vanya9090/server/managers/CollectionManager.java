@@ -69,6 +69,14 @@ public class CollectionManager {
         return null;
     }
 
+    public int getNextId() {
+        int maxId = this.getCollection()
+            .stream().filter(Objects::nonNull)
+            .map(HumanBeing::getId)
+            .mapToInt(Integer::intValue).max().orElse(0);
+        return maxId + 1;
+    }
+
 //    public void readCollection(String ENV_KEY) throws EmptyFileException, ValidateException, AccessException, NotFoundException, FormatException, FileNotFoundException {
 //        this.collection = (ArrayDeque<HumanBeing>) jsonManager.readFile(ENV_KEY);
 //        this.initDate = LocalDateTime.now();

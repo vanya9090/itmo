@@ -23,6 +23,7 @@ public class UpdateNew extends Command implements Formable {
         int id = Integer.parseInt(arg.getStringArg()[0]);
         HumanBeing humanToUpdate = collectionManager.getById(id);
         if (humanToUpdate == null) throw new NotFoundException("человек с таким id не найден");
+        humanBeing.setId(collectionManager.getNextId());
         humanToUpdate.update(humanBeing);
         return new String[]{""};
     }

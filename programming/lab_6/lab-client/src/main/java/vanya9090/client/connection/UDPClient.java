@@ -49,25 +49,6 @@ public class UDPClient {
         return (Response) ObjectIO.readObject(buffer1.array());
     }
 
-    private byte[] receiveData() throws IOException {
-        boolean received = false;
-        byte[] result = new byte[0];
-
-        while(!received) {
-            byte[] data = receiveData(PACKET_SIZE);
-            logger.info("Получено \"" + new String(data) + "\"");
-            logger.info("Последний байт: " + data[data.length - 1]);
-
-            if (data[data.length - 1] == 1) {
-                received = true;
-                logger.info("Получение данных окончено");
-            }
-            result = Bytes.concat(result, Arrays.copyOf(data, data.length - 1));
-        }
-
-        return result;
-    }
-
     private byte[] receiveData(int bufferSize) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
         SocketAddress address = null;

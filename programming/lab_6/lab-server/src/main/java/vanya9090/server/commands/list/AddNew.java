@@ -16,6 +16,7 @@ public class AddNew extends Command implements Formable {
     @Override
     public Object[] apply(CommandArgument arg) throws Exception {
         HumanBeing humanBeing = arg.getModelArg();
+        humanBeing.setId(collectionManager.getNextId());
         collectionManager.add(humanBeing);
         return new String[]{""};
     }

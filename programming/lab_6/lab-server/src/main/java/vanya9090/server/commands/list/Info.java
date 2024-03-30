@@ -29,8 +29,7 @@ public class Info extends Command {
                 append("\nДата инициализации: ").
                 append(dtf.format(this.collectionManager.getInitDate())).
                 append("\nКоличество элементов: ").
-                append(this.collectionManager.getSize())
-                .append("\n");
+                append(this.collectionManager.getSize());
         return new String[]{stringBuilder.toString()};
     }
 }
