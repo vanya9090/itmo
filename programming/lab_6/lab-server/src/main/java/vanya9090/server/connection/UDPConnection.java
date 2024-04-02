@@ -56,6 +56,7 @@ public class UDPConnection extends ConnectionManager{
                         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
                         ObjectInputStream oi = new ObjectInputStream(bi);
                         Request request = (Request) oi.readObject();
+                        Thread.sleep(10000);
                         System.out.println(request.getCommandName());
                         response = this.requestCallback.call(request);
                         key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);

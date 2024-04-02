@@ -24,8 +24,6 @@ public final class Client {
             HashMap<String, String> commands = (HashMap<String, String>) help.getBody()[0];
             System.out.println(commands);
             Runner runner = new Runner(client, commands);
-//            Response response = client.request(new Request("remove_head", ""));
-//            System.out.println(response.getMessage());
             runner.run();
         } catch (Exception e) {
             throw new RuntimeException(e);
