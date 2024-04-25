@@ -17,7 +17,11 @@ c_1000: word 0x00;
 c_100: word 0x00;
 c_10: word 0x00;
 c_1: word 0x00;
+position: word ?;
+symbol: word ?;
+
 start:cla;
+call clear;
 ;---------------
 ;in
 s1: in 0x07;
@@ -95,6 +99,12 @@ count_1000:
   jump count_1000;
 
 count_100:
+  ld #0x03;
+  st position;
+  ld c_1000;
+  st symbol;
+  call print;
+
   ld biggest_num;
   sub p_100;
   bmi count_10;
@@ -105,6 +115,12 @@ count_100:
   jump count_100;
 
 count_10:
+  ld #0x02;
+  st position;
+  ld c_100;
+  st symbol;
+  call print;
+
   ld biggest_num;
   sub p_10;
   bmi count_1;
@@ -115,37 +131,38 @@ count_10:
   jump count_10;
 
 count_1:
+  ld #0x01;
+  st position;
+  ld c_10;
+  st symbol;
+  call print;
+
   ld biggest_num;
   sub #0x01;
-  bmi exit;
+  bmi last_print;
   st biggest_num;
   ld c_1;
   inc;
   st c_1;
   jump count_1;
 
-exit:
+last_print:
+  ld #0x00;
+  st position;
+  ld c_1;
+  st symbol;
+  call print;
   hlt;
 
-org 0x100
-position: word ?;
-symbol: word ?;
-start:cla;
-call clear;
-
-ld #0x03;
-st position;
-ld #0x03;
-st symbol;
-
-ld position;
-rol;
-rol;
-rol;
-rol;
-add symbol;
-out 0x14;
-hlt;
+print:
+  ld position;
+  rol;
+  rol;
+  rol;
+  rol;
+  add symbol;
+  out 0x14;
+  ret;
 
 clear:
   ld #0x07;
