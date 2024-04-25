@@ -7,6 +7,16 @@ nums_start: word 0x200;
 temp: word 0x200;
 counter: word ?;
 first_num: word ?;
+second_num: word ?;
+biggest_num: word ?;
+p_2500: word 0x9c4;
+p_1000: word 0x3e8;
+p_100: word 0x064;
+p_10: word 0x00a;
+c_1000: word 0x00;
+c_100: word 0x00;
+c_10: word 0x00;
+c_1: word 0x00;
 start:cla;
 ;---------------
 ;in
@@ -33,6 +43,14 @@ ld nums_start;
 add #0x02;
 st nums_start;
 call load_num;
+st second_num;
+
+cmp first_num;
+bpl write_second;
+bmi write_first;
+beq write_first;
+
+printing: call count_1000;
 hlt;
 
 load_num: 
@@ -41,18 +59,73 @@ load_num:
   st temp;
 
   ld (nums_start);
-  asl
-  asl
-  asl
-  asl
-  asl
-  asl
-  asl
-  asl
+  asl;
+  asl;
+  asl;
+  asl;
+  asl;
+  asl;
+  asl;
+  asl;
   add (temp);
   ret;
 
+write_first:
+  ld first_num;
+  st biggest_num;
+  jump printing;
 
+write_second:
+  ld second_num;
+  st biggest_num;
+  jump printing;
+
+count_10000:
+  ld biggest_num;
+  sub p_2500;
+
+count_1000:
+  ld biggest_num;
+  sub p_1000;
+  bmi count_100;
+  st biggest_num;
+  ld c_1000;
+  inc;
+  st c_1000;
+  jump count_1000;
+
+count_100:
+  ld biggest_num;
+  sub p_100;
+  bmi count_10;
+  st biggest_num;
+  ld c_100;
+  inc;
+  st c_100;
+  jump count_100;
+
+count_10:
+  ld biggest_num;
+  sub p_10;
+  bmi count_1;
+  st biggest_num;
+  ld c_10;
+  inc;
+  st c_10;
+  jump count_10;
+
+count_1:
+  ld biggest_num;
+  sub #0x01;
+  bmi exit;
+  st biggest_num;
+  ld c_1;
+  inc;
+  st c_1;
+  jump count_1;
+
+exit:
+  hlt;
 
 org 0x100
 position: word ?;
