@@ -9,16 +9,16 @@ counter: word ?;
 first_num: word ?;
 second_num: word ?;
 biggest_num: word ?;
-p_2500: word 0x9c4;
+p_10000: word 0x2710;
 p_1000: word 0x3e8;
 p_100: word 0x064;
 p_10: word 0x00a;
+c_10000: word 0x00;
 c_1000: word 0x00;
 c_100: word 0x00;
 c_10: word 0x00;
 c_1: word 0x00;
-position: word ?;
-symbol: word ?;
+asl_i: word ?;
 
 start:cla;
 call clear;
@@ -54,23 +54,22 @@ bpl write_second;
 bmi write_first;
 beq write_first;
 
-printing: call count_1000;
+printing: call count_10000;
 hlt;
 
 load_num: 
+  ld asl_i;
+  add #0x08;
+  st asl_i;
+
   ld nums_start;
   inc;
   st temp;
 
   ld (nums_start);
-  asl;
-  asl;
-  asl;
-  asl;
-  asl;
-  asl;
-  asl;
-  asl;
+    asl_loop: asl;
+    loop asl_i;
+    jump asl_loop;
   add (temp);
   ret;
 
@@ -86,9 +85,23 @@ write_second:
 
 count_10000:
   ld biggest_num;
-  sub p_2500;
+  sub p_10000;
+  bmi count_1000;
+  st biggest_num;
+  ld c_10000;
+  inc;
+  st c_10000;
+  jump count_10000;
 
 count_1000:
+  position: word ?;
+  symbol: word ?;
+  ld #0x04;
+  st position;
+  ld c_10000;
+  st symbol;
+  call print;
+
   ld biggest_num;
   sub p_1000;
   bmi count_100;
@@ -168,12 +181,9 @@ clear:
   ld #0x07;
   st position;
     clear_start: ld position;
-    rol;
-    rol;
-    rol;
-    rol;
-    add #0x0f
-    out 0x14;
+    ld #0x0f;
+    st symbol;
+    call print;
     loop position;
     jump clear_start;
   cla;
