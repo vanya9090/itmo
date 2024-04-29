@@ -6,9 +6,9 @@ import com.google.gson.JsonElement;
 import vanya9090.common.handlers.*;
 import vanya9090.common.models.*;
 import vanya9090.common.validators.*;
-import vanya9090.common.models.*;
 import vanya9090.common.exceptions.*;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -77,195 +77,86 @@ public class CollectionManager {
         return maxId + 1;
     }
 
-//    public void readCollection(String ENV_KEY) throws EmptyFileException, ValidateException, AccessException, NotFoundException, FormatException, FileNotFoundException {
-//        this.collection = (ArrayDeque<HumanBeing>) jsonManager.readFile(ENV_KEY);
-//        this.initDate = LocalDateTime.now();
-//    }
-
-// todo: iterate by Model fields
-    public Map<Integer, List<Exception>> readCollection(JsonArray jsonElements) throws WrongFieldsException, ReadException, WrongPathException, EmptyFieldException, ParseException, NullFieldException {
-        Handler<Integer> intHandler = new IntHandler();
-        Handler<Boolean> booleanHandler = new BooleanHandler();
-        Handler<String> stringHandler = new StringHandler();
-        Handler<Float> floatHandler = new FloatHandler();
-        Handler<LocalDate> localDateHandler = new LocalDateHandler();
-//        Handler<WeaponType> weaponTypeHandler = new WeaponTypeHandler();
-//        Handler<Mood> moodHandler = new MoodHandler();
-
-        Validator<Integer> idValidator = new IdValidator();
-        Validator<String> nameValidator = new NameValidator();
-        Validator<Integer> xValidator = new XValidator();
-        Validator<Float> yValidator = new YValidator();
-        Validator<LocalDate> creationDateValidator = new CreationDateValidator();
-        Validator<Boolean> realHeroValidator = new RealHeroValidator();
-        Validator<Boolean> hasToothpickValidator = new HasToothpickValidator();
-        Validator<Integer> impactSpeedValidator = new ImpactSpeedValidator();
-        Validator<Float> minutesOfWaitingValidator = new MinutesOfWaitingValidator();
-//        Validator<WeaponType> weaponTypeValidator = new WeaponTypeValidator();
-//        Validator<Mood> moodValidator = new MoodValidator();
-        Validator<String> nameCarValidator = new NameCarValidator();
-        Validator<Boolean> coolCarValidator = new CoolCarValidator();
-
-        Integer id = null;
-        String name = null;
-        Integer x = null;
-        Float y = null;
-        LocalDate creationDate = null;
-        Boolean realHero = null;
-        Boolean hasToothpick = null;
-        Integer impactSpeed = null;
-        Float minutesOfWaiting = null;
-        WeaponType weaponType = null;
-        Mood mood = null;
-        String nameCar = null;
-        Boolean coolCar = null;
+    public Map<Integer, List<Exception>> readCollection(JsonArray jsonElements) throws Exception {
+        Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
+        Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
 
         int counter = -1;
         Map<Integer, List<Exception>> exceptionMap = new HashMap<>();
+        Integer id = null;
 
         for (JsonElement jsonElement: jsonElements) {
+            Map<String, Object> humanMap = new HashMap<>();
             counter += 1;
             List<Exception> exceptionList = new ArrayList<>();
-            try {
-                String fieldId = jsonElement.getAsJsonObject().get("id").getAsString();
-                id = intHandler.handle(fieldId, "id");
-                if (!idValidator.validate(id)) {
-                    exceptionList.add(new WrongFieldsException(counter, "id"));
-                    id = null;
+
+            for (Field classField: HumanBeing.class.getDeclaredFields()) {
+                if (id == null) id = counter;
+                if (java.lang.reflect.Modifier.isStatic(classField.getModifiers())) continue;
+                if (classField.getType() == Coordinates.class) continue;
+                if (classField.getType() == Car.class) continue;
+                try {
+                    String jsonField = jsonElement.getAsJsonObject().get(classField.getName()).getAsString();
+                    Object castedField = handlers.get(classField.getType().getSimpleName()).handle(jsonField, classField.getName());
+                    Validator<Object> validator = (Validator<Object>) validators.get(classField.getName());
+                    if (!validator.validate(castedField)) {
+                        exceptionList.add(new WrongFieldsException(id, classField.getName()));
+                        if (classField.getName().equals("id")) id = null;
+                    }
+                    humanMap.put(classField.getName(), castedField);
+                } catch (UnsupportedOperationException e) {
+                    exceptionList.add(new NullFieldException(id, classField.getName()));
+                } catch (Exception e) {
+                    exceptionList.add(e);
                 }
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(counter, "id"));
-                id = null;
-            } catch (ParseException e) {
-                exceptionList.add(e);
             }
 
-            if (id == null) id = counter;
-
-            try {
-                String fieldName = jsonElement.getAsJsonObject().get("name").getAsString();
-                name = stringHandler.handle(fieldName, "name");
-                if (!nameValidator.validate(name)) exceptionList.add(new WrongFieldsException(id, "name"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "name"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
+            for (Field classField: Coordinates.class.getDeclaredFields()) {
+                try {
+                    String jsonField = jsonElement.getAsJsonObject().get("coordinates").getAsJsonObject().get(classField.getName()).getAsString();
+                    Object castedField = handlers.get(classField.getType().getSimpleName()).handle(jsonField, classField.getName());
+                    Validator<Object> validator = (Validator<Object>) validators.get(classField.getName());
+                    if (!validator.validate(castedField)) {
+                        exceptionList.add(new WrongFieldsException(id, classField.getName()));
+                        if (classField.getName().equals("id")) id = null;
+                    }
+                    humanMap.put("coordinates" + classField.getName(), castedField);
+                } catch (UnsupportedOperationException e) {
+                    exceptionList.add(new NullFieldException(id, classField.getName()));
+                } catch (Exception e) {
+                    exceptionList.add(e);
+                }
             }
 
-            try {
-                String fieldX = jsonElement.getAsJsonObject().get("coordinates").getAsJsonObject().get("x").getAsString();
-                x = intHandler.handle(fieldX, "x");
-                if (!xValidator.validate(x)) exceptionList.add(new WrongFieldsException(id, "x"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "x"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
+            for (Field classField: Car.class.getDeclaredFields()) {
+                try {
+                    String jsonField = jsonElement.getAsJsonObject().get("car").getAsJsonObject().get(classField.getName()).getAsString();
+                    Object castedField = handlers.get(classField.getType().getSimpleName()).handle(jsonField, classField.getName());
+                    Validator<Object> validator = (Validator<Object>) validators.get(classField.getName());
+                    if (!validator.validate(castedField)) {
+                        exceptionList.add(new WrongFieldsException(id, classField.getName()));
+                        if (classField.getName().equals("id")) id = null;
+                    }
+                    humanMap.put("car" + classField.getName(), castedField);
+                } catch (UnsupportedOperationException e) {
+                    exceptionList.add(new NullFieldException(id, classField.getName()));
+                } catch (Exception e) {
+                    exceptionList.add(e);
+                }
             }
 
-            try {
-                String fieldY = jsonElement.getAsJsonObject().get("coordinates").getAsJsonObject().get("y").getAsString();
-                y = floatHandler.handle(fieldY, "y");
-                if (!yValidator.validate(y)) exceptionList.add(new WrongFieldsException(id, "y"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "y"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-            try {
-                String fieldCreationDate = jsonElement.getAsJsonObject().get("creationDate").getAsString();
-                creationDate = localDateHandler.handle(fieldCreationDate, "creationDate");
-                if (!creationDateValidator.validate(creationDate)) exceptionList.add(new WrongFieldsException(id, "creationDate"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "creationDate"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-            try {
-                String fieldRealHero = jsonElement.getAsJsonObject().get("realHero").getAsString();
-                realHero = booleanHandler.handle(fieldRealHero, "realHero");
-                if (!realHeroValidator.validate(realHero)) exceptionList.add(new WrongFieldsException(id, "realHero"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "realHero"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-            try {
-                String fieldHasToothpick = jsonElement.getAsJsonObject().get("hasToothpick").getAsString();
-                hasToothpick = booleanHandler.handle(fieldHasToothpick, "hasToothpick");
-                if (!hasToothpickValidator.validate(hasToothpick)) exceptionList.add(new WrongFieldsException(id, "hasToothpick"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "hasToothpick"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-
-            try {
-                String fieldImpactSpeed = jsonElement.getAsJsonObject().get("impactSpeed").getAsString();
-                impactSpeed = intHandler.handle(fieldImpactSpeed, "impactSpeed");
-                if (!impactSpeedValidator.validate(impactSpeed)) exceptionList.add(new WrongFieldsException(id, "impactSpeed"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "impactSpeed"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-            try {
-                String fieldMinutesOfWaiting = jsonElement.getAsJsonObject().get("minutesOfWaiting").getAsString();
-                minutesOfWaiting = floatHandler.handle(fieldMinutesOfWaiting, "minutesOfWaiting");
-                if (!minutesOfWaitingValidator.validate(minutesOfWaiting)) exceptionList.add(new WrongFieldsException(id, "minutesOfWaiting"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "minutesOfWaiting"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-            weaponType = WeaponType.HAMMER;
-//            try {
-//                String fieldWeaponType = jsonElement.getAsJsonObject().get("weaponType").getAsString();
-//                weaponType = weaponTypeHandler.handle(fieldWeaponType, "weaponType");
-//                if (!weaponTypeValidator.validate(weaponType)) exceptionList.add(new WrongFieldsException(id, "weaponType"));
-//            } catch (UnsupportedOperationException e) {
-//                exceptionList.add(new NullFieldException(id, "weaponType"));
-//            } catch (ParseException e) {
-//                exceptionList.add(e);
-//            }
-
-            mood = Mood.SADNESS;
-//            try {
-//                String fieldMood = jsonElement.getAsJsonObject().get("mood").getAsString();
-//                mood = moodHandler.handle(fieldMood, "mood");
-//                if (!moodValidator.validate(mood)) exceptionList.add(new WrongFieldsException(id, "mood"));
-//            } catch (UnsupportedOperationException e) {
-//                exceptionList.add(new NullFieldException(id, "mood"));
-//            } catch (ParseException e) {
-//                exceptionList.add(e);
-//            }
-
-
-            try {
-                String fieldNameCar = jsonElement.getAsJsonObject().get("car").getAsJsonObject().get("name").getAsString();
-                nameCar = stringHandler.handle(fieldNameCar, "nameCar");
-                if (!nameCarValidator.validate(nameCar)) exceptionList.add(new WrongFieldsException(id, "nameCar"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "nameCar"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
-
-
-            try {
-                String fieldCoolCar = jsonElement.getAsJsonObject().get("car").getAsJsonObject().get("cool").getAsString();
-                coolCar = booleanHandler.handle(fieldCoolCar, "coolCar");
-                if (!coolCarValidator.validate(coolCar)) exceptionList.add(new WrongFieldsException(id, "coolCar"));
-            } catch (UnsupportedOperationException e) {
-                exceptionList.add(new NullFieldException(id, "coolCar"));
-            } catch (ParseException e) {
-                exceptionList.add(e);
-            }
+            String name = (String) humanMap.get("name");
+            Integer x = (Integer) humanMap.get("coordinatesx");
+            Float y = (Float) humanMap.get("coordinatesy");
+            LocalDate creationDate = (LocalDate) humanMap.get("creationDate");
+            Boolean realHero = (Boolean) humanMap.get("realHero");
+            Boolean hasToothpick = (Boolean) humanMap.get("hasToothpick");
+            Integer impactSpeed = (Integer) humanMap.get("impactSpeed");
+            Float minutesOfWaiting = (Float) humanMap.get("minutesOfWaiting");
+            WeaponType weaponType = (WeaponType) humanMap.get("weaponType");
+            Mood mood = (Mood) humanMap.get("mood");
+            String nameCar = (String) humanMap.get("carname");
+            Boolean coolCar = (Boolean) humanMap.get("carcool");
 
             if (exceptionList.isEmpty()) {
                 Coordinates coordinates = new Coordinates(x, y);

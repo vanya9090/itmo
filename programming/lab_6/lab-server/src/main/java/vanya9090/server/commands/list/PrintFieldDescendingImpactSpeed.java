@@ -20,7 +20,8 @@ public class PrintFieldDescendingImpactSpeed extends Command {
     private final CollectionManager collectionManager;
 
     public PrintFieldDescendingImpactSpeed(CollectionManager collectionManager) {
-        super("print_field_descending_impact_speed", "вывести значения поля impactSpeed всех элементов в порядке убывания");
+        super("print_field_descending_impact_speed", "вывести значения поля impactSpeed всех элементов в порядке убывания",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

@@ -2,7 +2,9 @@ package vanya9090.common.models;
 
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Objects;
 
 public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializable {
@@ -49,6 +51,10 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
         this.weaponType = weaponType;
         this.mood = mood;
         this.car = car;
+    }
+
+    public HumanBeing(Map<Field, Object> humanMap) {
+
     }
 
     public void setId(int id) {

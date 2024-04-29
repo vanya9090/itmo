@@ -16,7 +16,8 @@ public class RemoveHead extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveHead(CollectionManager collectionManager) {
-        super("remove_head", "вывести первый элемент коллекции и удалить его");
+        super("remove_head", "вывести первый элемент коллекции и удалить его",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

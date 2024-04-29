@@ -15,7 +15,8 @@ public class RemoveFirst extends Command {
     private final CollectionManager collectionManager;
 
     public RemoveFirst(CollectionManager collectionManager) {
-        super("remove_first", "удалить первый элемент из коллекции");
+        super("remove_first", "удалить первый элемент из коллекции",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

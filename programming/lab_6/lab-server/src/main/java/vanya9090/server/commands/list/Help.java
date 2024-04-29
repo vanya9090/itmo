@@ -15,7 +15,7 @@ public class Help extends Command {
     private final Map<String, Command> commands;
 
     public Help(Map<String, Command> commands) {
-        super("help", "вывести справку по доступным командам");
+        super("help", "вывести справку по доступным командам", new CommandArgument[]{});
         this.commands = commands;
     }
 

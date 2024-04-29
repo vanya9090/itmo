@@ -15,7 +15,7 @@ public class Clear extends Command {
     private final CollectionManager collectionManager;
 
     public Clear(CollectionManager collectionManager) {
-        super("clear", "очистить коллекцию");
+        super("clear", "очистить коллекцию", new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

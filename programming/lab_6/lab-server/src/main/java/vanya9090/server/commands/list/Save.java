@@ -16,7 +16,8 @@ public class Save extends Command {
     private final String envKey;
 
     public Save(CollectionManager collectionManager, String envKey) {
-        super("save", "сохранить коллекцию в файл");
+        super("save", "сохранить коллекцию в файл",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
         this.envKey = envKey;
     }

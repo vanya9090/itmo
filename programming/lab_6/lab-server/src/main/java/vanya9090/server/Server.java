@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 public final class Server {
     public static ILogger logger = new Logger();
     private final static String ENV_KEY = "lab5";
-    public static void main(String[] args) throws IOException, AccessException, EmptyFileException, NotFoundException, FormatException, ReadException, WrongFieldsException, NullFieldException, WrongPathException, ParseException, EmptyFieldException {
+    public static void main(String[] args) throws Exception {
         CommandManager commandManager = new CommandManager();
 //        Runner runner = new Runner(logger, commandManager);
         JSONManager jsonManager = new JSONManager();
         CollectionManager collectionManager = new CollectionManager(jsonManager);
-
         try {
             Map<Integer, List<Exception>> exceptionMap = collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
+            System.out.println(collectionManager.getCollection());
             for(Map.Entry<Integer, List<Exception>> entry : exceptionMap.entrySet()) {
                 Integer key = entry.getKey();
                 List<Exception> value = entry.getValue();
@@ -38,6 +38,7 @@ public final class Server {
 
 
         commandManager.register("help", new Help(commandManager.getCommands()));
+        commandManager.register("get_commands", new GetCommands(commandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));
         commandManager.register("add", new AddNew(collectionManager));

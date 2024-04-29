@@ -11,7 +11,8 @@ import vanya9090.server.managers.CollectionManager;
 public class UpdateNew extends Command implements Formable {
     private final CollectionManager collectionManager;
     public UpdateNew(CollectionManager collectionManager) {
-        super("update", "обновить значение элемента коллекции, id которого равен заданному");
+        super("update", "обновить значение элемента коллекции, id которого равен заданному",
+                new CommandArgument[]{new CommandArgument("human", HumanBeing.class)});
         this.collectionManager = collectionManager;
     }
 

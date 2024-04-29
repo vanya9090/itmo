@@ -12,7 +12,7 @@ import vanya9090.common.commands.CommandManager;
 public class Exit extends Command {
 
     public Exit() {
-        super("exit", "завершить программу (без сохранения в файл)");
+        super("exit", "завершить программу (без сохранения в файл)", new CommandArgument[]{});
     }
 
     /**
@@ -23,7 +23,7 @@ public class Exit extends Command {
      */
     @Override
     public Object[] apply(CommandArgument args) throws Exception {
-        CommandManager.getCommands().get("save").apply(new CommandArgument().withStringArg(new String[]{""}));
+//        CommandManager.getCommands().get("save").apply(new CommandArgument().withStringArg(new String[]{""}));
         System.exit(0);
         return new String[]{""};
     }

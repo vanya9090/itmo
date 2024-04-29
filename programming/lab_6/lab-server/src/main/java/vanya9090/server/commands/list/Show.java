@@ -18,7 +18,8 @@ public class Show extends Command {
     private final CollectionManager collectionManager;
 
     public Show(CollectionManager collectionManager) {
-        super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении");
+        super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

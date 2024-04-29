@@ -7,6 +7,12 @@ import java.io.Serializable;
 public class CommandArgument implements Serializable {
     private String[] stringArg;
     private HumanBeing humanBeing;
+    private final String name;
+    public final Class<?> type;
+    public CommandArgument(String name, Class<?> type){
+        this.name = name;
+        this.type = type;
+    }
     public CommandArgument withStringArg(String[] stringArg) {
         this.stringArg = stringArg;
         return this;
@@ -16,11 +22,16 @@ public class CommandArgument implements Serializable {
         return this;
     }
 
-    public String[] getStringArg() {
-        return stringArg;
+    public String getName() {
+        return this.name;
     }
-
+    public Class<?> getType(){
+        return this.type;
+    }
+    public String[] getStringArg() {
+        return this.stringArg;
+    }
     public HumanBeing getModelArg() {
-        return humanBeing;
+        return this.humanBeing;
     }
 }

@@ -10,7 +10,8 @@ import vanya9090.server.managers.CollectionManager;
 public class AddIfMinNew extends Command implements Formable {
     private final CollectionManager collectionManager;
     public AddIfMinNew(CollectionManager collectionManager) {
-        super("add_if_min", "добавить новый элемент в коллекцию, если его расстояние от начала координат меньше, чем у наименьшего элемента этой коллекции");
+        super("add_if_min", "добавить новый элемент в коллекцию, если его расстояние от начала координат меньше, чем у наименьшего элемента этой коллекции",
+                new CommandArgument[]{new CommandArgument("human", HumanBeing.class)});
         this.collectionManager = collectionManager;
     }
 

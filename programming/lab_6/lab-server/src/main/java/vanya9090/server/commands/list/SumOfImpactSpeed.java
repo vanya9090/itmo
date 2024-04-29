@@ -14,7 +14,8 @@ public class SumOfImpactSpeed extends Command {
     private final CollectionManager collectionManager;
 
     public SumOfImpactSpeed(CollectionManager collectionManager) {
-        super("sum_of_impact_speed", "вывести сумму значений поля impactSpeed для всех элементов коллекции");
+        super("sum_of_impact_speed", "вывести сумму значений поля impactSpeed для всех элементов коллекции",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

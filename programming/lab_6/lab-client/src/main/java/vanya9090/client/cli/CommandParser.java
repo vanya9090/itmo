@@ -5,11 +5,7 @@ import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandManager;
 
 public class CommandParser {
-    String[] tokens;
-    public CommandParser(String[] tokens) {
-        this.tokens = tokens;
-    }
-
+    public
     public Command getCommand() {
         return CommandManager.getCommands().get(this.tokens[0]);
     }

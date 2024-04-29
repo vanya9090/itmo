@@ -1,6 +1,7 @@
 package vanya9090.common.commands;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 
 /**
  * абстрактный класс для всех команд
@@ -10,12 +11,13 @@ import java.io.Serializable;
 public abstract class Command implements Serializable {
     private final String name;
     private final String description;
-
-    public Command(String name, String description) {
+    private final CommandArgument[] arguments;
+    public Command(String name, String description, CommandArgument[] arguments) {
         this.name = name;
         this.description = description;
+        this.arguments = arguments;
     }
-
+    public CommandArgument[] getArguments(){return this.arguments;}
     public String getName() {
         return this.name;
     }

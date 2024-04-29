@@ -16,7 +16,8 @@ public class Info extends Command {
     private final CollectionManager collectionManager;
 
     public Info(CollectionManager collectionManager) {
-        super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)");
+        super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)",
+                new CommandArgument[]{});
         this.collectionManager = collectionManager;
     }
 

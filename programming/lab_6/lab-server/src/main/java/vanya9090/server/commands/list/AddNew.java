@@ -9,7 +9,7 @@ import vanya9090.server.managers.CollectionManager;
 public class AddNew extends Command implements Formable {
     private final CollectionManager collectionManager;
     public AddNew(CollectionManager collectionManager) {
-        super("add", "добавить новый элемент в коллекцию");
+        super("add", "добавить новый элемент в коллекцию",  new CommandArgument[]{new CommandArgument("human", HumanBeing.class)});
         this.collectionManager = collectionManager;
     }
 
