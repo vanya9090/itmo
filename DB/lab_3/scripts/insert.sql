@@ -14,7 +14,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER task_date_trigger
 AFTER INSERT ON scientist_task
 FOR EACH ROW
-EXECUTE FUNCTION check_task_date();
+EXECUTE PROCEDURE check_task_date();
 
 INSERT INTO scientist (inn, name, lastname) VALUES
 ('1234567890', 'Frank', 'Peabody'),
