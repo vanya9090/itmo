@@ -55,5 +55,24 @@
       "cool": true,
       "name": "kia"
     }
+  },
+  {
+    "id": 3,
+    "name": "kjds",
+    "coordinates": {
+      "x": 3,
+      "y": 3.0
+    },
+    "creationDate": "2024-04-30",
+    "realHero": true,
+    "hasToothpick": false,
+    "impactSpeed": 32,
+    "minutesOfWaiting": 3.0,
+    "weaponType": "KNIFE",
+    "mood": "CALM",
+    "car": {
+      "cool": true,
+      "name": "dskjf"
+    }
   }
 ]

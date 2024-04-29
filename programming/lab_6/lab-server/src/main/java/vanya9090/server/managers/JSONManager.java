@@ -28,51 +28,6 @@ public class JSONManager implements FileManager {
             .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
             .create();
 
-//    /**
-//     * @param ENV_KEY переменная окружения
-//     * @return коллекция из HumanBeing
-//     * @throws ValidateException  синтетическое описание
-//     * @throws EmptyFileException пустое поле
-//     * @throws NotFoundException  файл/переменная окржения не найдены
-//     * @throws AccessException    ошибка доступа
-//     * @throws FormatException    неправильная разметка файла
-//     */
-//    public Collection<HumanBeing> readFile(String ENV_KEY) throws ValidateException, EmptyFileException, NotFoundException, AccessException, FormatException, FileNotFoundException {
-//        String path = System.getenv(ENV_KEY);
-//        if (path == null || path.isEmpty()) throw new NotFoundException("переменная окружения не найдена");
-//        if (!new File(path).exists()) throw new FileNotFoundException();
-//        if (!new File(path).canRead()) throw new AccessException("нет прав доступа для чтения файла");
-//        try (Scanner fileReader = new Scanner(new File(path))) {
-//            var collectionType = new TypeToken<ArrayDeque<HumanBeing>>() {
-//            }.getType();
-//            StringBuilder jsonString = new StringBuilder();
-//            String line;
-//            while (fileReader.hasNext()) {
-//                line = fileReader.nextLine().trim();
-//                if (!line.isEmpty()) {
-//                    jsonString.append(line);
-//                }
-//            }
-//            if (jsonString.isEmpty()) {
-//                jsonString = new StringBuilder("[]");
-//            }
-//            ArrayDeque<HumanBeing> collection = gson.fromJson(jsonString.toString(), collectionType);
-//            for (HumanBeing humanBeing : collection) {
-//                if (!humanBeing.validate()) {
-//                    throw new ValidateException("некоторые поля не соответствуют синтетическому описанию");
-//                }
-//            }
-//            return collection;
-//        } catch (NoSuchElementException e) {
-//            throw new EmptyFileException("файл " + path + " пуст");
-//        } catch (FileNotFoundException e) {
-//            throw new NotFoundException("файл не найден");
-//        } catch (JsonSyntaxException e) {
-//            throw new FormatException("неправильная разметка файла");
-//        }
-//    }
-
-
     public JsonArray readFile(String ENV_KEY) throws EmptyFileException, NotFoundException, FormatException, FileNotFoundException, AccessException {
         String path = System.getenv(ENV_KEY);
         if (path == null || path.isEmpty()) throw new NotFoundException("переменная окружения не найдена");

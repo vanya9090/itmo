@@ -16,7 +16,7 @@ public class GetCommands extends Command {
         this.commands = commands;
     }
     @Override
-    public Map<String, String>[] apply(CommandArgument args) {
+    public Map<String, String>[] apply(Map<String, Object> args) {
         System.out.println(this.commands.values().
                 stream().
                 collect(Collectors.toMap(Command::getName, Command::getArguments)));

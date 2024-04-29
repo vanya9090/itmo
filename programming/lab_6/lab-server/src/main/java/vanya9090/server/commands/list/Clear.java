@@ -6,6 +6,8 @@ import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
 
+import java.util.Map;
+
 /**
  * удаляет все записи в коллекции
  *
@@ -25,9 +27,9 @@ public class Clear extends Command {
      * @throws EmptyCollectionException пустая ли коллекция
      */
     @Override
-    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
         if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         collectionManager.clear();
-        return new String[]{""};
+        return new String[]{};
     }
 }

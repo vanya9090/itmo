@@ -6,6 +6,8 @@ import vanya9090.common.commands.CommandArgument;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.exceptions.EmptyCollectionException;
 
+import java.util.Map;
+
 /**
  * удаление первого человека из коллекции
  *
@@ -21,7 +23,7 @@ public class RemoveFirst extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         this.collectionManager.removeFirst();
         return new String[]{""};

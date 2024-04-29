@@ -2,6 +2,7 @@ package vanya9090.common.commands;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 /**
  * абстрактный класс для всех команд
@@ -26,5 +27,5 @@ public abstract class Command implements Serializable {
         return this.description;
     }
 
-    abstract public Object[] apply(CommandArgument arg) throws Exception;
+    abstract public Object[] apply(Map<String, Object> arg) throws Exception;
 }

@@ -26,7 +26,6 @@ public final class Server {
         CollectionManager collectionManager = new CollectionManager(jsonManager);
         try {
             Map<Integer, List<Exception>> exceptionMap = collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
-            System.out.println(collectionManager.getCollection());
             for(Map.Entry<Integer, List<Exception>> entry : exceptionMap.entrySet()) {
                 Integer key = entry.getKey();
                 List<Exception> value = entry.getValue();
@@ -37,15 +36,15 @@ public final class Server {
         }
 
 
-        commandManager.register("help", new Help(commandManager.getCommands()));
-        commandManager.register("get_commands", new GetCommands(commandManager.getCommands()));
+        commandManager.register("help", new Help(CommandManager.getCommands()));
+        commandManager.register("get_commands", new GetCommands(CommandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));
         commandManager.register("add", new AddNew(collectionManager));
         commandManager.register("update", new UpdateNew(collectionManager));
         commandManager.register("remove_by_id", new RemoveById(collectionManager));
         commandManager.register("clear", new Clear(collectionManager));
-//        commandManager.register("save", new Save(collectionManager, ENV_KEY));
+        commandManager.register("save", new Save(collectionManager, ENV_KEY));
 //        commandManager.register("execute_script", new ExecuteScript(runner));
         commandManager.register("exit", new Exit());
         commandManager.register("remove_first", new RemoveFirst(collectionManager));

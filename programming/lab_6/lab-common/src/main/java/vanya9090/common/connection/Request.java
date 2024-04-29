@@ -8,25 +8,25 @@ import java.util.Map;
 public class Request extends Connection {
     private String commandName;
     private Command command;
-    private CommandArgument argument;
+    private Map<String, Object> argument;
 
     public Request(String commandName,  Map<String, Object> arguments) {
         this.commandName = commandName;
-        this.argument = argument;
+        this.argument = arguments;
     }
 
     public Request(Command command, Map<String, Object> arguments) {
         this.command = command;
-        this.argument = argument;
+        this.argument = arguments;
     }
 
     public String getCommandName() {
         return this.commandName;
     }
-    public CommandArgument getArgument() {
+    public Map<String, Object> getArgument() {
         return this.argument;
     }
-    public void setArgument(CommandArgument argument) {
+    public void setArgument(Map<String, Object> argument) {
         this.argument = argument;
     }
 }

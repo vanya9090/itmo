@@ -45,8 +45,6 @@ public class UDPConnection extends ConnectionManager{
                     SelectionKey key = iter.next();
 
                     if (key.isReadable()) {
-                        System.out.println("reading");
-
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
 
@@ -56,15 +54,11 @@ public class UDPConnection extends ConnectionManager{
                         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
                         ObjectInputStream oi = new ObjectInputStream(bi);
                         Request request = (Request) oi.readObject();
-                        System.out.println(request.getCommandName());
                         response = this.requestCallback.call(request);
                         key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
                     } if (key.isWritable() && key.isValid()) {
-                        System.out.println("writing");
-
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
-                        System.out.println(response.getBody());
                         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
                         buffer.clear();
                         client.send(buffer, this.clientAddress);

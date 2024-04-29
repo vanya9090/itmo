@@ -6,6 +6,7 @@ import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 /**
  * информация о коллекции
@@ -22,7 +23,7 @@ public class Info extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) {
+    public Object[] apply(Map<String, Object> args) {
         StringBuilder stringBuilder = new StringBuilder();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         stringBuilder.append("Тип: ").

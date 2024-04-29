@@ -7,6 +7,8 @@ import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.common.exceptions.EmptyFieldException;
 
+import java.util.Map;
+
 /**
  * удаление первого человека и вывод в консоли
  *
@@ -22,7 +24,7 @@ public class RemoveHead extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) throws EmptyFieldException, EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws EmptyFieldException, EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         return new String[]{collectionManager.removeHead().toString()};
     }

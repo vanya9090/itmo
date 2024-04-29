@@ -8,6 +8,7 @@ import vanya9090.common.models.HumanBeing;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class PrintFieldDescendingImpactSpeed extends Command {
      * @return значения поля impactSpeed всех элементов
      */
     @Override
-    public Object[] apply(CommandArgument args) {
+    public Object[] apply(Map<String, Object> args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();
         return result.stream()
                 .map(Objects::toString).toArray();

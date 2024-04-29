@@ -76,7 +76,6 @@ public class CollectionManager {
             .mapToInt(Integer::intValue).max().orElse(0);
         return maxId + 1;
     }
-
     public Map<Integer, List<Exception>> readCollection(JsonArray jsonElements) throws Exception {
         Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
         Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
@@ -89,7 +88,6 @@ public class CollectionManager {
             Map<String, Object> humanMap = new HashMap<>();
             counter += 1;
             List<Exception> exceptionList = new ArrayList<>();
-
             for (Field classField: HumanBeing.class.getDeclaredFields()) {
                 if (id == null) id = counter;
                 if (java.lang.reflect.Modifier.isStatic(classField.getModifiers())) continue;
@@ -145,6 +143,7 @@ public class CollectionManager {
                 }
             }
 
+            Integer idForm = (Integer) humanMap.get("id");
             String name = (String) humanMap.get("name");
             Integer x = (Integer) humanMap.get("coordinatesx");
             Float y = (Float) humanMap.get("coordinatesy");
@@ -161,7 +160,7 @@ public class CollectionManager {
             if (exceptionList.isEmpty()) {
                 Coordinates coordinates = new Coordinates(x, y);
                 Car car = new Car(nameCar, coolCar);
-                HumanBeing humanBeing = new HumanBeing(id, name, coordinates, creationDate, realHero, hasToothpick, impactSpeed, minutesOfWaiting, weaponType, mood, car);
+                HumanBeing humanBeing = new HumanBeing(idForm, name, coordinates, creationDate, realHero, hasToothpick, impactSpeed, minutesOfWaiting, weaponType, mood, car);
                 humanBeing.validate();
                 this.add(humanBeing);
                 this.initDate = LocalDateTime.now();

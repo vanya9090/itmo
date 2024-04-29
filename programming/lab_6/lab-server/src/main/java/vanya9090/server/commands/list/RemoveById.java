@@ -10,6 +10,8 @@ import vanya9090.common.exceptions.FormatException;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
+import java.util.Map;
+
 /**
  * команда для удаления человека по id
  *
@@ -25,18 +27,15 @@ public class RemoveById extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) throws WrongAmountOfElementsException, EmptyCollectionException, NotFoundException, FormatException {
+    public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, EmptyCollectionException, NotFoundException, FormatException {
         try {
-            if (args.getStringArg().length == 0) throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-            if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
-
-            Integer id = Integer.parseInt(args.getStringArg()[0]);
+            Integer id = (Integer) args.get("id");
             HumanBeing humanToDelete = collectionManager.getById(id);
             if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
 
             collectionManager.remove(humanToDelete);
 
-            return new String[]{""};
+            return new String[]{};
 
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new WrongAmountOfElementsException("пустой аргумент, введите id");

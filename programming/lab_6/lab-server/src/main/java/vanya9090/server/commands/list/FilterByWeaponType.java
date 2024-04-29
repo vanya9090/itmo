@@ -9,6 +9,7 @@ import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,10 +34,9 @@ public class FilterByWeaponType extends Command {
      * @throws NotFoundException              нет такого типа оружия
      */
     @Override
-    public Object[] apply(CommandArgument args) throws WrongAmountOfElementsException, NotFoundException {
+    public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, NotFoundException {
         try {
-            if (args.getStringArg().length == 0) throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
-            WeaponType weaponType = WeaponType.valueOf(args.getStringArg()[0].toUpperCase());
+            WeaponType weaponType = (WeaponType) args.get("weaponType");
             List<HumanBeing> result = filterByWeaponType(weaponType);
             if (result.isEmpty()) return new String[]{"no results"};
             return result.stream().map(HumanBeing::toString).toArray();

@@ -4,6 +4,8 @@ import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandManager;
 
+import java.util.Map;
+
 /**
  * выход из программы
  *
@@ -22,9 +24,7 @@ public class Exit extends Command {
      * @return пустая строка
      */
     @Override
-    public Object[] apply(CommandArgument args) throws Exception {
-//        CommandManager.getCommands().get("save").apply(new CommandArgument().withStringArg(new String[]{""}));
-        System.exit(0);
-        return new String[]{""};
+    public Object[] apply(Map<String, Object> args) throws Exception {
+        return new String[]{};
     }
 }

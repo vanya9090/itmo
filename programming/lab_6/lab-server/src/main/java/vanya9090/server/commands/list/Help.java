@@ -20,12 +20,12 @@ public class Help extends Command {
     }
 
     @Override
-    public Map<String, String>[] apply(CommandArgument args) {
-        return new Map[]{this.commands.values().
-                stream().
-                collect(Collectors.toMap(Command::getName, Command::getDescription))};
-//        return this.commands.values().stream()
-//                .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
-//                .collect(Collectors.joining());
+    public Object[] apply(Map<String, Object> args) {
+//        return new Map[]{this.commands.values().
+//                stream().
+//                collect(Collectors.toMap(Command::getName, Command::getDescription))};
+        return new Object[]{this.commands.values().stream()
+                .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
+                .collect(Collectors.joining())};
     }
 }

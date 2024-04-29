@@ -5,6 +5,8 @@ import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
 
+import java.util.Map;
+
 /**
  * вывод суммы значений поля impactSpeed
  *
@@ -20,7 +22,7 @@ public class SumOfImpactSpeed extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) {
+    public Object[] apply(Map<String, Object> args) {
         int result = this.getSumOfImpactSpeed();
         return new String[]{result + "\n"};
     }

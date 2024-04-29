@@ -6,6 +6,8 @@ import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.AccessException;
 import vanya9090.common.exceptions.NotFoundException;
 
+import java.util.Map;
+
 /**
  * сохранение коллекции в файл
  *
@@ -23,8 +25,8 @@ public class Save extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) throws AccessException, NotFoundException {
+    public Object[] apply(Map<String, Object> args) throws AccessException, NotFoundException {
         this.collectionManager.writeCollection(this.envKey);
-        return new String[]{""};
+        return new String[]{};
     }
 }

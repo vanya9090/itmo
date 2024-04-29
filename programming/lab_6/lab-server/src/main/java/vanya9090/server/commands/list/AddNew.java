@@ -6,6 +6,8 @@ import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Formable;
 import vanya9090.server.managers.CollectionManager;
 
+import java.util.Map;
+
 public class AddNew extends Command implements Formable {
     private final CollectionManager collectionManager;
     public AddNew(CollectionManager collectionManager) {
@@ -14,10 +16,10 @@ public class AddNew extends Command implements Formable {
     }
 
     @Override
-    public Object[] apply(CommandArgument arg) throws Exception {
-        HumanBeing humanBeing = arg.getModelArg();
+    public Object[] apply(Map<String, Object> arg) throws Exception {
+        HumanBeing humanBeing = (HumanBeing) arg.get("human");
         humanBeing.setId(collectionManager.getNextId());
         collectionManager.add(humanBeing);
-        return new String[]{""};
+        return new String[]{};
     }
 }

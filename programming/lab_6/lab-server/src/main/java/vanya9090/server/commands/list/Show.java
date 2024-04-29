@@ -7,6 +7,7 @@ import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +25,7 @@ public class Show extends Command {
     }
 
     @Override
-    public Object[] apply(CommandArgument args) throws EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
         if (collectionManager.getCollection().isEmpty()) throw new EmptyCollectionException();
         return collectionManager.getCollection().stream()
                 .map(HumanBeing::toString).toArray();
