@@ -27,5 +27,6 @@ public class ValidatorManager {
         register("y", new YValidator());
         register("weaponType", new WeaponTypeValidator());
         register("mood", new MoodValidator());
+        register("filename", new FilenameValidator());
     }
 }

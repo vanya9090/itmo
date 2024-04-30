@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public final class Client {
     public static ILogger logger = new Logger();
@@ -24,7 +25,7 @@ public final class Client {
             Response getCommands = client.request(new Request("get_commands", null));
             HashMap<String, CommandArgument[]> commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             Runner runner = new Runner(client, commands);
-            runner.run();
+            runner.run(System.in);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
