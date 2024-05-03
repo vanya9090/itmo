@@ -1,6 +1,7 @@
 package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
@@ -22,9 +23,10 @@ public class SumOfImpactSpeed extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) {
+    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
+        if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         int result = this.getSumOfImpactSpeed();
-        return new String[]{result + "\n"};
+        return new String[]{String.valueOf(result)};
     }
 
     private int getSumOfImpactSpeed() {

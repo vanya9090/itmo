@@ -32,6 +32,6 @@ public class ExecuteScript extends Command {
 //        } catch (WrongAmountOfElementsException | ArrayIndexOutOfBoundsException | NotFoundException e) {
 //            throw new WrongAmountOfElementsException("пустой аргумент, введите название файла");
 //        }
-        return new Object[]{""};
+        return new String[]{};
     }
 }

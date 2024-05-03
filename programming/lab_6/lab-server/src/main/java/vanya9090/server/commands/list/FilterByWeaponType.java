@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.WeaponType;
@@ -34,7 +35,8 @@ public class FilterByWeaponType extends Command {
      * @throws NotFoundException              нет такого типа оружия
      */
     @Override
-    public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, NotFoundException {
+    public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, NotFoundException, EmptyCollectionException {
+        if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         try {
             WeaponType weaponType = (WeaponType) args.get("weaponType");
             List<HumanBeing> result = filterByWeaponType(weaponType);

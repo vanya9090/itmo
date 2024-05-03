@@ -89,7 +89,6 @@ public class CollectionManager {
             counter += 1;
             List<Exception> exceptionList = new ArrayList<>();
             for (Field classField: HumanBeing.class.getDeclaredFields()) {
-                if (id == null) id = counter;
                 if (java.lang.reflect.Modifier.isStatic(classField.getModifiers())) continue;
                 if (classField.getType() == Coordinates.class) continue;
                 if (classField.getType() == Car.class) continue;
@@ -165,7 +164,7 @@ public class CollectionManager {
                 this.add(humanBeing);
                 this.initDate = LocalDateTime.now();
             } else {
-                exceptionMap.put(id, exceptionList);
+                exceptionMap.put(counter, exceptionList);
             }
         }
         return exceptionMap;

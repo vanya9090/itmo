@@ -14,8 +14,10 @@ import vanya9090.common.handlers.HandleManager;
 import vanya9090.common.handlers.Handler;
 import vanya9090.common.handlers.IntHandler;
 import vanya9090.common.models.HumanBeing;
+import vanya9090.common.util.FakeLogger;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.*;
+import vanya9090.common.util.Logger;
 import vanya9090.common.validators.Validator;
 import vanya9090.common.validators.ValidatorManager;
 
@@ -40,7 +42,7 @@ public class Runner {
         this.client = client;
         this.commands = commands;
     }
-    public Map<String, Object> getArgsMap(String commandName, String arg, Scanner scanner) throws EmptyFieldException, ParseException {
+    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws EmptyFieldException, ParseException {
         Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
         Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
 
@@ -49,10 +51,10 @@ public class Runner {
         CommandArgument[] neededArgs = this.commands.get(commandName);
         for (CommandArgument commandArgument : neededArgs) {
             if (commandArgument.getType() == HumanBeing.class){
-                field = new HumanBeingForm(this.logger, scanner, false).create();
+                field = new HumanBeingForm(logger, scanner, false).create();
             } else {
                 try {
-                    field = handlers.get(commandArgument.getType().getSimpleName()).handle(arg, commandArgument.getName());
+                    field = handlers.get(commandArgument.getType().getSimpleName()).handle(arg[1], commandArgument.getName());
                 } catch (ArrayIndexOutOfBoundsException e){
                     throw new EmptyFieldException(commandArgument.getName());
                 }
@@ -63,7 +65,7 @@ public class Runner {
         }
         return argsMap;
     }
-    public void run(InputStream inputStream) {
+    public void run(InputStream inputStream, ILogger logger) {
         Scanner scanner = new Scanner(inputStream);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
@@ -82,27 +84,27 @@ public class Runner {
                 try {
                     if (!new File(tokens[1]).exists()) throw new NotFoundException("файла не существует");
                     if (!Files.isReadable(Paths.get(tokens[1]))) throw new AccessException("нет прав доступа для записи в файл");
-                    this.run(Files.newInputStream(new File(tokens[1]).toPath()));
+                    this.run(Files.newInputStream(new File(tokens[1]).toPath()), new FakeLogger());
                 }catch (Exception e){
-                    logger.warning(e);
+                    this.logger.warning(e);
                     continue;
                 }
             }
 
             Response response;
             try {
-                argsMap = this.getArgsMap(commandName, tokens[tokens.length-1], scanner);
+                argsMap = this.getArgsMap(commandName, tokens, scanner, logger);
                 response = client.request(new Request(commandName, argsMap));
                 if (response.getCode() == Status.OK) {
                     for (Object object : response.getBody()) {
-                        logger.info(object);
+                        this.logger.info(object);
                     }
-                    logger.success("команда " + commandName + " успешно выполнена");
+                    this.logger.success("команда " + commandName + " успешно выполнена");
                 } else {
-                    logger.error(response.getMessage());
+                    this.logger.error(response.getMessage());
                 }
             } catch (Exception e){
-                logger.warning(e);
+                this.logger.warning(e);
             }
         }
     }

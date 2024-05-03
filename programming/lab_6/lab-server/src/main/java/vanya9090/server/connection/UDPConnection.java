@@ -20,16 +20,16 @@ import java.util.Set;
 
 public class UDPConnection extends ConnectionManager{
     InetSocketAddress clientAddress;
-    int port = 3547;
+    int port = 17895;
     Selector selector;
     public UDPConnection() throws IOException {
+        System.out.println(new InetSocketAddress(port).getAddress());
         DatagramChannel channel = DatagramChannel.open();
         channel.bind(new InetSocketAddress(port));
         channel.configureBlocking(false);
 
         selector = Selector.open();
         channel.register(selector, SelectionKey.OP_READ);
-
         this.clientAddress = null;
     }
     @Override

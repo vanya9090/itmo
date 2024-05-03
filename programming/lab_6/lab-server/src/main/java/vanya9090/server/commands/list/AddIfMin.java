@@ -1,85 +1,40 @@
-//package vanya9090.server.commands.list;
-//
-//import vanya9090.common.util.ILogger;
-//import vanya9090.common.commands.Executable;
-//import vanya9090.server.managers.CollectionManager;
-//import vanya9090.common.exceptions.*;
-//import vanya9090.server.models.*;
-//
-//import java.util.Scanner;
-//
-///**
-// * добавляет новый элемент в коллекцию, если он меньше других
-// *
-// * @author vanya9090
-// */
-//public class AddIfMin extends Command implements Executable {
-//    private final ILogger logger;
-//    private final CollectionManager collectionManager;
-//
-//    public AddIfMin(ILogger logger, CollectionManager collectionManager) {
-//        super("add_if_min", "добавить новый элемент в коллекцию, если его расстояние от начала координат меньше, чем у наименьшего элемента этой коллекции");
-//        this.logger = logger;
-//        this.collectionManager = collectionManager;
-//    }
-//
-//    /**
-//     * выполняет команду
-//     *
-//     * @param args аргументы, переданные в командной строке
-//     * @return "added"/"not added"
-//     * @throws ParseException      ошибка парсинга поля
-//     * @throws EmptyFieldException пустое поле
-//     * @throws ValidateException   ошибка синтетических ограничений
-//     */
-//    @Override
-//    public String apply(String[] args) throws ParseException, EmptyFieldException, ValidateException {
-//        HumanBeing.updateNextId(collectionManager);
-//        HumanBeingForm humanBeingForm = new HumanBeingForm(this.logger, new Scanner(System.in), false);
-//        HumanBeing humanBeing = humanBeingForm.create();
-//        if (!humanBeing.validate()) {
-//            throw new ValidateException("некоторые поля не соответствуют синтетическим ограничениям");
-//        }
-//        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
-//            collectionManager.add(humanBeing);
-//            return "added\n";
-//        } else {
-//            return "not added\n";
-//        }
-//    }
-//
-//    /**
-//     * выполняет команду в режиме execute
-//     *
-//     * @param args       аргументы, переданные в командной строке
-//     * @param fileReader отдельные Scanner для скрипта
-//     * @return "added"/"not added"
-//     * @throws ParseException      ошибка парсинга поля
-//     * @throws EmptyFieldException пустое поле
-//     * @throws ValidateException   ошибка синтетических ограничений
-//     */
-//    @Override
-//    public String apply(String[] args, Scanner fileReader) throws ParseException, EmptyFieldException, ValidateException {
-//        HumanBeing.updateNextId(collectionManager);
-//        HumanBeingForm humanBeingForm = new HumanBeingForm(new ExecuteLogger(), fileReader, true);
-//        HumanBeing humanBeing = humanBeingForm.create();
-//        if (!humanBeing.validate()) {
-//            throw new ValidateException("некоторые поля не соответствуют синтетическим ограничениям");
-//        }
-//        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
-//            collectionManager.add(humanBeing);
-//            return "added\n";
-//        } else {
-//            return "not added\n";
-//        }
-//    }
-//
-//    private Double getMin() {
-//        return this.collectionManager.getCollection().stream()
-//                .map(HumanBeing::getCoordinates)
-//                .map(Coordinates::getDistance)
-//                .mapToDouble(Double::doubleValue)
-//                .min()
-//                .orElse(Double.MAX_VALUE);
-//    }
-//}
+package vanya9090.server.commands.list;
+
+import vanya9090.common.commands.Command;
+import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.Formable;
+import vanya9090.common.models.*;
+import vanya9090.server.managers.CollectionManager;
+
+import java.util.Map;
+
+
+public class AddIfMin extends Command implements Formable {
+    private final CollectionManager collectionManager;
+    public AddIfMin(CollectionManager collectionManager) {
+        super("add_if_min", "добавить новый элемент в коллекцию, если его расстояние от начала координат меньше, чем у наименьшего элемента этой коллекции",
+                new CommandArgument[]{new CommandArgument("human", HumanBeing.class)});
+        this.collectionManager = collectionManager;
+    }
+
+    @Override
+    public Object[] apply(Map<String, Object> arg) throws Exception {
+        HumanBeing humanBeing = (HumanBeing) arg.get("human");
+        if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
+            humanBeing.setId(collectionManager.getNextId());
+            collectionManager.add(humanBeing);
+            return new String[]{"added"};
+        } else {
+            return new String[]{"not added"};
+        }
+    }
+
+    private Double getMin() {
+        return this.collectionManager.getCollection().stream()
+                .map(HumanBeing::getCoordinates)
+                .map(Coordinates::getDistance)
+                .mapToDouble(Double::doubleValue)
+                .min()
+                .orElse(Double.MAX_VALUE);
+    }
+}

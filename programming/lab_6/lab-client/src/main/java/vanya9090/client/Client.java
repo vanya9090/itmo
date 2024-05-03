@@ -17,15 +17,17 @@ import java.util.Scanner;
 
 public final class Client {
     public static ILogger logger = new Logger();
-    private static final int PORT = 3547;
+    private static final int PORT = 17895;
 
     public static void main(String[] args){
         try {
-            UDPClient client = new UDPClient(InetAddress.getLocalHost(), PORT);
+            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
             Response getCommands = client.request(new Request("get_commands", null));
+            System.out.println("djsklf");
+            System.out.println(getCommands.getMessage());
             HashMap<String, CommandArgument[]> commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             Runner runner = new Runner(client, commands);
-            runner.run(System.in);
+            runner.run(System.in, logger);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

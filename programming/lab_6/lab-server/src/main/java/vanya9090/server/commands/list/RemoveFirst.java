@@ -26,6 +26,6 @@ public class RemoveFirst extends Command {
     public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
         this.collectionManager.removeFirst();
-        return new String[]{""};
+        return new String[]{};
     }
 }
