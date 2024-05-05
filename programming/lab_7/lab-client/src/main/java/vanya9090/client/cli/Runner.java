@@ -42,7 +42,7 @@ public class Runner {
         this.client = client;
         this.commands = commands;
     }
-    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws EmptyFieldException, ParseException {
+    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws Exception {
         Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
         Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
 

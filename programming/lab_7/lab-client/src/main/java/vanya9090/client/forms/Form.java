@@ -9,5 +9,5 @@ import vanya9090.common.exceptions.ParseException;
  * @author vanya9090
  */
 public interface Form {
-    Object create() throws ParseException, EmptyFieldException;
+    Object create() throws Exception;
 }

@@ -21,9 +21,8 @@ public final class Server {
     private final static String ENV_KEY = "lab5";
     public static void main(String[] args) throws Exception {
         CommandManager commandManager = new CommandManager();
-//        Runner runner = new Runner(logger, commandManager);
-
         DataBaseManager dataBaseManager = new DataBaseManager();
+//        dataBaseManager.deleteAllCollection();
         CollectionManager collectionManager = new CollectionManager(dataBaseManager);
         collectionManager.setCollection(dataBaseManager.read());
 

@@ -6,27 +6,29 @@ public enum Requests {
     CREATE_CAR_SEQUENCE("CREATE SEQUENCE IF NOT EXISTS car_seq START 1"),
 
     CREATE_HUMAN_BEING_TABLE("CREATE TABLE IF NOT EXISTS HUMAN_BEING ("
-    + "id BIGINT PRIMARY KEY DEFAULT nextval('human_being_seq'),"
-    + "name VARCHAR(255) NOT NULL CHECK (name <> ''),"
-    + "creation_date DATE NOT NULL DEFAULT CURRENT_DATE,"
-    + "real_hero BOOLEAN,"
-    + "has_tooth_pick BOOLEAN,"
-    + "impact_speed INT,"
-    + "minutes_of_waiting FLOAT,"
-    + "weapon_type TEXT NOT NULL CHECK (weapon_type in ('HAMMER', 'AXE', 'SHOTGUN', 'RIFLE', 'KNIFE')),"
-    + "mood TEXT NOT NULL CHECK (mood in ('SADNESS', 'SORROW', 'APATHY', 'CALM', 'RAGE')),"
-    + "coordinates_id BIGINT NOT NULL REFERENCES COORDINATES(id),"
-    + "car_id BIGINT NOT NULL REFERENCES CAR(id))"),
+            + "id BIGINT PRIMARY KEY DEFAULT nextval('human_being_seq'),"
+            + "name VARCHAR(255) NOT NULL CHECK (name <> ''),"
+            + "creation_date DATE NOT NULL DEFAULT CURRENT_DATE,"
+            + "real_hero BOOLEAN,"
+            + "has_tooth_pick BOOLEAN,"
+            + "impact_speed INT,"
+            + "minutes_of_waiting FLOAT,"
+            + "weapon_type TEXT NOT NULL CHECK (weapon_type in ('HAMMER', 'AXE', 'SHOTGUN', 'RIFLE', 'KNIFE')),"
+            + "mood TEXT NOT NULL CHECK (mood in ('SADNESS', 'SORROW', 'APATHY', 'CALM', 'RAGE')),"
+            + "coordinates_id BIGINT NOT NULL REFERENCES COORDINATES(id),"
+            + "car_id BIGINT NOT NULL REFERENCES CAR(id))"),
 
     CREATE_COORDINATES_TABLE("CREATE TABLE IF NOT EXISTS COORDINATES ("
-    + "id BIGINT PRIMARY KEY DEFAULT nextval('coordinates_seq'),"
-    + "x INT NOT NULL CHECK (x <= 925),"
-    + "y FLOAT NOT NULL CHECK (y > -208))"),
+            + "id BIGINT PRIMARY KEY DEFAULT nextval('coordinates_seq'),"
+            + "x INT NOT NULL CHECK (x <= 925),"
+            + "y FLOAT NOT NULL CHECK (y > -208),"
+            + "UNIQUE (x,y))"),
 
     CREATE_CAR_TABLE("CREATE TABLE IF NOT EXISTS CAR ("
-    + "id BIGINT PRIMARY KEY DEFAULT nextval('car_seq'),"
-    + "name TEXT NOT NULL,"
-    + "cool BOOLEAN NOT NULL)"),
+            + "id BIGINT PRIMARY KEY DEFAULT nextval('car_seq'),"
+            + "name TEXT NOT NULL,"
+            + "cool BOOLEAN NOT NULL,"
+            + "UNIQUE (name, cool))"),
 
     INSERT_COORDINATES("INSERT INTO COORDINATES (x, y) VALUES (?,?)"),
     INSERT_CAR("INSERT INTO CAR (name, cool) VALUES (?,?)"),

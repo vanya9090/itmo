@@ -68,7 +68,7 @@ public class DataBaseManager implements StorageManager{
         return generatedId;
     }
 
-    public void addHumanBeing(HumanBeing humanBeing) throws SQLException {
+    public void add(HumanBeing humanBeing) throws SQLException {
         Integer coordinatesId = this.addCoordinates(humanBeing.getCoordinates());
         Integer carId = this.addCar(humanBeing.getCar());
         try (Connection connection = this.getConnection();
@@ -141,7 +141,7 @@ public class DataBaseManager implements StorageManager{
         }
 
         for (HumanBeing humanBeing : collection) {
-            this.addHumanBeing(humanBeing);
+            this.add(humanBeing);
         }
     }
 

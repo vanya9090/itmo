@@ -7,6 +7,7 @@ import vanya9090.common.handlers.*;
 import vanya9090.common.models.*;
 import vanya9090.common.validators.*;
 import vanya9090.common.exceptions.*;
+import vanya9090.server.Server;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -40,7 +41,13 @@ public class CollectionManager {
     }
 
     public void add(HumanBeing humanBeing) {
-        this.collection.add(humanBeing);
+        System.out.println(humanBeing);
+        try {
+            storageManager.add(humanBeing);
+            this.collection.add(humanBeing);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void remove(HumanBeing humanBeing) {

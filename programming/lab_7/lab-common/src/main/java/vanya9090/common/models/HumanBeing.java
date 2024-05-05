@@ -53,7 +53,18 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
         this.car = car;
     }
 
-    public HumanBeing(Map<Field, Object> humanMap) {
+    public HumanBeing(Map<String, Object> humanMap) {
+        this.id = nextId;
+        this.name = (String) humanMap.get("name");
+        this.coordinates = (Coordinates) humanMap.get("coordinates");
+        this.creationDate = LocalDate.now();
+        this.realHero = (Boolean) humanMap.get("realHero");
+        this.hasToothpick = (Boolean) humanMap.get("hasToothpick");
+        this.impactSpeed = (Integer) humanMap.get("impactSpeed");
+        this.minutesOfWaiting = (Float) humanMap.get("minutesOfWaiting");
+        this.weaponType = (WeaponType) humanMap.get("weaponType");
+        this.mood = (Mood) humanMap.get("mood");
+        this.car = (Car) humanMap.get("car");
 
     }
 
