@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "name": "batman",
+    "coordinates": {
+      "x": 123,
+      "y": 987.234
+    },
+    "creationDate": "2024-02-19",
+    "realHero": true,
+    "hasToothpick": false,
+    "impactSpeed": 999,
+    "minutesOfWaiting": 29.534,
+    "weaponType": "AXE",
+    "mood": "SADNESS",
+    "car": {
+      "cool": true,
+      "name": "batcar"
+    }
+  },
+  {
+    "id": 2,
+    "name": "karlson",
+    "coordinates": {
+      "x": 234,
+      "y": -12.0
+    },
+    "creationDate": "2023-02-26",
+    "realHero": true,
+    "hasToothpick": true,
+    "impactSpeed": 239,
+    "minutesOfWaiting": 1.0,
+    "weaponType": "SHOTGUN",
+    "mood": "RAGE",
+    "car": {
+      "cool": true,
+      "name": "kia"
+    }
+  },
+  {
+    "id": 3,
+    "name": "kjds",
+    "coordinates": {
+      "x": 3,
+      "y": 3.0
+    },
+    "creationDate": "2024-04-30",
+    "realHero": true,
+    "hasToothpick": false,
+    "impactSpeed": 32,
+    "minutesOfWaiting": 3.0,
+    "weaponType": "KNIFE",
+    "mood": "CALM",
+    "car": {
+      "cool": true,
+      "name": "dskjf"
+    }
+  },
+  {
+    "id": 4,
+    "name": "ksdf",
+    "coordinates": {
+      "x": 3,
+      "y": 3.0
+    },
+    "creationDate": "2024-05-03",
+    "realHero": true,
+    "hasToothpick": false,
+    "impactSpeed": 3,
+    "minutesOfWaiting": 3.0,
+    "weaponType": "RIFLE",
+    "mood": "SADNESS",
+    "car": {
+      "cool": true,
+      "name": "kdsfj"
+    }
+  }
+]
