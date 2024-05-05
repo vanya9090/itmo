@@ -1,5 +1,6 @@
 package vanya9090.server;
 
+import vanya9090.common.models.HumanBeing;
 import vanya9090.server.commands.list.*;
 import vanya9090.server.connection.ConnectionManager;
 import vanya9090.server.connection.UDPConnection;
@@ -8,6 +9,7 @@ import vanya9090.common.util.ILogger;
 import vanya9090.common.util.Logger;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.CommandManager;
+import vanya9090.server.managers.DataBaseManager;
 import vanya9090.server.managers.JSONManager;
 
 import java.util.List;
@@ -20,18 +22,10 @@ public final class Server {
     public static void main(String[] args) throws Exception {
         CommandManager commandManager = new CommandManager();
 //        Runner runner = new Runner(logger, commandManager);
-        JSONManager jsonManager = new JSONManager();
-        CollectionManager collectionManager = new CollectionManager(jsonManager);
-        try {
-            Map<Integer, List<Exception>> exceptionMap = collectionManager.readCollection(jsonManager.readFile(ENV_KEY));
-            for(Map.Entry<Integer, List<Exception>> entry : exceptionMap.entrySet()) {
-                Integer key = entry.getKey();
-                List<Exception> value = entry.getValue();
-                logger.error("запись с номером " + key + " имеет ошибки: " + value.stream().map(Exception::toString).collect(Collectors.joining(", ")));
-            }
-        } catch (Exception e) {
-            logger.error(e);
-        }
+
+        DataBaseManager dataBaseManager = new DataBaseManager();
+        CollectionManager collectionManager = new CollectionManager(dataBaseManager);
+        collectionManager.setCollection(dataBaseManager.read());
 
 
         commandManager.register("help", new Help(CommandManager.getCommands()));

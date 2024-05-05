@@ -23,7 +23,6 @@ public class UDPConnection extends ConnectionManager{
     int port = 17895;
     Selector selector;
     public UDPConnection() throws IOException {
-        System.out.println(new InetSocketAddress(port).getAddress());
         DatagramChannel channel = DatagramChannel.open();
         channel.bind(new InetSocketAddress(port));
         channel.configureBlocking(false);

@@ -15,6 +15,9 @@ public class Coordinates implements Validatable, Serializable {
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     }
 
+    public Integer getX() {return this.x;}
+    public Float getY() {return this.y;}
+
     @Override
     public String toString() {
         return "x=" + x + ", y=" + y;

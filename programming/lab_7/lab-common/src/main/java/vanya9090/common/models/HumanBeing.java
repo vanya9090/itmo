@@ -69,22 +69,23 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
 //                .mapToInt(Integer::intValue).max().orElse(0);
 //        nextId = maxId + 1;
 //    }
-
     public int getId() {
         return this.id;
     }
-
+    public String getName() {return this.name;}
+    public Boolean getRealHero() {return this.realHero;}
+    public Boolean getHasToothpick() {return this.hasToothpick;}
+    public float getMinutesOfWaiting() {return this.minutesOfWaiting;}
     public Coordinates getCoordinates() {
         return this.coordinates;
     }
-
     public int getImpactSpeed() {
         return this.impactSpeed;
     }
+    public WeaponType getWeaponType() {return weaponType;}
+    public Mood getMood() {return this.mood;}
+    public Car getCar() {return this.car;}
 
-    public WeaponType getWeaponType() {
-        return weaponType;
-    }
 
     public void update(HumanBeing humanBeing) {
         this.name = humanBeing.name;

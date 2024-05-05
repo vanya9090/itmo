@@ -26,8 +26,8 @@ public class Save extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) throws AccessException, NotFoundException {
-        this.collectionManager.writeCollection(this.envKey);
+    public Object[] apply(Map<String, Object> args) throws Exception {
+        this.collectionManager.writeCollection();
         return new String[]{};
     }
 }
