@@ -1,6 +1,7 @@
 package vanya9090.common.models;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class Coordinates implements Validatable, Serializable {
     private final Integer x; //Максимальное значение поля: 925, Поле не может быть null
@@ -9,6 +10,11 @@ public class Coordinates implements Validatable, Serializable {
     public Coordinates(Integer x, Float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Coordinates(Map<String, Object> coordinatesMap) {
+        this.x = (Integer) coordinatesMap.get("x");
+        this.y = (Float) coordinatesMap.get("y");
     }
 
     public double getDistance() {

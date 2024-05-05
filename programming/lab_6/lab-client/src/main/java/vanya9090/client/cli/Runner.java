@@ -42,7 +42,7 @@ public class Runner {
         this.client = client;
         this.commands = commands;
     }
-    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws EmptyFieldException, ParseException {
+    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws Exception {
         Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
         Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
 
@@ -65,19 +65,39 @@ public class Runner {
         }
         return argsMap;
     }
+
+    public void send(String commandName, String[] tokens, Scanner scanner, ILogger logger){
+        Response response;
+        Map<String, Object> argsMap;
+        try {
+            argsMap = this.getArgsMap(commandName, tokens, scanner, logger);
+            response = client.request(new Request(commandName, argsMap));
+            if (response.getCode() == Status.OK) {
+                for (Object object : response.getBody()) {
+                    this.logger.info(object);
+                }
+                this.logger.success("команда " + commandName + " успешно выполнена");
+            } else {
+                this.logger.error(response.getMessage());
+            }
+        } catch (Exception e){
+            this.logger.warning(e);
+        }
+    }
     public void run(InputStream inputStream, ILogger logger) {
         Scanner scanner = new Scanner(inputStream);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
             String[] tokens = line.split(" ");
             String commandName = tokens[0];
-            Map<String, Object> argsMap;
 
             if (!this.commands.containsKey(commandName)) {
                 this.logger.warning("команда " + commandName + " не найдена, наберите help для справки");
                 continue;
             }
             if (Objects.equals(commandName, "exit")){
+                System.out.println(Arrays.toString(Arrays.stream(tokens).toArray()));
+                this.send("save", tokens, scanner, logger);
                 System.exit(0);
             }
             if (Objects.equals(commandName, "execute_script")){
@@ -90,22 +110,7 @@ public class Runner {
                     continue;
                 }
             }
-
-            Response response;
-            try {
-                argsMap = this.getArgsMap(commandName, tokens, scanner, logger);
-                response = client.request(new Request(commandName, argsMap));
-                if (response.getCode() == Status.OK) {
-                    for (Object object : response.getBody()) {
-                        this.logger.info(object);
-                    }
-                    this.logger.success("команда " + commandName + " успешно выполнена");
-                } else {
-                    this.logger.error(response.getMessage());
-                }
-            } catch (Exception e){
-                this.logger.warning(e);
-            }
+            this.send(commandName, tokens, scanner, logger);
         }
     }
 

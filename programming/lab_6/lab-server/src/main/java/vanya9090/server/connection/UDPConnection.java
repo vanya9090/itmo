@@ -47,7 +47,6 @@ public class UDPConnection extends ConnectionManager{
                     if (key.isReadable()) {
                         DatagramChannel client = (DatagramChannel) key.channel();
                         client.configureBlocking(false);
-
                         ByteBuffer buffer = ByteBuffer.allocate(4096);
                         this.clientAddress = (InetSocketAddress) client.receive(buffer);
                         buffer.flip();

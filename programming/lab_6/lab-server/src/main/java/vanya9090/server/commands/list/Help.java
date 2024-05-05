@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class Help extends Command {
 //                stream().
 //                collect(Collectors.toMap(Command::getName, Command::getDescription))};
         return new Object[]{this.commands.values().stream()
+                .filter(command -> command.getCommandType() == CommandType.CLIENT)
                 .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
                 .collect(Collectors.joining())};
     }
