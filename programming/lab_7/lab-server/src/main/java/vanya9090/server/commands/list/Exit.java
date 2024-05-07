@@ -25,6 +25,8 @@ public class Exit extends Command {
      */
     @Override
     public Object[] apply(Map<String, Object> args) throws Exception {
+        Command save = CommandManager.getCommands().get("save");
+        save.apply(args);
         return new String[]{};
     }
 }

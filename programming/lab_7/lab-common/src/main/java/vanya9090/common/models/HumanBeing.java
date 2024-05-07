@@ -65,7 +65,6 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
         this.weaponType = (WeaponType) humanMap.get("weaponType");
         this.mood = (Mood) humanMap.get("mood");
         this.car = (Car) humanMap.get("car");
-
     }
 
     public void setId(int id) {

@@ -42,7 +42,7 @@ public class Runner {
         this.client = client;
         this.commands = commands;
     }
-    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger) throws Exception {
+    public Map<String, Object> getArgsMap(String commandName, String[] arg, Scanner scanner, ILogger logger, boolean isExecute) throws Exception {
         Map<String, Handler<?>> handlers = new HandleManager().getHandlers();
         Map<String, Validator<?>> validators = new ValidatorManager().getValidators();
 
@@ -51,7 +51,7 @@ public class Runner {
         CommandArgument[] neededArgs = this.commands.get(commandName);
         for (CommandArgument commandArgument : neededArgs) {
             if (commandArgument.getType() == HumanBeing.class){
-                field = new HumanBeingForm(logger, scanner, false).create();
+                field = new HumanBeingForm(logger, scanner, isExecute).create();
             } else {
                 try {
                     field = handlers.get(commandArgument.getType().getSimpleName()).handle(arg[1], commandArgument.getName());
@@ -66,11 +66,11 @@ public class Runner {
         return argsMap;
     }
 
-    public void send(String commandName, String[] tokens, Scanner scanner, ILogger logger){
+    public void send(String commandName, String[] tokens, Scanner scanner, ILogger logger, boolean isExecute){
         Response response;
         Map<String, Object> argsMap;
         try {
-            argsMap = this.getArgsMap(commandName, tokens, scanner, logger);
+            argsMap = this.getArgsMap(commandName, tokens, scanner, logger, isExecute);
             response = client.request(new Request(commandName, argsMap));
             if (response.getCode() == Status.OK) {
                 for (Object object : response.getBody()) {
@@ -84,7 +84,7 @@ public class Runner {
             this.logger.warning(e);
         }
     }
-    public void run(InputStream inputStream, ILogger logger) {
+    public void run(InputStream inputStream, ILogger logger, boolean isExecute) {
         Scanner scanner = new Scanner(inputStream);
         while (scanner.hasNext()) {
             String line = scanner.nextLine().trim();
@@ -96,20 +96,20 @@ public class Runner {
                 continue;
             }
             if (Objects.equals(commandName, "exit")){
-                this.send("save", new String[]{}, scanner, logger);
+                this.send("exit", tokens, scanner, logger, isExecute);
                 System.exit(0);
             }
             if (Objects.equals(commandName, "execute_script")){
                 try {
                     if (!new File(tokens[1]).exists()) throw new NotFoundException("файла не существует");
                     if (!Files.isReadable(Paths.get(tokens[1]))) throw new AccessException("нет прав доступа для записи в файл");
-                    this.run(Files.newInputStream(new File(tokens[1]).toPath()), new FakeLogger());
+                    this.run(Files.newInputStream(new File(tokens[1]).toPath()), new FakeLogger(), true);
                 }catch (Exception e){
                     this.logger.warning(e);
                     continue;
                 }
             }
-            this.send(commandName, tokens, scanner, logger);
+            this.send(commandName, tokens, scanner, logger, isExecute);
         }
     }
 

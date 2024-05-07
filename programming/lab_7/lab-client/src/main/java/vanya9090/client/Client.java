@@ -26,7 +26,7 @@ public final class Client {
             Response getCommands = client.request(new Request("get_commands", null));
             HashMap<String, CommandArgument[]> commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             Runner runner = new Runner(client, commands);
-            runner.run(System.in, logger);
+            runner.run(System.in, logger, false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
