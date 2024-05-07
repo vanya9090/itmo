@@ -28,7 +28,7 @@ public final class Client {
             Runner runner = new Runner(client, commands);
             runner.run(System.in, logger);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.warning(e);
         }
     }
 }

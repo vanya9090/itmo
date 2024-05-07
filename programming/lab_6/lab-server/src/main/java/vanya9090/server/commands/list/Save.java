@@ -27,7 +27,6 @@ public class Save extends Command {
 
     @Override
     public Object[] apply(Map<String, Object> args) throws AccessException, NotFoundException {
-        System.out.println("sdklfksdf");
         this.collectionManager.writeCollection(this.envKey);
         return new String[]{};
     }

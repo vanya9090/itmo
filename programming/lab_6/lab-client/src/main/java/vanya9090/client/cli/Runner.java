@@ -96,8 +96,7 @@ public class Runner {
                 continue;
             }
             if (Objects.equals(commandName, "exit")){
-                System.out.println(Arrays.toString(Arrays.stream(tokens).toArray()));
-                this.send("save", tokens, scanner, logger);
+                this.send("exit", tokens, scanner, logger);
                 System.exit(0);
             }
             if (Objects.equals(commandName, "execute_script")){

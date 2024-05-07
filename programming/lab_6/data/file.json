@@ -74,5 +74,24 @@
       "cool": true,
       "name": "kdsfj"
     }
+  },
+  {
+    "id": 5,
+    "name": "yaroslav",
+    "coordinates": {
+      "x": 100,
+      "y": 100.0
+    },
+    "creationDate": "2024-05-07",
+    "realHero": true,
+    "hasToothpick": true,
+    "impactSpeed": 100,
+    "minutesOfWaiting": 100.0,
+    "weaponType": "KNIFE",
+    "mood": "RAGE",
+    "car": {
+      "cool": true,
+      "name": "kon\u0027"
+    }
   }
 ]
