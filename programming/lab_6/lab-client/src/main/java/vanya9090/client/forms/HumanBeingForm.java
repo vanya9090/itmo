@@ -41,10 +41,9 @@ public class HumanBeingForm implements Form {
         return new HumanBeing(this.askAll());
     }
 
-    public Map<String, Object> fieldCircle(Field classField) {
+    public Map<String, Object> fieldCircle(Field classField) throws WrongFieldsException {
         while (true) {
-
-            System.out.print("Введите " + classField.getName() + ": ");
+            logger.info("Введите " + classField.getName() + ": ");
 
             String field = this.scanner.nextLine().trim();
             try {
@@ -58,9 +57,11 @@ public class HumanBeingForm implements Form {
 
                 return fieldMap;
             } catch (Exception e) {
+                if (isExecute) break;
                 logger.error(e);
             }
         }
+        throw new WrongFieldsException(0, classField.getName());
     }
 
     public Map<String, Object> askAll() throws Exception {
@@ -77,9 +78,9 @@ public class HumanBeingForm implements Form {
                 continue;
             }
             if (classField.getType() == WeaponType.class) {
-                System.out.println(Arrays.toString(WeaponType.values()));
+                logger.info(Arrays.toString(WeaponType.values()));
             } else if (classField.getType() == Mood.class) {
-                System.out.println(Arrays.toString(Mood.values()));
+                logger.info(Arrays.toString(Mood.values()));
             }
             fieldMap = this.fieldCircle(classField);
             humanMap.put(classField.getName(), fieldMap.get(classField.getName()));
@@ -87,7 +88,7 @@ public class HumanBeingForm implements Form {
         return humanMap;
     }
 
-    private Car askCar() throws ParseException, EmptyFieldException {
+    private Car askCar() throws ParseException, EmptyFieldException, WrongFieldsException {
         Map<String, Object> carMap = new HashMap<>();
         Map<String, Object> fieldMap;
         logger.info("Машина:");
@@ -101,7 +102,7 @@ public class HumanBeingForm implements Form {
         return new Car(carMap);
     }
 
-    private Coordinates askCoordinates() throws ParseException, EmptyFieldException {
+    private Coordinates askCoordinates() throws ParseException, EmptyFieldException, WrongFieldsException {
         Map<String, Object> coordinatesMap = new HashMap<>();
         Map<String, Object> fieldMap;
         logger.info("Координаты:");
