@@ -40,29 +40,35 @@ public class CollectionManager {
         return this.collection.getClass().getName();
     }
 
-    public void add(HumanBeing humanBeing) {
+    public void add(HumanBeing humanBeing) throws Exception {
         System.out.println(humanBeing);
-        try {
-            storageManager.add(humanBeing);
-            this.collection.add(humanBeing);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        this.storageManager.add(humanBeing);
+        this.collection.add(humanBeing);
     }
 
-    public void remove(HumanBeing humanBeing) {
+    public void update(HumanBeing humanBeing, int id) throws Exception {
+        HumanBeing humanToUpdate = this.getById(id);
+        this.storageManager.update(humanBeing, id);
+        humanToUpdate.update(humanBeing);
+    }
+
+    public void remove(HumanBeing humanBeing) throws Exception {
+        this.storageManager.remove(humanBeing.getId());
         this.collection.remove(humanBeing);
     }
 
     public void removeFirst() {
+        this.collection.remove(this.collection.getFirst());
         this.collection.remove();
     }
 
     public HumanBeing removeHead() {
+        this.collection.remove(collection.getFirst());
         return this.collection.poll();
     }
 
-    public void clear() {
+    public void clear() throws Exception {
+        this.storageManager.truncateStorage();
         this.collection.clear();
     }
 

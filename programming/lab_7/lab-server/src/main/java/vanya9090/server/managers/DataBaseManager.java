@@ -34,6 +34,38 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
+    public Connection getConnection() throws SQLException {
+        if (this.connection == null) {
+            return DriverManager.getConnection(url, username, password);
+        }
+        else if (this.connection.isClosed()) {
+            return DriverManager.getConnection(url, username, password);
+        } else {
+            return this.connection;
+        }
+    }
+
+    private void setFieldsHumanBeing(HumanBeing humanBeing, int coordinatesId, int carId, PreparedStatement statement) throws SQLException {
+        statement.setString(1, humanBeing.getName());
+        statement.setBoolean(2, humanBeing.getRealHero());
+        statement.setBoolean(3, humanBeing.getHasToothpick());
+        statement.setInt(4, humanBeing.getImpactSpeed());
+        statement.setFloat(5, humanBeing.getMinutesOfWaiting());
+        statement.setString(6, humanBeing.getWeaponType().name());
+        statement.setString(7, humanBeing.getMood().name());
+        statement.setInt(8, coordinatesId);
+        statement.setInt(9, carId);
+    }
+
+    public void remove(int id) throws SQLException {
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.DELETE_HUMAN_BEING_BY_ID.getQuery()))
+        {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+    }
+
     public Integer addCar(Car car) throws SQLException {
         Integer generatedId = null;
         try (Connection connection = this.getConnection();
@@ -68,21 +100,71 @@ public class DataBaseManager implements StorageManager{
         return generatedId;
     }
 
+    public int getForeignId(int humanBeingId, String fieldName) throws SQLException {
+        System.out.println(humanBeingId + " " + fieldName);
+        Integer foreignId = null;
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.SELECT_FOREIGN_KEYS.getQuery());)
+        {
+            statement.setInt(1, humanBeingId);
+            statement.execute();
+            ResultSet rs = statement.getResultSet();
+            if (rs.next()) {
+                foreignId = rs.getInt(fieldName);
+            }
+        }
+        return foreignId;
+    }
+
+    public void updateCoordinates(int coordinatesId, Coordinates coordinates) throws SQLException {
+        System.out.println(coordinatesId);
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.UPDATE_COORDINATES.getQuery());)
+        {
+            System.out.println(statement);
+            statement.setInt(1, coordinates.getX());
+            statement.setFloat(2, coordinates.getY());
+            statement.setInt(3, coordinatesId);
+            statement.executeUpdate();
+        }
+    }
+
+    public void updateCar(int carId, Car car) throws SQLException {
+        System.out.println(carId);
+        try (Connection connection = this.getConnection();
+        PreparedStatement statement = connection.prepareStatement(Requests.UPDATE_CAR.getQuery());)
+        {
+            System.out.println(statement);
+            statement.setString(1, car.getName());
+            statement.setBoolean(2, car.getCool());
+            statement.setInt(3, carId);
+            statement.executeUpdate();
+        }
+    }
+
+    public void update(HumanBeing humanBeing, int humanBeingId) throws SQLException {
+        System.out.println(humanBeingId);
+        int coordinatesId = this.getForeignId(humanBeingId, "coordinates_id");
+        int carId = this.getForeignId(humanBeingId, "car_id");
+        this.updateCoordinates(coordinatesId, humanBeing.getCoordinates());
+        this.updateCar(carId, humanBeing.getCar());
+        try (Connection connection = this.getConnection();
+        PreparedStatement statement = connection.prepareStatement(Requests.UPDATE_HUMAN_BEING.getQuery());)
+        {
+            setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
+            statement.setInt(10, humanBeingId);
+            statement.executeUpdate();
+        }
+
+    }
+
     public void add(HumanBeing humanBeing) throws SQLException {
         Integer coordinatesId = this.addCoordinates(humanBeing.getCoordinates());
         Integer carId = this.addCar(humanBeing.getCar());
         try (Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(Requests.INSERT_HUMAN_BEING.getQuery()))
         {
-            statement.setString(1, humanBeing.getName());
-            statement.setBoolean(2, humanBeing.getRealHero());
-            statement.setBoolean(3, humanBeing.getHasToothpick());
-            statement.setInt(4, humanBeing.getImpactSpeed());
-            statement.setFloat(5, humanBeing.getMinutesOfWaiting());
-            statement.setString(6, humanBeing.getWeaponType().name());
-            statement.setString(7, humanBeing.getMood().name());
-            statement.setInt(8, coordinatesId);
-            statement.setInt(9, carId);
+            setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
             statement.executeUpdate();
         }
     }
@@ -145,7 +227,7 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
-    public void deleteAllCollection() throws SQLException{
+    public void deleteAllStorage() throws SQLException{
         try (Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(Requests.DROP_ALL.getQuery()))
         {
@@ -153,14 +235,11 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        if (this.connection == null) {
-            return DriverManager.getConnection(url, username, password);
-        }
-        else if (this.connection.isClosed()) {
-            return DriverManager.getConnection(url, username, password);
-        } else {
-            return this.connection;
+    public void truncateStorage() throws SQLException{
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.TRUNCATE_ALL.getQuery()))
+        {
+            statement.executeUpdate();
         }
     }
 }

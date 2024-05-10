@@ -8,4 +8,7 @@ public interface StorageManager {
     void add(HumanBeing humanBeing) throws Exception;
     Deque<HumanBeing> read() throws Exception;
     void write(Deque<HumanBeing> collection) throws Exception;
+    void remove(int id) throws Exception;
+    void truncateStorage() throws Exception;
+    void update(HumanBeing humanBeing, int id) throws Exception;
 }

@@ -36,6 +36,30 @@ public enum Requests {
             " (name, real_hero, has_tooth_pick, impact_speed, minutes_of_waiting, weapon_type, mood, coordinates_id, car_id)" +
             " VALUES (?,?,?,?,?,?,?,?,?)"),
 
+    UPDATE_HUMAN_BEING("UPDATE HUMAN_BEING "
+            + "SET name = ?,"
+            + "real_hero = ?,"
+            + "has_tooth_pick = ?,"
+            + "impact_speed = ?,"
+            + "minutes_of_waiting = ?,"
+            + "weapon_type = ?,"
+            + "mood = ?,"
+            + "coordinates_id = ?,"
+            + "car_id = ? "
+            + "WHERE id = ?"),
+    UPDATE_COORDINATES("UPDATE COORDINATES "
+            + "SET x = ?,"
+            + "y = ? "
+            + "WHERE id = ?"),
+    UPDATE_CAR("UPDATE CAR "
+            + "SET name = ?,"
+            + "cool = ? "
+            + "WHERE id = ?"),
+
+    DELETE_HUMAN_BEING_BY_ID("DELETE FROM HUMAN_BEING WHERE id = ?"),
+    DELETE_COORDINATES_BY_ID("DELETE FROM COORDINATES WHERE id = ?"),
+    DELETE_CARS_BY_ID("DELETE FROM CAR WHERE id = ?"),
+
     SELECT_HUMAN_BEING_BY_ID("SELECT * FROM HUMAN_BEING "
             + "INNER JOIN COORDINATES "
             + "ON HUMAN_BEING.id = COORDINATES.id "
@@ -49,6 +73,9 @@ public enum Requests {
             + "INNER JOIN CAR "
             + "ON HUMAN_BEING.id = CAR.id "),
 
+    SELECT_FOREIGN_KEYS("SELECT coordinates_id, car_id FROM HUMAN_BEING "
+            + "WHERE id = ?"),
+
     DROP_ALL("DROP TABLE IF EXISTS HUMAN_BEING;"
             + "DROP TABLE IF EXISTS COORDINATES;"
             + "DROP TABLE IF EXISTS CAR;"
@@ -56,9 +83,9 @@ public enum Requests {
             + "DROP SEQUENCE IF EXISTS coordinates_seq;"
             + "DROP SEQUENCE IF EXISTS car_seq;"),
 
-    TRUNCATE_ALL("TRUNCATE TABLE IF EXISTS HUMAN_BEING;"
-            + "TRUNCATE TABLE IF EXISTS COORDINATES;"
-            + "TRUNCATE TABLE IF EXISTS CAR;");
+    TRUNCATE_ALL("TRUNCATE TABLE HUMAN_BEING CASCADE;"
+            + "TRUNCATE TABLE COORDINATES CASCADE;"
+            + "TRUNCATE TABLE CAR CASCADE;");
 
     private final String query;
     Requests(String query) {

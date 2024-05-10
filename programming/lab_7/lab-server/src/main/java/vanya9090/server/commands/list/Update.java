@@ -19,12 +19,13 @@ public class Update extends Command implements Formable {
 
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
+        System.out.println(arg);
         HumanBeing humanBeing = (HumanBeing) arg.get("human");
         int id = (int) arg.get("id");
         HumanBeing humanToUpdate = collectionManager.getById(id);
         if (humanToUpdate == null) throw new NotFoundException("человек с таким id не найден");
-        humanBeing.setId(collectionManager.getNextId());
-        humanToUpdate.update(humanBeing);
+        collectionManager.update(humanBeing, id);
         return new String[]{};
+
     }
 }

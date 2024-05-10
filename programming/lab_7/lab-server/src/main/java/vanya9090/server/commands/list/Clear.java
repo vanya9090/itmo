@@ -27,7 +27,7 @@ public class Clear extends Command {
      * @throws EmptyCollectionException пустая ли коллекция
      */
     @Override
-    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws Exception {
         if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         collectionManager.clear();
         return new String[]{};
