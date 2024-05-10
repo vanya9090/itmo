@@ -19,10 +19,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 /**
- * форма для ввода человека
+ * Форма для ввода человека
  * @author vanya9090
  */
-public class HumanBeingForm implements Form {
+public class HumanBeingForm extends ParentForm {
     private final ILogger logger;
     private final Scanner scanner;
     boolean isExecute;
@@ -30,6 +30,7 @@ public class HumanBeingForm implements Form {
     Map<String, Validator<?>> validators;
 
     public HumanBeingForm(ILogger logger, Scanner scanner, boolean isExecute) {
+        super(logger, scanner, isExecute);
         this.logger = logger;
         this.scanner = scanner;
         this.isExecute = isExecute;
@@ -39,30 +40,6 @@ public class HumanBeingForm implements Form {
 
     public HumanBeing create() throws Exception {
         return new HumanBeing(this.askAll());
-    }
-
-    public Map<String, Object> fieldCircle(Field classField) throws WrongFieldsException {
-        while (true) {
-
-            logger.info("Введите " + classField.getName() + ": ");
-
-            String field = this.scanner.nextLine().trim();
-            try {
-                if (field.isEmpty()) throw new EmptyFieldException(classField.getName());
-
-                Object castedField = handlers.get(classField.getType().getSimpleName()).handle(field, classField.getName());
-                Validator<Object> validator = (Validator<Object>) validators.get(classField.getName());
-                if (!validator.validate(castedField)) throw new WrongFieldsException(0, classField.getName());
-                Map<String, Object> fieldMap = new HashMap<>();
-                fieldMap.put(classField.getName(), castedField);
-
-                return fieldMap;
-            } catch (Exception e) {
-                if (isExecute) break;
-                logger.error(e);
-            }
-        }
-        throw new WrongFieldsException(0, classField.getName());
     }
 
     public Map<String, Object> askAll() throws Exception {
@@ -81,7 +58,7 @@ public class HumanBeingForm implements Form {
             if (classField.getType() == WeaponType.class) {
                 logger.info(Arrays.toString(WeaponType.values()));
             } else if (classField.getType() == Mood.class) {
-                logger.info(Arrays.toString(Mood.values()));
+                logger.info(Arrays.toString(Mood.values(    )));
             }
             fieldMap = this.fieldCircle(classField);
             humanMap.put(classField.getName(), fieldMap.get(classField.getName()));
@@ -89,7 +66,7 @@ public class HumanBeingForm implements Form {
         return humanMap;
     }
 
-    private Car askCar() throws ParseException, EmptyFieldException, WrongFieldsException {
+    private Car askCar() throws WrongFieldsException {
         Map<String, Object> carMap = new HashMap<>();
         Map<String, Object> fieldMap;
         logger.info("Машина:");
@@ -103,7 +80,7 @@ public class HumanBeingForm implements Form {
         return new Car(carMap);
     }
 
-    private Coordinates askCoordinates() throws ParseException, EmptyFieldException, WrongFieldsException {
+    private Coordinates askCoordinates() throws WrongFieldsException {
         Map<String, Object> coordinatesMap = new HashMap<>();
         Map<String, Object> fieldMap;
         logger.info("Координаты:");
