@@ -27,20 +27,11 @@ public class RemoveById extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, EmptyCollectionException, NotFoundException, FormatException {
-        try {
-            Integer id = (Integer) args.get("id");
-            HumanBeing humanToDelete = collectionManager.getById(id);
-            if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
-
-            collectionManager.remove(humanToDelete);
-
-            return new String[]{};
-
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new WrongAmountOfElementsException("пустой аргумент, введите id");
-        } catch (NumberFormatException e) {
-            throw new FormatException("id должен быть представлен целым числом");
-        }
+    public Object[] apply(Map<String, Object> args) throws NotFoundException {
+        Integer id = (Integer) args.get("id");
+        HumanBeing humanToDelete = collectionManager.getById(id);
+        if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
+        collectionManager.remove(humanToDelete);
+        return new String[]{};
     }
 }

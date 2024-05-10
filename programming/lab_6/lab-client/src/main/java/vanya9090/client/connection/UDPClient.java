@@ -48,13 +48,4 @@ public class UDPClient {
 
         return (Response) ObjectIO.readObject(buffer1.array());
     }
-
-    private byte[] receiveData(int bufferSize) throws IOException {
-        ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
-        SocketAddress address = null;
-        while(address == null) {
-            address = client.receive(buffer);
-        }
-        return buffer.array();
-    }
 }

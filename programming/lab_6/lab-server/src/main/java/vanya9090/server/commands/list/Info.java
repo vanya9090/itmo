@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.exceptions.EmptyCollectionException;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 
@@ -23,7 +24,8 @@ public class Info extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) {
+    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
+        if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
         StringBuilder stringBuilder = new StringBuilder();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         stringBuilder.append("Тип: ").

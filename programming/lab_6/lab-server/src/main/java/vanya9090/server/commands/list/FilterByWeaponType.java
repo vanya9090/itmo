@@ -37,16 +37,10 @@ public class FilterByWeaponType extends Command {
     @Override
     public Object[] apply(Map<String, Object> args) throws WrongAmountOfElementsException, NotFoundException, EmptyCollectionException {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
-        try {
-            WeaponType weaponType = (WeaponType) args.get("weaponType");
-            List<HumanBeing> result = filterByWeaponType(weaponType);
-            if (result.isEmpty()) return new String[]{"no results"};
-            return result.stream().map(HumanBeing::toString).toArray();
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new WrongAmountOfElementsException("пустой аргумент, введите тип оружия");
-        } catch (IllegalArgumentException e) {
-            throw new NotFoundException("такого типа оружия нет");
-        }
+        WeaponType weaponType = (WeaponType) args.get("weaponType");
+        List<HumanBeing> result = filterByWeaponType(weaponType);
+        if (result.isEmpty()) return new String[]{"no results"};
+        return result.stream().sorted(HumanBeing::compareTo).map(HumanBeing::toString).toArray();
     }
 
     private List<HumanBeing> filterByWeaponType(WeaponType weaponType) {

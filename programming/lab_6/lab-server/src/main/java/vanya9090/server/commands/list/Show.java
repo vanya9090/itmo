@@ -28,6 +28,7 @@ public class Show extends Command {
     public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
         if (collectionManager.getCollection().isEmpty()) throw new EmptyCollectionException();
         return collectionManager.getCollection().stream()
+                .sorted(HumanBeing::compareTo)
                 .map(HumanBeing::toString).toArray();
     }
 }
