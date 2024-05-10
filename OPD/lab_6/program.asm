@@ -34,25 +34,32 @@ start:      di;
             ei;
             cla;
 
-incloop:    ld x;
+incloop:    di;
+            ld x;
             inc;
             call check;
             st x;
+            ei;
             jump incloop;
             
-int1:       ld x;
+int1:       di;
+            ld x;
             asl;
             asl;
             add x;
             add x;
+            add #0x7;
             out 0x2;
+            ei;
             iret;
 
-int2:       cla;
+int2:       di;
+            cla;
             in 0x4;
             sub x;
             st x;
             iret;
+            ei;
 
 check:      cmp min;
             bmi ld_min;
