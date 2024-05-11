@@ -21,8 +21,8 @@ public final class Client {
 
     public static void main(String[] args){
         try {
-            UDPClient client = new UDPClient(InetAddress.getByName("localhost"), PORT);
-//            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
+//            UDPClient client = new UDPClient(InetAddress.getByName("localhost"), PORT);
+            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
             Response getCommands = client.request(new Request("get_commands", null));
             HashMap<String, CommandArgument[]> commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             Runner runner = new Runner(client, commands);
