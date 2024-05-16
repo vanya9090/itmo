@@ -18,7 +18,7 @@ public enum Requests {
             + "mood TEXT NOT NULL CHECK (mood in ('SADNESS', 'SORROW', 'APATHY', 'CALM', 'RAGE')),"
             + "coordinates_id BIGINT NOT NULL REFERENCES COORDINATES(id),"
             + "car_id BIGINT NOT NULL REFERENCES CAR(id),"
-            + "author VARCHAR(255) NOT NULL REFERENCES author(login) DEFAULT 'admin')"),
+            + "author VARCHAR(255) NOT NULL REFERENCES user1(login) DEFAULT 'admin')"),
     CREATE_COORDINATES_TABLE("CREATE TABLE IF NOT EXISTS COORDINATES ("
             + "id BIGINT PRIMARY KEY DEFAULT nextval('coordinates_seq'),"
             + "x INT NOT NULL CHECK (x <= 925),"
@@ -36,8 +36,8 @@ public enum Requests {
     INSERT_COORDINATES("INSERT INTO COORDINATES (x, y) VALUES (?,?)"),
     INSERT_CAR("INSERT INTO CAR (name, cool) VALUES (?,?)"),
     INSERT_HUMAN_BEING("INSERT INTO HUMAN_BEING" +
-            " (name, real_hero, has_tooth_pick, impact_speed, minutes_of_waiting, weapon_type, mood, coordinates_id, car_id)" +
-            " VALUES (?,?,?,?,?,?,?,?,?)"),
+            " (name, real_hero, has_tooth_pick, impact_speed, minutes_of_waiting, weapon_type, mood, coordinates_id, car_id, author)" +
+            " VALUES (?,?,?,?,?,?,?,?,?,?)"),
     INSERT_USER("INSERT INTO USER1 (login, password) VALUES (?,?)"),
 
     UPDATE_HUMAN_BEING("UPDATE HUMAN_BEING "
@@ -70,6 +70,9 @@ public enum Requests {
             + "INNER JOIN CAR "
             + "ON HUMAN_BEING.id = CAR.id "
             + "WHERE HUMAN_BEING.id = ?"),
+    SELECT_FIELD_BY_ID("SELECT ? FROM HUMAN_BEING "
+            + "WHERE HUMAN_BEING.id = ?"),
+    SELECT_AUTHOR_BY_ID("SELECT author FROM HUMAN_BEING WHERE HUMAN_BEING.id = ?"),
     SELECT_ALL("SELECT * FROM HUMAN_BEING "
             + "LEFT JOIN COORDINATES "
             + "ON HUMAN_BEING.coordinates_id = COORDINATES.id "
@@ -79,13 +82,16 @@ public enum Requests {
             + "WHERE id = ?"),
     SELECT_ALL_LOGINS("SELECT login FROM USER1"),
     SELECT_ALL_USERS("SELECT * FROM USER1"),
+    SELECT_USER_ID("SELECT id FROM USER1 WHERE login = ?"),
 
     DROP_ALL("DROP TABLE IF EXISTS HUMAN_BEING;"
             + "DROP TABLE IF EXISTS COORDINATES;"
             + "DROP TABLE IF EXISTS CAR;"
+            + "DROP TABLE IF EXISTS user1;"
             + "DROP SEQUENCE IF EXISTS human_being_seq;"
             + "DROP SEQUENCE IF EXISTS coordinates_seq;"
-            + "DROP SEQUENCE IF EXISTS car_seq;"),
+            + "DROP SEQUENCE IF EXISTS car_seq;"
+            + "DROP SEQUENCE IF EXISTS user_seq;"),
 
     TRUNCATE_ALL("TRUNCATE TABLE HUMAN_BEING CASCADE;"
             + "TRUNCATE TABLE COORDINATES CASCADE;"

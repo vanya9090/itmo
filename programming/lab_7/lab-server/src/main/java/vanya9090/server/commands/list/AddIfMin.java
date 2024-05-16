@@ -21,10 +21,11 @@ public class AddIfMin extends Command implements Formable {
 
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
+        User user = (User) arg.get("user");
         HumanBeing humanBeing = (HumanBeing) arg.get("human");
         if (humanBeing.getCoordinates().getDistance() < this.getMin()) {
             humanBeing.setId(collectionManager.getNextId());
-            collectionManager.add(humanBeing);
+            collectionManager.add(humanBeing, user);
             return new String[]{"added"};
         } else {
             return new String[]{"not added"};

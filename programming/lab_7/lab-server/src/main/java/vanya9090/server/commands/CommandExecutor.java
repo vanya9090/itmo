@@ -22,7 +22,11 @@ public class CommandExecutor {
 
     static public Response execute(Request request) throws Exception {
         try {
-
+            if (request.getArgument() != null) {
+                if (request.getArgument().containsKey("user")) {
+                    System.out.println(request.getArgument().get("user"));
+                }
+            }
             Command command = CommandManager.getCommands().get(request.getCommandName());
             Object[] out = command.apply(request.getArgument());
             if (Objects.equals(command.getName(), "login") || Objects.equals(command.getName(), "signin")) {

@@ -40,15 +40,15 @@ public class CollectionManager {
         return this.collection.getClass().getName();
     }
 
-    public void add(HumanBeing humanBeing) throws Exception {
+    public void add(HumanBeing humanBeing, User user) throws Exception {
         System.out.println(humanBeing);
-        this.storageManager.add(humanBeing);
+        this.storageManager.add(humanBeing, user);
         this.collection.add(humanBeing);
     }
 
-    public void update(HumanBeing humanBeing, int id) throws Exception {
+    public void update(HumanBeing humanBeing, int id, User user) throws Exception {
         HumanBeing humanToUpdate = this.getById(id);
-        this.storageManager.update(humanBeing, id);
+        this.storageManager.update(humanBeing, id, user);
         humanToUpdate.update(humanBeing);
     }
 
@@ -96,7 +96,7 @@ public class CollectionManager {
         this.initDate = LocalDateTime.now();
     }
 
-    public void writeCollection() throws Exception {
-        storageManager.write(this.collection);
-    }
+//    public void writeCollection() throws Exception {
+//        storageManager.write(this.collection);
+//    }
 }

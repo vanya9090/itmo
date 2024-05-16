@@ -2,6 +2,8 @@ package vanya9090.server.managers;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import vanya9090.common.exceptions.AuthException;
+import vanya9090.common.exceptions.MessageException;
+import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.models.User;
 import vanya9090.server.db.Requests;
 
@@ -89,6 +91,20 @@ public class UserManager {
             }
         }
         return false;
+    }
+
+    public int getId(User user) throws SQLException, NotFoundException {
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.SELECT_USER_ID.getQuery()))
+        {
+            statement.setString(1, user.getLogin());
+            ResultSet rs = statement.executeQuery();
+            System.out.println(rs);
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        }
+        throw new NotFoundException("Пользователь не найден");
     }
 
 //    public boolean isUserExists(String login, String password) throws Exception {

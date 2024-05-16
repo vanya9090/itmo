@@ -1,12 +1,17 @@
 package vanya9090.server.managers;
 
+import vanya9090.common.exceptions.AuthException;
+import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.models.*;
+import vanya9090.server.Server;
 import vanya9090.server.db.Requests;
 
+import javax.swing.plaf.IconUIResource;
 import java.sql.*;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
+import java.util.Objects;
 
 public class DataBaseManager implements StorageManager{
     private final String url = "jdbc:postgresql://localhost:5432/ivanmironov";
@@ -16,20 +21,25 @@ public class DataBaseManager implements StorageManager{
     public DataBaseManager() throws SQLException {
         this.connection = this.getConnection();
         try (this.connection;
+            PreparedStatement createUserSeq = connection.prepareStatement(Requests.CREATE_USER_SEQUENCE.getQuery());
             PreparedStatement createCarSeq = connection.prepareStatement(Requests.CREATE_CAR_SEQUENCE.getQuery());
             PreparedStatement createCoordinatesSeq = connection.prepareStatement(Requests.CREATE_COORDINATES_SEQUENCE.getQuery());
             PreparedStatement createHumanBeingSeq = connection.prepareStatement(Requests.CREATE_HUMAN_BEING_SEQUENCE.getQuery());
 
+            PreparedStatement createUserTable = connection.prepareStatement(Requests.CREATE_USER_TABLE.getQuery());
             PreparedStatement createCarTable = connection.prepareStatement(Requests.CREATE_CAR_TABLE.getQuery());
             PreparedStatement createCoordinatesTable = connection.prepareStatement(Requests.CREATE_COORDINATES_TABLE.getQuery());
             PreparedStatement createHumanBeingTable = connection.prepareStatement(Requests.CREATE_HUMAN_BEING_TABLE.getQuery());
         ){
+            createUserSeq.execute();
             createCarSeq.execute();
             createCoordinatesSeq.execute();
             createHumanBeingSeq.execute();
 
+            createUserTable.execute();
             createCarTable.execute();
             createCoordinatesTable.execute();
+            System.out.println(createHumanBeingTable);
             createHumanBeingTable.execute();
         }
     }
@@ -142,8 +152,43 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
-    public void update(HumanBeing humanBeing, int humanBeingId) throws SQLException {
-        System.out.println(humanBeingId);
+//    public Object getFieldById(String field1, Object id) throws SQLException, NotFoundException {
+//        try (Connection connection = this.getConnection();
+//             PreparedStatement statement = connection.prepareStatement(Requests.SELECT_FIELD_BY_ID.getQuery());)
+//        {
+//            statement.setString(1, field1);
+//            statement.setObject(2, id);
+//
+//            System.out.println(statement);
+//            statement.execute();
+//            ResultSet rs = statement.getResultSet();
+//            System.out.println(rs.getMetaData().);
+//            if (rs.next()) {
+//                return rs.getObject("");
+//            }
+//        }
+//        throw new NotFoundException("Ни одно поле не найдено");
+//    }
+
+    public String getLoginById(int id) throws SQLException, NotFoundException {
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.SELECT_AUTHOR_BY_ID.getQuery());)
+        {
+            statement.setInt(1, id);
+            statement.execute();
+            ResultSet rs = statement.getResultSet();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        }
+        throw new NotFoundException("Ни одно поле не найдено");
+    }
+
+    public void update(HumanBeing humanBeing, int humanBeingId, User user) throws SQLException, NotFoundException, AuthException {
+        String userLogin = getLoginById(humanBeingId);
+        if (!Objects.equals(userLogin, user.getLogin())) {
+            throw new AuthException("Пользователь не может редактировать объекты другого пользователя");
+        }
         int coordinatesId = this.getForeignId(humanBeingId, "coordinates_id");
         int carId = this.getForeignId(humanBeingId, "car_id");
         this.updateCoordinates(coordinatesId, humanBeing.getCoordinates());
@@ -158,13 +203,14 @@ public class DataBaseManager implements StorageManager{
 
     }
 
-    public void add(HumanBeing humanBeing) throws SQLException {
+    public void add(HumanBeing humanBeing, User user) throws SQLException, NotFoundException {
         Integer coordinatesId = this.addCoordinates(humanBeing.getCoordinates());
         Integer carId = this.addCar(humanBeing.getCar());
         try (Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(Requests.INSERT_HUMAN_BEING.getQuery()))
         {
             setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
+            statement.setString(10, user.getLogin());
             statement.executeUpdate();
         }
     }
@@ -183,10 +229,10 @@ public class DataBaseManager implements StorageManager{
     }
 
     private HumanBeing handleHumanBeing(ResultSet rs) throws SQLException {
-        Coordinates coordinates = new Coordinates(rs.getInt(13),
-                rs.getFloat(14));
-        Car car = new Car(rs.getString(16),
-                rs.getBoolean(17));
+        Coordinates coordinates = new Coordinates(rs.getInt(14),
+                rs.getFloat(15));
+        Car car = new Car(rs.getString(17),
+                rs.getBoolean(18));
 
         return new HumanBeing(
                 rs.getInt("id"),
@@ -222,9 +268,9 @@ public class DataBaseManager implements StorageManager{
             statement.executeUpdate();
         }
 
-        for (HumanBeing humanBeing : collection) {
-            this.add(humanBeing);
-        }
+//        for (HumanBeing humanBeing : collection) {
+//            this.add(humanBeing);
+//        }
     }
 
     public void deleteAllStorage() throws SQLException{

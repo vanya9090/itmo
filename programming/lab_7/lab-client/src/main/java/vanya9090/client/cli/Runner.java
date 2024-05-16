@@ -80,6 +80,7 @@ public class Runner {
             response = client.request(new Request(commandName, argsMap, Client.user));
             if (response.getCode() == Status.CREATED) {
                 Client.user = (User) response.getBody()[0];
+                this.logger.success("команда " + commandName + " успешно выполнена");
             }
             if (response.getCode() == Status.OK) {
                 for (Object object : response.getBody()) {

@@ -28,7 +28,7 @@ public class Save extends Command {
 
     @Override
     public Object[] apply(Map<String, Object> args) throws Exception {
-        this.collectionManager.writeCollection();
+//        this.collectionManager.writeCollection();
         return new String[]{};
     }
 }
