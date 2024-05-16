@@ -2,6 +2,8 @@ package vanya9090.server.commands.list;
 
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 
@@ -18,7 +20,7 @@ public class Info extends Command {
 
     public Info(CollectionManager collectionManager) {
         super("info", "вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)",
-                new CommandArgument[]{});
+                new CommandArgument[]{new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

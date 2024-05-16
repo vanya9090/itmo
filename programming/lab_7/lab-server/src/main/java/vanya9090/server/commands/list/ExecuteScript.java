@@ -2,8 +2,10 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
 import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.exceptions.WrongAmountOfElementsException;
+import vanya9090.common.models.User;
 
 import java.util.Map;
 
@@ -15,7 +17,8 @@ import java.util.Map;
 public class ExecuteScript extends Command {
     public ExecuteScript() {
         super("execute_script", "считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.",
-                new CommandArgument[]{new CommandArgument("filename", String.class)});
+                new CommandArgument[]{new CommandArgument("filename", String.class),
+                                      new CommandArgument("user", User.class, CommandType.SYSTEM)});
     }
 
     /**

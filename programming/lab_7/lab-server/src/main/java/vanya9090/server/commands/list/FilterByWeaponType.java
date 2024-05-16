@@ -2,7 +2,9 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
 import vanya9090.common.exceptions.EmptyCollectionException;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.WeaponType;
@@ -22,7 +24,8 @@ public class FilterByWeaponType extends Command {
 
     public FilterByWeaponType(CollectionManager collectionManager) {
         super("filter_by_weapon_type", "вывести элементы, значение поля weaponType которых равно заданному",
-                new CommandArgument[]{new CommandArgument("weaponType", WeaponType.class)});
+                new CommandArgument[]{new CommandArgument("weaponType", WeaponType.class),
+                                      new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

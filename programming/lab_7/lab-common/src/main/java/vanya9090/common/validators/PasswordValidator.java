@@ -1,2 +1,8 @@
-package vanya9090.common.validators;public class PasswordValidator {
+package vanya9090.common.validators;
+
+public class PasswordValidator extends Validator<String>{
+    @Override
+    public boolean validate(String field) {
+        return true;
+    }
 }

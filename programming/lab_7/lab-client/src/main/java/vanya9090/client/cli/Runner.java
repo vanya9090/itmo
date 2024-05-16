@@ -3,10 +3,8 @@ package vanya9090.client.cli;
 import vanya9090.client.Client;
 import vanya9090.client.connection.UDPClient;
 import vanya9090.client.forms.HumanBeingForm;
-import vanya9090.common.commands.Command;
-import vanya9090.common.commands.CommandArgument;
-import vanya9090.common.commands.CommandManager;
-import vanya9090.common.commands.Executable;
+import vanya9090.client.forms.LoginForm;
+import vanya9090.common.commands.*;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
 import vanya9090.common.connection.Status;
@@ -14,6 +12,7 @@ import vanya9090.common.handlers.HandleManager;
 import vanya9090.common.handlers.Handler;
 import vanya9090.common.handlers.IntHandler;
 import vanya9090.common.models.HumanBeing;
+import vanya9090.common.models.User;
 import vanya9090.common.util.FakeLogger;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.exceptions.*;
@@ -50,8 +49,15 @@ public class Runner {
         Object field;
         CommandArgument[] neededArgs = this.commands.get(commandName);
         for (CommandArgument commandArgument : neededArgs) {
-            if (commandArgument.getType() == HumanBeing.class){
+            if (commandArgument.getType() == User.class && commandArgument.getCommandType() == CommandType.SYSTEM) {
+                if (Client.user == null) {
+                    throw new AccessException("Пользователь не вошел в аккаунт");
+                }
+                field = Client.user;
+            } else if (commandArgument.getType() == HumanBeing.class){
                 field = new HumanBeingForm(logger, scanner, isExecute).create();
+            } else if(commandArgument.getType() == User.class){
+                field = new LoginForm(logger, scanner, isExecute).create();
             } else {
                 try {
                     field = handlers.get(commandArgument.getType().getSimpleName()).handle(arg[1], commandArgument.getName());
@@ -71,7 +77,10 @@ public class Runner {
         Map<String, Object> argsMap;
         try {
             argsMap = this.getArgsMap(commandName, tokens, scanner, logger, isExecute);
-            response = client.request(new Request(commandName, argsMap));
+            response = client.request(new Request(commandName, argsMap, Client.user));
+            if (response.getCode() == Status.CREATED) {
+                Client.user = (User) response.getBody()[0];
+            }
             if (response.getCode() == Status.OK) {
                 for (Object object : response.getBody()) {
                     this.logger.info(object);
@@ -109,7 +118,6 @@ public class Runner {
                     continue;
                 }
             }
-            System.out.println(commandName + Arrays.toString(Arrays.stream(tokens).toArray()));
             this.send(commandName, tokens, scanner, logger, isExecute);
         }
     }

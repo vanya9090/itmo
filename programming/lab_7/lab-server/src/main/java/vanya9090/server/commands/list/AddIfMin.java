@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
 import vanya9090.common.commands.Formable;
 import vanya9090.common.models.*;
 import vanya9090.server.managers.CollectionManager;
@@ -13,7 +14,8 @@ public class AddIfMin extends Command implements Formable {
     private final CollectionManager collectionManager;
     public AddIfMin(CollectionManager collectionManager) {
         super("add_if_min", "добавить новый элемент в коллекцию, если его расстояние от начала координат меньше, чем у наименьшего элемента этой коллекции",
-                new CommandArgument[]{new CommandArgument("human", HumanBeing.class)});
+                new CommandArgument[]{new CommandArgument("human", HumanBeing.class),
+                                      new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

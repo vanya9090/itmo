@@ -1,7 +1,9 @@
 package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
 import vanya9090.common.exceptions.EmptyCollectionException;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
@@ -18,7 +20,7 @@ public class SumOfImpactSpeed extends Command {
 
     public SumOfImpactSpeed(CollectionManager collectionManager) {
         super("sum_of_impact_speed", "вывести сумму значений поля impactSpeed для всех элементов коллекции",
-                new CommandArgument[]{});
+                new CommandArgument[]{new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

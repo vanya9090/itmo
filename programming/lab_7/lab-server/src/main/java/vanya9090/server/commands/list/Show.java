@@ -2,6 +2,8 @@ package vanya9090.server.commands.list;
 
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
@@ -20,7 +22,7 @@ public class Show extends Command {
 
     public Show(CollectionManager collectionManager) {
         super("show", "вывести в стандартный поток вывода все элементы коллекции в строковом представлении",
-                new CommandArgument[]{});
+                new CommandArgument[]{new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

@@ -2,6 +2,8 @@ package vanya9090.server.commands.list;
 
 
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.commands.Command;
@@ -22,7 +24,8 @@ public class RemoveById extends Command {
 
     public RemoveById(CollectionManager collectionManager) {
         super("remove_by_id", "удалить элемент из коллекции по его id",
-                new CommandArgument[]{new CommandArgument("id", Integer.class)});
+                new CommandArgument[]{new CommandArgument("id", Integer.class),
+                                      new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

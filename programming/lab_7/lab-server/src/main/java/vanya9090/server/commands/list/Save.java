@@ -2,6 +2,7 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandType;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.AccessException;
@@ -20,7 +21,7 @@ public class Save extends Command {
 
     public Save(CollectionManager collectionManager, String envKey) {
         super("save", "сохранить коллекцию в файл",
-                new CommandArgument[]{}, CommandType.SYSTEM);
+                new CommandArgument[]{new CommandArgument("user", User.class, CommandType.SYSTEM)}, CommandType.SYSTEM);
         this.collectionManager = collectionManager;
         this.envKey = envKey;
     }

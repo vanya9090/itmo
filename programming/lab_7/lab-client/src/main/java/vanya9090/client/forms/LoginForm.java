@@ -1,5 +1,6 @@
 package vanya9090.client.forms;
 
+import vanya9090.client.Client;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.Mood;
 import vanya9090.common.models.User;
@@ -19,7 +20,9 @@ public class LoginForm extends ParentForm{
 
     @Override
     public User create() throws Exception {
-        return new User(askAll());
+        User user = new User(askAll());
+//        Client.user = user;
+        return user;
     }
 
     @Override

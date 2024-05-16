@@ -3,6 +3,8 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.commands.CommandType;
+import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
 
@@ -22,7 +24,7 @@ public class PrintFieldDescendingImpactSpeed extends Command {
 
     public PrintFieldDescendingImpactSpeed(CollectionManager collectionManager) {
         super("print_field_descending_impact_speed", "вывести значения поля impactSpeed всех элементов в порядке убывания",
-                new CommandArgument[]{});
+                new CommandArgument[]{new CommandArgument("user", User.class, CommandType.SYSTEM)});
         this.collectionManager = collectionManager;
     }
 

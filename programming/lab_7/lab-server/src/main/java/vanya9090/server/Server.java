@@ -1,6 +1,5 @@
 package vanya9090.server;
 
-import vanya9090.common.models.HumanBeing;
 import vanya9090.server.commands.list.*;
 import vanya9090.server.connection.ConnectionManager;
 import vanya9090.server.connection.UDPConnection;
@@ -10,14 +9,11 @@ import vanya9090.common.util.Logger;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.CommandManager;
 import vanya9090.server.managers.DataBaseManager;
-import vanya9090.server.managers.JSONManager;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import vanya9090.server.managers.UserManager;
 
 public final class Server {
     public static ILogger logger = new Logger();
+    public static UserManager userManager;
     private final static String ENV_KEY = "lab5";
     public static void main(String[] args) throws Exception {
         CommandManager commandManager = new CommandManager();
@@ -25,9 +21,12 @@ public final class Server {
 //        dataBaseManager.deleteAllCollection();
         CollectionManager collectionManager = new CollectionManager(dataBaseManager);
         collectionManager.setCollection(dataBaseManager.read());
+        userManager = new UserManager();
 
 
         commandManager.register("help", new Help(CommandManager.getCommands()));
+        commandManager.register("login", new Auth(userManager));
+        commandManager.register("signin", new Register(userManager));
         commandManager.register("get_commands", new GetCommands(CommandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));
