@@ -67,11 +67,15 @@ public class DataBaseManager implements StorageManager{
         statement.setInt(9, carId);
     }
 
-    public void remove(int id) throws SQLException {
+    public void remove(int humanBeingId, User user) throws SQLException, AuthException, NotFoundException {
+        String userLogin = getLoginById(humanBeingId);
+        if (!Objects.equals(userLogin, user.getLogin())) {
+            throw new AuthException("Пользователь не может редактировать объекты другого пользователя");
+        }
         try (Connection connection = this.getConnection();
              PreparedStatement statement = connection.prepareStatement(Requests.DELETE_HUMAN_BEING_BY_ID.getQuery()))
         {
-            statement.setInt(1, id);
+            statement.setInt(1, humanBeingId);
             statement.executeUpdate();
         }
     }

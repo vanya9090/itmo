@@ -52,19 +52,19 @@ public class CollectionManager {
         humanToUpdate.update(humanBeing);
     }
 
-    public void remove(HumanBeing humanBeing) throws Exception {
-        this.storageManager.remove(humanBeing.getId());
+    public void remove(HumanBeing humanBeing, User user) throws Exception {
+        this.storageManager.remove(humanBeing.getId(), user);
         this.collection.remove(humanBeing);
     }
 
-    public void removeFirst() {
-        this.collection.remove(this.collection.getFirst());
-        this.collection.remove();
+    public void removeFirst(User user) throws Exception {
+        remove(this.collection.getFirst(), user);
     }
 
-    public HumanBeing removeHead() {
-        this.collection.remove(collection.getFirst());
-        return this.collection.poll();
+    public HumanBeing removeHead(User user) throws Exception {
+        HumanBeing humanBeing = collection.getFirst();
+        remove(collection.getFirst(), user);
+        return humanBeing;
     }
 
     public void clear() throws Exception {

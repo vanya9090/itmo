@@ -25,9 +25,10 @@ public class RemoveFirst extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) throws EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws Exception {
+        User user = (User) args.get("user");
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
-        this.collectionManager.removeFirst();
+        this.collectionManager.removeFirst(user);
         return new String[]{};
     }
 }

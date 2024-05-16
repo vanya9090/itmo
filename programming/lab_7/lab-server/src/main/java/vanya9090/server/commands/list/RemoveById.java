@@ -31,10 +31,11 @@ public class RemoveById extends Command {
 
     @Override
     public Object[] apply(Map<String, Object> args) throws Exception {
+        User user = (User) args.get("user");
         Integer id = (Integer) args.get("id");
         HumanBeing humanToDelete = collectionManager.getById(id);
         if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
-        collectionManager.remove(humanToDelete);
+        collectionManager.remove(humanToDelete, user);
         return new String[]{};
     }
 }

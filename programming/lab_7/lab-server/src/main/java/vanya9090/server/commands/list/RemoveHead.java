@@ -26,8 +26,9 @@ public class RemoveHead extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) throws EmptyFieldException, EmptyCollectionException {
+    public Object[] apply(Map<String, Object> args) throws Exception {
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
-        return new String[]{collectionManager.removeHead().toString()};
+        User user = (User) args.get("user");
+        return new String[]{collectionManager.removeHead(user).toString()};
     }
 }
