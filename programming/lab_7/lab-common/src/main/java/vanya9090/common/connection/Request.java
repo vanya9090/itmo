@@ -3,13 +3,15 @@ package vanya9090.common.connection;
 import vanya9090.common.commands.Command;
 import vanya9090.common.models.User;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Request extends Connection {
+public class Request extends Connection implements Serializable {
     private String commandName;
     private Command command;
     private Map<String, Object> argument;
     private User user;
+    private static final long serialVersionUID = -8885817712041252438L;
 
     public Request(String commandName, Map<String, Object> arguments, User user) {
         this.commandName = commandName;

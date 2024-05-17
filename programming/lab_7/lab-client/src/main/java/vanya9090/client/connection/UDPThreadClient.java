@@ -10,42 +10,38 @@ import vanya9090.common.connection.Response;
 import vanya9090.common.connection.ObjectIO;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.Arrays;
 
-public class UDPClient {
-    private final int PACKET_SIZE = 1024;
-    private final int DATA_SIZE = PACKET_SIZE - 1;
+public class UDPThreadClient{
+    private final int BUFFER_SIZE = 1024;
+    private final int DATA_SIZE = BUFFER_SIZE - 1;
 
-    private final DatagramChannel client;
     private final InetSocketAddress addr;
-
+    private final DatagramSocket socket;
     private final ILogger logger = Client.logger;
 
-    public UDPClient(InetAddress address, int port) throws IOException {
+    public UDPThreadClient(InetAddress address, int port) throws IOException {
+        this.socket = new DatagramSocket();
         this.addr = new InetSocketAddress(address, port);
-        this.client = DatagramChannel.open().bind(null).connect(addr);
-        this.client.configureBlocking(false);
         logger.info("DatagramChannel подключен к " + addr);
     }
 
 
     public Response request(Request request) throws IOException, ClassNotFoundException {
         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(request).toByteArray());
-        while (buffer.hasRemaining()) {
-            this.client.send(buffer, this.addr);
-        }
+        DatagramPacket sendPacket = new DatagramPacket(buffer.array(), buffer.limit(), this.addr.getAddress(), this.addr.getPort());
+        System.out.println(Arrays.toString(sendPacket.getData()));
+        socket.send(sendPacket);
+        System.out.println(1);
 
-        ByteBuffer buffer1 = ByteBuffer.allocate(4096);
-        SocketAddress address = null;
-        while (address == null) {
-            address = this.client.receive(buffer1);
-        }
-
-        return (Response) ObjectIO.readObject(buffer1.array());
+        byte[] buffer1 = new byte[4096];
+        DatagramPacket packet = new DatagramPacket(buffer1, buffer1.length);
+        socket.receive(packet);
+        System.out.println(1);
+        System.out.println(packet.getAddress());
+        return (Response) ObjectIO.readObject(buffer1);
     }
 }

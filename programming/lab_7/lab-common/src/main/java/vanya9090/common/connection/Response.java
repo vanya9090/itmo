@@ -1,9 +1,12 @@
 package vanya9090.common.connection;
 
-public class Response  extends Connection {
+import java.io.Serializable;
+
+public class Response extends Connection implements Serializable {
     private Object[] body = new String[]{""};
     private String message = "";
     public  Status code = Status.OK;
+    private static final long serialVersionUID = -8885817712041252439L;
 
     public Response withMessage(String message) {
         this.message = message;

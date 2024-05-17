@@ -1,8 +1,7 @@
 package vanya9090.server;
 
 import vanya9090.server.commands.list.*;
-import vanya9090.server.connection.ConnectionManager;
-import vanya9090.server.connection.UDPConnection;
+import vanya9090.server.connection.*;
 import vanya9090.server.commands.CommandExecutor;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.util.Logger;
@@ -10,6 +9,9 @@ import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.CommandManager;
 import vanya9090.server.managers.DataBaseManager;
 import vanya9090.server.managers.UserManager;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public final class Server {
     public static ILogger logger = new Logger();
@@ -45,7 +47,7 @@ public final class Server {
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(collectionManager));
 
 
-        ConnectionManager udpManager = new UDPConnection();
+        ConnectionManager udpManager = new UDPStupidServer();
         udpManager.setRequestCallback(CommandExecutor::execute);
         udpManager.run();
     }

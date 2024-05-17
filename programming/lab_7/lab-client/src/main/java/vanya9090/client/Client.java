@@ -2,6 +2,7 @@ package vanya9090.client;
 
 import vanya9090.client.cli.Runner;
 import vanya9090.client.connection.UDPClient;
+import vanya9090.client.connection.UDPThreadClient;
 import vanya9090.client.forms.LoginForm;
 import vanya9090.common.commands.Command;
 import vanya9090.common.commands.CommandArgument;
@@ -24,7 +25,7 @@ public final class Client {
 
     public static void main(String[] args){
         try {
-            UDPClient client = new UDPClient(InetAddress.getByName("localhost"), PORT);
+            UDPThreadClient client = new UDPThreadClient(InetAddress.getByName("localhost"), PORT);
 //            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
 //            user = new LoginForm(logger, new Scanner(System.in), false).create();
 //            System.out.println(user.getLogin() + " " + user.getPassword());
