@@ -31,6 +31,30 @@ public class UDPConnection extends ConnectionManager{
         channel.register(selector, SelectionKey.OP_READ);
         this.clientAddress = null;
     }
+    public Response read(SelectionKey key) throws Exception {
+        Response response;
+        DatagramChannel client = (DatagramChannel) key.channel();
+        client.configureBlocking(false);
+        ByteBuffer buffer = ByteBuffer.allocate(4096);
+        this.clientAddress = (InetSocketAddress) client.receive(buffer);
+        buffer.flip();
+        ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
+        ObjectInputStream oi = new ObjectInputStream(bi);
+        Request request = (Request) oi.readObject();
+        response = this.requestCallback.call(request);
+        key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+        return response;
+    }
+
+    public void send(SelectionKey key, Response response) throws Exception {
+        DatagramChannel client = (DatagramChannel) key.channel();
+        client.configureBlocking(false);
+        ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
+        buffer.clear();
+        client.send(buffer, this.clientAddress);
+        client.register(selector, SelectionKey.OP_READ);
+    }
+
     @Override
     public void run() {
         Response response = null;
@@ -44,23 +68,9 @@ public class UDPConnection extends ConnectionManager{
                     SelectionKey key = iter.next();
 
                     if (key.isReadable()) {
-                        DatagramChannel client = (DatagramChannel) key.channel();
-                        client.configureBlocking(false);
-                        ByteBuffer buffer = ByteBuffer.allocate(4096);
-                        this.clientAddress = (InetSocketAddress) client.receive(buffer);
-                        buffer.flip();
-                        ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
-                        ObjectInputStream oi = new ObjectInputStream(bi);
-                        Request request = (Request) oi.readObject();
-                        response = this.requestCallback.call(request);
-                        key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+                        response = read(key);
                     } if (key.isWritable() && key.isValid()) {
-                        DatagramChannel client = (DatagramChannel) key.channel();
-                        client.configureBlocking(false);
-                        ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
-                        buffer.clear();
-                        client.send(buffer, this.clientAddress);
-                        client.register(selector, SelectionKey.OP_READ);
+                        send(key, response);
                     }
                     iter.remove();
                 }
