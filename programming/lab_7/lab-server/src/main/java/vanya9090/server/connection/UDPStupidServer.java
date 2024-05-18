@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 
 public class UDPStupidServer extends ConnectionManager{
@@ -19,12 +20,14 @@ public class UDPStupidServer extends ConnectionManager{
     public static ForkJoinPool forkJoinPool = new ForkJoinPool(2);
     DatagramPacket receivePacket;
     Response response;
+    ReentrantLock lock;
 
     public UDPStupidServer() throws SocketException {
         this.socket = new DatagramSocket(17895);
+        this.lock = new ReentrantLock();
     }
 
-    public synchronized DatagramPacket read() throws IOException {
+    public DatagramPacket read() throws IOException {
         new Thread(() -> {
             byte[] buffer = new byte[4096];
             receivePacket = new DatagramPacket(buffer, buffer.length);
@@ -37,7 +40,7 @@ public class UDPStupidServer extends ConnectionManager{
         return receivePacket;
     }
 
-    public synchronized void send(Response response, InetAddress address, int port) {
+    public void send(Response response, InetAddress address, int port) {
         new Thread(() -> {
             try {
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
@@ -59,15 +62,16 @@ public class UDPStupidServer extends ConnectionManager{
     public void run() {
         while (true) {
             try {
-                System.out.println(Thread.currentThread().getName());
                 DatagramPacket packet = read();
-//                if (packet == null) continue;
                 ByteArrayInputStream byteStream = new ByteArrayInputStream(packet.getData());
                 ObjectInputStream objectStream = new ObjectInputStream(byteStream);
                 Request request = (Request) objectStream.readObject();
                 forkJoinPool.execute(() -> {
                     try {
+                        lock.lock();
                         response = this.requestCallback.call(request);
+                        lock.unlock();
+
                         send(response, packet.getAddress(), packet.getPort());
                     } catch (Exception e) {
                         e.printStackTrace();

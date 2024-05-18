@@ -16,12 +16,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class UDPThreadConnection extends ConnectionManager{
     InetSocketAddress clientAddress;
     int port = 17895;
     Selector selector;
+    public static ForkJoinPool forkJoinPool = new ForkJoinPool(1);
+    ReentrantLock lock;
+    Response response;
+    Request request;
+    Thread readThread, writeThread;
+
     public UDPThreadConnection() throws IOException {
         DatagramChannel channel = DatagramChannel.open();
         channel.bind(new InetSocketAddress(port));
@@ -30,8 +38,9 @@ public class UDPThreadConnection extends ConnectionManager{
         selector = Selector.open();
         channel.register(selector, SelectionKey.OP_READ);
         this.clientAddress = null;
+        this.lock = new ReentrantLock();
     }
-    public Request read(SelectionKey key) throws Exception {
+    public synchronized Request read(SelectionKey key) throws Exception {
         DatagramChannel client = (DatagramChannel) key.channel();
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.allocate(4096);
@@ -39,12 +48,12 @@ public class UDPThreadConnection extends ConnectionManager{
         buffer.flip();
         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
         ObjectInputStream oi = new ObjectInputStream(bi);
-        Request request = (Request) oi.readObject();
+        request = (Request) oi.readObject();
 //        client.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ);
         return request;
     }
 
-    public void send(SelectionKey key, Response response) throws IOException {
+    public synchronized void send(SelectionKey key, Response response) throws IOException {
         DatagramChannel client = (DatagramChannel) key.channel();
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
@@ -55,13 +64,12 @@ public class UDPThreadConnection extends ConnectionManager{
 
     @Override
     public void run() {
-        AtomicReference<Response> response = new AtomicReference<>();
-        Thread readThread;
-        Thread writeThread;
+//        Thread readThread;
+//        Thread writeThread;
         Map<Response, InetSocketAddress> responseAdressMap = new HashMap<>();
         while (true) {
             try {
-                if (selector.select(1000) == 0) continue;
+                if (selector.select(0) == 0) continue;
                 Set<SelectionKey> keys = selector.selectedKeys();
                 Iterator<SelectionKey> iter = keys.iterator();
 
@@ -70,28 +78,38 @@ public class UDPThreadConnection extends ConnectionManager{
                     if (key.isReadable()) {
                         Runnable readTask = () -> {
                             try {
-                                Request request = read(key);
-                                response.set(this.requestCallback.call(request));
-                                key.interestOps(SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+                                request = read(key);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         };
                         readThread = new Thread(readTask);
                         readThread.start();
-//                        readThread.join();
-                    } if (key.isWritable() && key.isValid()) {
-                        Runnable writeTask = () -> {
+
+                        forkJoinPool.execute(() -> {
+//                            lock.lock();
                             try {
-                                send(key, response.get());
+                                response = this.requestCallback.call(request);
+                                key.interestOps(SelectionKey.OP_WRITE);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            key.interestOps(SelectionKey.OP_READ);
+//                            lock.unlock();
+                        });
+
+                        readThread.join();
+                    } if (key.isWritable() && key.isValid()) {
+                        Runnable writeTask = () -> {
+                            try {
+                                send(key, response);
+                                key.interestOps(SelectionKey.OP_READ);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         };
                         writeThread = new Thread(writeTask);
                         writeThread.start();
-//                        writeThread.join();
+                        writeThread.join();
                     }
                     iter.remove();
                 }
