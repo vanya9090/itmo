@@ -11,14 +11,16 @@ import java.util.Map;
 public class Register extends Command {
     private final UserManager userManager;
     public Register(UserManager userManager) {
-        super("signin", "signin", new CommandArgument[]{new CommandArgument("user", User.class)});
+        super("register", "register", new CommandArgument[]{new CommandArgument("user", User.class)});
         this.userManager = userManager;
     }
 
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
         User user = (User) arg.get("user");
-        if (userManager.getLogins().contains(user.getLogin())) {
+        boolean isLoginExists = userManager.isUserLoginExists(user);
+        System.out.println(isLoginExists);
+        if (isLoginExists) {
             throw new AuthException("Такое имя пользователя занято");
         } else {
             userManager.add(user);

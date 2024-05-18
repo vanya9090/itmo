@@ -34,10 +34,10 @@ import java.util.*;
  */
 public class Runner {
     private final ILogger logger;
-    private final UDPThreadClient client;
+    private final UDPClient client;
     private final Map<String, CommandArgument[]> commands;
 
-    public Runner(UDPThreadClient client, Map<String, CommandArgument[]> commands) {
+    public Runner(UDPClient client, Map<String, CommandArgument[]> commands) {
         this.logger = Client.logger;
         this.client = client;
         this.commands = commands;

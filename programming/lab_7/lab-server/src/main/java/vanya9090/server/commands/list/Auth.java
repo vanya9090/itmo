@@ -12,17 +12,22 @@ import java.util.Map;
 public class Auth extends Command {
     private final UserManager userManager;
     public Auth(UserManager userManager) {
-        super("login", "login", new CommandArgument[]{new CommandArgument("user", User.class)});
+        super("authenticate", "authenticate", new CommandArgument[]{new CommandArgument("user", User.class)});
         this.userManager = userManager;
     }
 
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
         User user = (User) arg.get("user");
-        if (!userManager.isUserExists(user.getLogin(), user.getPassword())) {
-            throw new AuthException("Пользователь не зарегистрирован");
-        } else {
+        boolean isLoginExists = userManager.isUserLoginExists(user);
+        boolean isUserExists = userManager.isUserExists(user);
+        System.out.println(isLoginExists + " " + isUserExists);
+        if (isUserExists) {
             return new Object[]{user};
+        } else if (isLoginExists) {
+            throw new AuthException("Неверный пароль");
+        } else {
+            throw new AuthException("Пользователь не зарегистрирован");
         }
     }
 }

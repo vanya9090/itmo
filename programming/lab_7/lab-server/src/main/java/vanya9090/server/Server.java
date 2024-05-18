@@ -27,8 +27,8 @@ public final class Server {
 
 
         commandManager.register("help", new Help(CommandManager.getCommands()));
-        commandManager.register("login", new Auth(userManager));
-        commandManager.register("signin", new Register(userManager));
+        commandManager.register("authenticate", new Auth(userManager));
+        commandManager.register("register", new Register(userManager));
         commandManager.register("get_commands", new GetCommands(CommandManager.getCommands()));
         commandManager.register("info", new Info(collectionManager));
         commandManager.register("show", new Show(collectionManager));

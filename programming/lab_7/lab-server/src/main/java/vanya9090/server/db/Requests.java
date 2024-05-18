@@ -95,7 +95,10 @@ public enum Requests {
 
     TRUNCATE_ALL("TRUNCATE TABLE HUMAN_BEING CASCADE;"
             + "TRUNCATE TABLE COORDINATES CASCADE;"
-            + "TRUNCATE TABLE CAR CASCADE;");
+            + "TRUNCATE TABLE CAR CASCADE;"),
+
+    USER_LOGIN_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ?);"),
+    USER_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ? AND password = ?);");
 
     private final String query;
     Requests(String query) {

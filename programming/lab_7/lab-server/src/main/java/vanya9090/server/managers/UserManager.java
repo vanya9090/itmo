@@ -77,20 +77,47 @@ public class UserManager {
         return users;
     }
 
-    public boolean isUserExists(String login, String password) throws Exception {
-        List<User> users = getUsers();
-        System.out.println(login + " " + password);
-        for (User user : users) {
-            System.out.println(user.getLogin() + " " + user.getPassword() + " " + user.getLogin().equals(login) + " " + user.getPassword().equals(password));
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return true;
-            } else if (user.getLogin().equals(login) && !user.getPassword().equals(password)) {
-                throw new AuthException("Неверный пароль");
-            } else {
-                continue;
+//    public boolean isUserExists(String login, String password) throws Exception {
+//        List<User> users = getUsers();
+//        System.out.println(login + " " + password);
+//        for (User user : users) {
+//            System.out.println(user.getLogin() + " " + user.getPassword() + " " + user.getLogin().equals(login) + " " + user.getPassword().equals(password));
+//            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+//                return true;
+//            } else if (user.getLogin().equals(login) && !user.getPassword().equals(password)) {
+//                throw new AuthException("Неверный пароль");
+//            } else {
+//                continue;
+//            }
+//        }
+//        return false;
+//    }
+
+    public boolean isUserLoginExists(User user) throws Exception {
+        boolean isExists = false;
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.USER_LOGIN_EXISTS.getQuery());) {
+            statement.setString(1, user.getLogin());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                isExists = rs.getBoolean(1);
             }
         }
-        return false;
+        return isExists;
+    }
+
+    public boolean isUserExists(User user) throws Exception {
+        boolean isExists = false;
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.USER_EXISTS.getQuery());) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                isExists = rs.getBoolean(1);
+            }
+        }
+        return isExists;
     }
 
     public int getId(User user) throws SQLException, NotFoundException {

@@ -3,19 +3,19 @@ package vanya9090.server.connection;
 import vanya9090.common.connection.ObjectIO;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
+import vanya9090.common.connection.Status;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
@@ -24,11 +24,12 @@ public class UDPThreadConnection extends ConnectionManager{
     InetSocketAddress clientAddress;
     int port = 17895;
     Selector selector;
-    public static ForkJoinPool forkJoinPool = new ForkJoinPool(1);
-    ReentrantLock lock;
     Response response;
     Request request;
-    Thread readThread, writeThread;
+    ReentrantLock lock;
+    Map<SelectionKey, Response> keyResponseMap;
+    public static ForkJoinPool forkJoinPool = new ForkJoinPool(1);
+
 
     public UDPThreadConnection() throws IOException {
         DatagramChannel channel = DatagramChannel.open();
@@ -38,9 +39,11 @@ public class UDPThreadConnection extends ConnectionManager{
         selector = Selector.open();
         channel.register(selector, SelectionKey.OP_READ);
         this.clientAddress = null;
+
         this.lock = new ReentrantLock();
+        keyResponseMap = new HashMap<>();
     }
-    public synchronized Request read(SelectionKey key) throws Exception {
+    public Request read(SelectionKey key) throws Exception {
         DatagramChannel client = (DatagramChannel) key.channel();
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.allocate(4096);
@@ -48,62 +51,59 @@ public class UDPThreadConnection extends ConnectionManager{
         buffer.flip();
         ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
         ObjectInputStream oi = new ObjectInputStream(bi);
-        request = (Request) oi.readObject();
-//        client.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ);
+        Request request = (Request) oi.readObject();
         return request;
     }
 
-    public synchronized void send(SelectionKey key, Response response) throws IOException {
+    public void send(SelectionKey key, Response response) throws IOException {
         DatagramChannel client = (DatagramChannel) key.channel();
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
         buffer.clear();
         client.send(buffer, this.clientAddress);
-//        client.register(selector, SelectionKey.OP_READ);
     }
 
     @Override
-    public void run() {
-//        Thread readThread;
-//        Thread writeThread;
-        Map<Response, InetSocketAddress> responseAdressMap = new HashMap<>();
+    public void run(){
+        Thread readThread = null, writeThread = null;
         while (true) {
             try {
-                if (selector.select(0) == 0) continue;
+                if (selector.select(100) == 0) continue;
                 Set<SelectionKey> keys = selector.selectedKeys();
                 Iterator<SelectionKey> iter = keys.iterator();
 
                 while (iter.hasNext()) {
                     SelectionKey key = iter.next();
                     if (key.isReadable()) {
+//                        if (writeThread != null) writeThread.join();
                         Runnable readTask = () -> {
                             try {
                                 request = read(key);
+                                forkJoinPool.execute(() -> {
+                                    try {
+                                        lock.lock();
+                                        response = this.requestCallback.call(request);
+                                        keyResponseMap.put(key, response);
+                                        lock.unlock();
+                                        key.interestOps(SelectionKey.OP_WRITE);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         };
                         readThread = new Thread(readTask);
                         readThread.start();
-
-                        forkJoinPool.execute(() -> {
-//                            lock.lock();
-                            try {
-                                response = this.requestCallback.call(request);
-                                key.interestOps(SelectionKey.OP_WRITE);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-//                            lock.unlock();
-                        });
-
                         readThread.join();
                     } if (key.isWritable() && key.isValid()) {
+//                        if (readThread != null) readThread.join();
                         Runnable writeTask = () -> {
                             try {
-                                send(key, response);
+                                send(key, keyResponseMap.get(key));
                                 key.interestOps(SelectionKey.OP_READ);
-                            } catch (Exception e) {
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         };
@@ -113,7 +113,7 @@ public class UDPThreadConnection extends ConnectionManager{
                     }
                     iter.remove();
                 }
-            } catch (IOException  e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (Exception e) {
                 System.out.println(e);

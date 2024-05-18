@@ -33,15 +33,11 @@ public class UDPThreadClient{
     public Response request(Request request) throws IOException, ClassNotFoundException {
         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(request).toByteArray());
         DatagramPacket sendPacket = new DatagramPacket(buffer.array(), buffer.limit(), this.addr.getAddress(), this.addr.getPort());
-        System.out.println(Arrays.toString(sendPacket.getData()));
         socket.send(sendPacket);
-        System.out.println(1);
 
         byte[] buffer1 = new byte[4096];
         DatagramPacket packet = new DatagramPacket(buffer1, buffer1.length);
         socket.receive(packet);
-        System.out.println(1);
-        System.out.println(packet.getAddress());
         return (Response) ObjectIO.readObject(buffer1);
     }
 }
