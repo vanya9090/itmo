@@ -19,6 +19,7 @@ public class Auth extends Command {
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
         User user = (User) arg.get("user");
+        user.setSHAPassword();
         boolean isLoginExists = userManager.isUserLoginExists(user);
         boolean isUserExists = userManager.isUserExists(user);
         System.out.println(isLoginExists + " " + isUserExists);

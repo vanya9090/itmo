@@ -18,6 +18,7 @@ public class Register extends Command {
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
         User user = (User) arg.get("user");
+        user.setSHAPassword();
         boolean isLoginExists = userManager.isUserLoginExists(user);
         System.out.println(isLoginExists);
         if (isLoginExists) {

@@ -29,9 +29,7 @@ public final class Client {
             UDPClient client = new UDPClient(InetAddress.getByName("127.0.0.1"), PORT);
 //            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
 //            user = new LoginForm(logger, new Scanner(System.in), false).create();
-//            System.out.println(user.getLogin() + " " + user.getPassword());
             Response getCommands = client.request(new Request("get_commands", null));
-//            System.out.println(getCommands.getBody()[0]);
             HashMap<String, CommandArgument[]> commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             Runner runner = new Runner(client, commands);
             runner.run(System.in, logger, false);
