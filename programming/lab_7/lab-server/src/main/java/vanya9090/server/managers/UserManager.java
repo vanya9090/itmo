@@ -41,11 +41,14 @@ public class UserManager {
     public void add(User user) throws SQLException {
         try (Connection connection = this.getConnection();
              PreparedStatement statement = connection.prepareStatement(Requests.INSERT_USER.getQuery());) {
-            {
                 statement.setString(1, user.getLogin());
                 statement.setString(2, user.getPassword());
                 statement.executeUpdate();
-            }
+                connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        } finally {
+            connection.close();
         }
     }
     public List<String> getLogins() throws SQLException {

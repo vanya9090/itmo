@@ -15,19 +15,18 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.security.interfaces.RSAKey;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UDPThreadConnection extends ConnectionManager{
-    InetSocketAddress clientAddress;
     int port = 17895;
     Selector selector;
-    Response response;
     Request request;
     ReentrantLock lock;
-    Map<SelectionKey, Response> keyResponseMap;
+    Map<SelectionKey, Object[]> keyResponseMap;
     public static ForkJoinPool forkJoinPool = new ForkJoinPool(1);
 
 
@@ -38,29 +37,17 @@ public class UDPThreadConnection extends ConnectionManager{
 
         selector = Selector.open();
         channel.register(selector, SelectionKey.OP_READ);
-        this.clientAddress = null;
 
         this.lock = new ReentrantLock();
         keyResponseMap = new HashMap<>();
     }
-    public Request read(SelectionKey key) throws Exception {
-        DatagramChannel client = (DatagramChannel) key.channel();
-        client.configureBlocking(false);
-        ByteBuffer buffer = ByteBuffer.allocate(4096);
-        this.clientAddress = (InetSocketAddress) client.receive(buffer);
-        buffer.flip();
-        ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
-        ObjectInputStream oi = new ObjectInputStream(bi);
-        Request request = (Request) oi.readObject();
-        return request;
-    }
 
-    public void send(SelectionKey key, Response response) throws IOException {
+    public void send(SelectionKey key, Response response, InetSocketAddress clientAddress) throws IOException {
         DatagramChannel client = (DatagramChannel) key.channel();
         client.configureBlocking(false);
         ByteBuffer buffer = ByteBuffer.wrap(ObjectIO.writeObject(response).toByteArray());
         buffer.clear();
-        client.send(buffer, this.clientAddress);
+        client.send(buffer, clientAddress);
     }
 
     @Override
@@ -78,12 +65,19 @@ public class UDPThreadConnection extends ConnectionManager{
 //                        if (writeThread != null) writeThread.join();
                         Runnable readTask = () -> {
                             try {
-                                request = read(key);
+                                DatagramChannel client = (DatagramChannel) key.channel();
+                                client.configureBlocking(false);
+                                ByteBuffer buffer = ByteBuffer.allocate(4096);
+                                InetSocketAddress clientAddress = (InetSocketAddress) client.receive(buffer);
+                                buffer.flip();
+                                ByteArrayInputStream bi = new ByteArrayInputStream(buffer.array());
+                                ObjectInputStream oi = new ObjectInputStream(bi);
+                                Request request = (Request) oi.readObject();
                                 forkJoinPool.execute(() -> {
                                     try {
                                         lock.lock();
-                                        response = this.requestCallback.call(request);
-                                        keyResponseMap.put(key, response);
+                                        Response response = this.requestCallback.call(request);
+                                        keyResponseMap.put(key, new Object[]{response, clientAddress});
                                         lock.unlock();
                                         key.interestOps(SelectionKey.OP_WRITE);
                                     } catch (Exception e) {
@@ -101,7 +95,8 @@ public class UDPThreadConnection extends ConnectionManager{
 //                        if (readThread != null) readThread.join();
                         Runnable writeTask = () -> {
                             try {
-                                send(key, keyResponseMap.get(key));
+                                Object[] responseAndAddress = keyResponseMap.get(key);
+                                send(key, (Response) responseAndAddress[0], (InetSocketAddress) responseAndAddress[1]);
                                 key.interestOps(SelectionKey.OP_READ);
                             } catch (IOException e) {
                                 e.printStackTrace();

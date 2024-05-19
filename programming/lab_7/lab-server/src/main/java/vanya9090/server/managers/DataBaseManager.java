@@ -204,7 +204,6 @@ public class DataBaseManager implements StorageManager{
             statement.setInt(10, humanBeingId);
             statement.executeUpdate();
         }
-
     }
 
     public void add(HumanBeing humanBeing, User user) throws SQLException, NotFoundException {

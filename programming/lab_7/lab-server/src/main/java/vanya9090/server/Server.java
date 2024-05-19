@@ -47,7 +47,7 @@ public final class Server {
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(collectionManager));
 
 
-        ConnectionManager udpManager = new UDPThreadConnection();
+        ConnectionManager udpManager = new UDPStupidServer();
         udpManager.setRequestCallback(CommandExecutor::execute);
         udpManager.run();
     }

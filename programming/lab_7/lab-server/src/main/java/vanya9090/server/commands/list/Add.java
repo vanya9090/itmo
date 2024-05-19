@@ -16,7 +16,6 @@ public class Add extends Command implements Formable {
         super("add", "добавить новый элемент в коллекцию",
                 new CommandArgument[]{new CommandArgument("human", HumanBeing.class),
                 new CommandArgument("user", User.class, CommandType.SYSTEM)});
-
         this.collectionManager = collectionManager;
     }
 
