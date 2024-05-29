@@ -23,6 +23,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>9</source>
+					<target>9</target>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -85,7 +89,11 @@
 			<artifactId>javafx-controls</artifactId>
 			<version>22.0.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>22.0.1</version>
+		</dependency>
 
 	</dependencies>
 
