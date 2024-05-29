@@ -1,15 +1,16 @@
 package vanya9090.common.handlers;
 
+import vanya9090.common.models.Mood;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
 
-public class IntHandler extends Handler<Integer>{
+public class MoodHandler extends Handler<Mood> {
     @Override
-    public Integer handle(String field, String fieldName) throws EmptyFieldException, ParseException {
+    public Mood handle(String field, String fieldName) throws EmptyFieldException, ParseException {
         if (field.isEmpty()) throw new EmptyFieldException(fieldName);
         try {
-            return Integer.parseInt(field);
-        } catch (NumberFormatException e) {
+            return Mood.valueOf(field.toUpperCase());
+        } catch (IllegalArgumentException e) {
             throw new ParseException(fieldName, field);
         }
     }

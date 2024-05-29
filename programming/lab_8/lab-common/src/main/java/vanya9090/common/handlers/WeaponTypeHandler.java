@@ -1,15 +1,16 @@
 package vanya9090.common.handlers;
 
+import vanya9090.common.models.WeaponType;
 import vanya9090.common.exceptions.EmptyFieldException;
 import vanya9090.common.exceptions.ParseException;
 
-public class IntHandler extends Handler<Integer>{
+public class WeaponTypeHandler extends Handler<WeaponType> {
     @Override
-    public Integer handle(String field, String fieldName) throws EmptyFieldException, ParseException {
+    public WeaponType handle(String field, String fieldName) throws EmptyFieldException, ParseException {
         if (field.isEmpty()) throw new EmptyFieldException(fieldName);
         try {
-            return Integer.parseInt(field);
-        } catch (NumberFormatException e) {
+            return WeaponType.valueOf(field.toUpperCase());
+        } catch (IllegalArgumentException e) {
             throw new ParseException(fieldName, field);
         }
     }
