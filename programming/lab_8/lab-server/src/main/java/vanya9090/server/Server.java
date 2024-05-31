@@ -45,6 +45,7 @@ public final class Server {
         commandManager.register("sum_of_impact_speed", new SumOfImpactSpeed(collectionManager));
         commandManager.register("filter_by_weapon_type", new FilterByWeaponType(collectionManager));
         commandManager.register("print_field_descending_impact_speed", new PrintFieldDescendingImpactSpeed(collectionManager));
+        commandManager.register("get_collection", new GetCollection(collectionManager));
 
 
         ConnectionManager udpManager = new UDPThreadConnection();

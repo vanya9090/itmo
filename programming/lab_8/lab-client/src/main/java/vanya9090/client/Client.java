@@ -7,22 +7,28 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
 import vanya9090.client.connection.UDPClient;
+import vanya9090.client.controllers.AuthController;
 import vanya9090.client.controllers.MainController;
+import vanya9090.client.utils.Localizator;
+import vanya9090.common.commands.CommandArgument;
+import vanya9090.common.connection.Request;
+import vanya9090.common.connection.Response;
 import vanya9090.common.models.User;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.util.Logger;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 public final class Client extends Application {
     public static ILogger logger = new Logger();
     private static final int PORT = 17895;
     public static User user;
-    private Stage mainStage;
-    private Stage authStage;
+    public static UDPClient client;
+    private Stage stage;
+    public static Localizator localizator;
+    public static HashMap<String, CommandArgument[]> commands;
     public static final HashMap<String, Locale> localeMap = new HashMap<>() {{
         put("Русский", new Locale("ru", "RU"));
         put("Suomen", new Locale("fi", "FI"));
@@ -32,33 +38,39 @@ public final class Client extends Application {
 
     public static void main(String[] args){
         try {
-            UDPClient client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
+            client = new UDPClient(InetAddress.getByName("localhost"), PORT);
+//            client = new UDPClient(InetAddress.getByName("192.168.10.80"), PORT);
+            Response getCommands = client.request(new Request("get_commands", null));
+            commands = (HashMap<String, CommandArgument[]>) getCommands.getBody()[0];
             launch();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        this.stage = stage;
+//        ResourceBundle resourceBundle = ResourceBundle.getBundle("locales/gui");
+        localizator = new Localizator(ResourceBundle.getBundle("locales/gui", new Locale("ru", "RU")));
+        authStage();
     }
 
-    public void mainStage(Stage stage){
-        mainStage = stage;
+    public void mainStage(){
         FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("/mainScene.fxml"));
         Parent mainRoot = loadFxml(mainLoader);
         MainController mainController = mainLoader.getController();
-        mainStage.setScene(new Scene(mainRoot));
-        mainStage.show();
+        stage.setScene(new Scene(mainRoot));
+        stage.show();
     }
 
-    public void authStage(Stage stage) {
-        authStage = stage;
+    public void authStage() {
         FXMLLoader authLoader = new FXMLLoader(getClass().getResource("/authScene.fxml"));
         Parent authRoot = loadFxml(authLoader);
-        authStage.setScene(new Scene(authRoot));
-        authStage.show();
+        AuthController authController = authLoader.getController();
+        authController.setCallback(this::mainStage);
+        stage.setScene(new Scene(authRoot));
+        stage.show();
     }
 
     private Parent loadFxml(FXMLLoader loader) {

@@ -14,20 +14,9 @@ public class User implements Serializable {
         this.password = (String) humanMap.get("password");
     }
 
-    public User(String login) {
+    public User(String login, String password) {
         this.login = login;
-//        this.password = DigestUtils.sha1Hex(password);
-    }
-
-    public User setPasswordSHA(String password) {
         this.password = password;
-        return this;
-    }
-
-    public User setPassword(String password) {
-//        this.password = DigestUtils.sha1Hex(password);
-        this.password = password;
-        return this;
     }
 
     public void setSHAPassword() {

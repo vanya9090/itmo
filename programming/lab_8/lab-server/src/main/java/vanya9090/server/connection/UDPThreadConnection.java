@@ -108,10 +108,8 @@ public class UDPThreadConnection extends ConnectionManager{
                     }
                     iter.remove();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
         }
     }

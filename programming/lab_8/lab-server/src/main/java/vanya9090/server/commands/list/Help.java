@@ -27,7 +27,7 @@ public class Help extends Command {
 //                collect(Collectors.toMap(Command::getName, Command::getDescription))};
         return new Object[]{this.commands.values().stream()
                 .filter(command -> command.getCommandType() == CommandType.CLIENT)
-                .map(command -> String.format("%-36s%s%n", command.getName(), command.getDescription()))
+                .map(command -> String.format(command.getName(), command.getDescription()))
                 .collect(Collectors.joining())};
     }
 }

@@ -3,6 +3,7 @@ package vanya9090.common.connection;
 import java.io.Serializable;
 
 public class Response extends Connection implements Serializable {
+    private Object data;
     private Object[] body = new String[]{""};
     private String message = "";
     public  Status code = Status.OK;
@@ -23,6 +24,11 @@ public class Response extends Connection implements Serializable {
         this.code = code;
     }
 
+    public Response(Object data, Status code) {
+        this.data = data;
+        this.code = code;
+    }
+
     public void setBody(Object[] body) {
         this.body = body;
     }
@@ -37,4 +43,5 @@ public class Response extends Connection implements Serializable {
     public Object getCode() {
         return this.code;
     }
+    public Object getData() {return this.data;}
 }

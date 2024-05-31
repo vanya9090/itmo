@@ -46,15 +46,12 @@ public class DataBaseManager implements StorageManager{
 
     public Connection getConnection() throws SQLException {
         if (this.connection == null) {
-            System.out.println("this.connection.isClosed()");
             Connection conn = DriverManager.getConnection(url, username, password);
-            conn.setAutoCommit(false);
             return conn;
         }
         else if (this.connection.isClosed()) {
             System.out.println(this.connection.isClosed());
             Connection conn = DriverManager.getConnection(url, username, password);
-            conn.setAutoCommit(false);
             return conn;
         } else {
             System.out.println(this.connection.isClosed());
@@ -84,11 +81,6 @@ public class DataBaseManager implements StorageManager{
         {
             statement.setInt(1, humanBeingId);
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
 
@@ -105,11 +97,6 @@ public class DataBaseManager implements StorageManager{
             if (rs.next()) {
                 generatedId = rs.getInt(1);
             }
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
         return generatedId;
     }
@@ -127,11 +114,6 @@ public class DataBaseManager implements StorageManager{
             if (rs.next()) {
                 generatedId = rs.getInt(1);
             }
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
         return generatedId;
     }
@@ -162,11 +144,6 @@ public class DataBaseManager implements StorageManager{
             statement.setFloat(2, coordinates.getY());
             statement.setInt(3, coordinatesId);
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
 
@@ -180,11 +157,6 @@ public class DataBaseManager implements StorageManager{
             statement.setBoolean(2, car.getCool());
             statement.setInt(3, carId);
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
 
@@ -235,11 +207,6 @@ public class DataBaseManager implements StorageManager{
             setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
             statement.setInt(10, humanBeingId);
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
 
@@ -253,11 +220,6 @@ public class DataBaseManager implements StorageManager{
             setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
             statement.setString(10, user.getLogin());
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
 
@@ -311,11 +273,6 @@ public class DataBaseManager implements StorageManager{
             PreparedStatement statement = connection.prepareStatement(Requests.TRUNCATE_ALL.getQuery()))
         {
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
 
 //        for (HumanBeing humanBeing : collection) {
@@ -328,11 +285,7 @@ public class DataBaseManager implements StorageManager{
             PreparedStatement statement = connection.prepareStatement(Requests.DROP_ALL.getQuery()))
         {
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
+
         }
     }
 
@@ -341,11 +294,7 @@ public class DataBaseManager implements StorageManager{
              PreparedStatement statement = connection.prepareStatement(Requests.TRUNCATE_ALL.getQuery()))
         {
             statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
+
         }
     }
 }

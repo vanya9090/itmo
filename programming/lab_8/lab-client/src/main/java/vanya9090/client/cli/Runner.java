@@ -95,6 +95,7 @@ public class Runner {
             this.logger.warning(e);
         }
     }
+
     public void run(InputStream inputStream, ILogger logger, boolean isExecute) {
         Scanner scanner = new Scanner(inputStream);
         while (scanner.hasNext()) {

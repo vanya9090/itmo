@@ -30,13 +30,11 @@ public class UserManager {
     public Connection getConnection() throws SQLException {
         if (this.connection == null) {
             Connection conn = DriverManager.getConnection(url, username, password);
-            conn.setAutoCommit(false);
             return conn;
         }
         else if (this.connection.isClosed()) {
             System.out.println(this.connection.isClosed());
             Connection conn = DriverManager.getConnection(url, username, password);
-            conn.setAutoCommit(false);
             return conn;
         } else {
             return this.connection;
@@ -49,11 +47,6 @@ public class UserManager {
                 statement.setString(1, user.getLogin());
                 statement.setString(2, user.getPassword());
                 statement.executeUpdate();
-                connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.close();
         }
     }
     public List<String> getLogins() throws SQLException {
@@ -71,19 +64,19 @@ public class UserManager {
         return logins;
     }
 
-    public List<User> getUsers() throws SQLException {
-        List<User> users = new ArrayList<>();
-        try (Connection connection = this.getConnection();
-             Statement statement = connection.createStatement();)
-        {
-            ResultSet rs = statement.executeQuery(Requests.SELECT_ALL_USERS.getQuery());
-            while (rs.next()) {
-                System.out.println("db password: " + rs.getString("password"));
-                users.add(new User(rs.getString("login")).setPasswordSHA(rs.getString("password")));
-            }
-        }
-        return users;
-    }
+//    public List<User> getUsers() throws SQLException {
+//        List<User> users = new ArrayList<>();
+//        try (Connection connection = this.getConnection();
+//             Statement statement = connection.createStatement();)
+//        {
+//            ResultSet rs = statement.executeQuery(Requests.SELECT_ALL_USERS.getQuery());
+//            while (rs.next()) {
+//                System.out.println("db password: " + rs.getString("password"));
+//                users.add(new User(rs.getString("login")).setPasswordSHA(rs.getString("password")));
+//            }
+//        }
+//        return users;
+//    }
 
 //    public boolean isUserExists(String login, String password) throws Exception {
 //        List<User> users = getUsers();

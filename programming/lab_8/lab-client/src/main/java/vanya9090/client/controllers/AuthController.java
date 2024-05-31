@@ -9,14 +9,26 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import vanya9090.client.Client;
+import vanya9090.client.auth.SessionManager;
 import vanya9090.client.utils.Localizator;
+import vanya9090.common.connection.Request;
+import vanya9090.common.connection.Response;
+import vanya9090.common.connection.Status;
+import vanya9090.common.models.User;
 
+import java.io.IOException;
+import java.lang.ref.Cleaner;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static vanya9090.client.Client.localeMap;
+import static vanya9090.client.Client.localizator;
 
 public class AuthController {
-    private Localizator localizator;
+    private Runnable callback;
+
     @FXML
     private ComboBox<String> languageComboBox;
 
@@ -39,12 +51,12 @@ public class AuthController {
     void initialize() {
         languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
 
-        languageComboBox.setValue(SessionHandler.getCurrentLanguage());
+        languageComboBox.setValue(SessionManager.getCurrentLanguage());
         languageComboBox.setStyle("-fx-font: 13px \"Sergoe UI\";");
 
         languageComboBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             localizator.setBundle(ResourceBundle.getBundle("locales/gui", localeMap.get(newValue)));
-            SessionHandler.setCurrentLanguage(newValue);
+            SessionManager.setCurrentLanguage(newValue);
             changeLanguage();
         });
 
@@ -54,12 +66,14 @@ public class AuthController {
             }
         });
         passwordField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!newValue.matches("\\S*")) {
                 passwordField.setText(oldValue);
+            }
         });
     }
 
     @FXML
-    void ok(ActionEvent event) {
+    void ok(ActionEvent event) throws IOException, ClassNotFoundException {
         if (signUpButton.isSelected()) {
             register();
         } else {
@@ -67,10 +81,55 @@ public class AuthController {
         }
     }
 
-    public void register() {
+    public void register() throws IOException, ClassNotFoundException {
         if (loginField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty() || loginField.getText().length() > 40) {
             DialogManager.alert("InvalidCredentials", localizator);
         }
+        User user = new User(loginField.getText(), passwordField.getText());
+        Map<String, Object> args = new HashMap<>();
+        args.put("user", user);
+        Response response = Client.client.request(new Request("register", args));
+        if (response.getCode() == Status.CREATED) {
+            SessionManager.setCurrentUser(user);
+//            DialogManager.info("Registered", localizator);
+            this.callback.run();
+        } else if (response.getCode() == Status.FORBIDDEN){
+            DialogManager.alert("LoginExists", localizator);
+        }
+
+    }
+
+    public void authenticate() throws IOException, ClassNotFoundException {
+        if (loginField.getText().trim().isEmpty() || passwordField.getText().trim().isEmpty() || loginField.getText().length() > 40) {
+            DialogManager.alert("InvalidCredentials", localizator);
+        }
+        User user = new User(loginField.getText(), passwordField.getText());
+        Map<String, Object> args = new HashMap<>();
+        args.put("user", user);
+        Response response = Client.client.request(new Request("authenticate", args));
+        if (response.getCode() == Status.FORBIDDEN){
+            if (response.getMessage().equals("Неверный пароль")) {
+                DialogManager.alert("PasswordIncorrect", localizator);
+            } else {
+                DialogManager.alert("UserIsNotRegistered", localizator);
+            }
+        }
+        else {
+            SessionManager.setCurrentUser(user);
+//            DialogManager.info("Authenticated", localizator);
+            this.callback.run();
+        }
+    }
+
+    public void changeLanguage() {
+        titleLabel.setText(localizator.getKeyString("AuthTitle"));
+        loginField.setPromptText(localizator.getKeyString("LoginField"));
+        passwordField.setPromptText(localizator.getKeyString("PasswordField"));
+        signUpButton.setText(localizator.getKeyString("SignUpButton"));
+    }
+
+    public void setCallback(Runnable callback) {
+        this.callback = callback;
     }
 
 }

@@ -58,7 +58,7 @@ public class HumanBeingForm extends ParentForm {
             if (classField.getType() == WeaponType.class) {
                 logger.info(Arrays.toString(WeaponType.values()));
             } else if (classField.getType() == Mood.class) {
-                logger.info(Arrays.toString(Mood.values(    )));
+                logger.info(Arrays.toString(Mood.values()));
             }
             fieldMap = this.fieldCircle(classField);
             humanMap.put(classField.getName(), fieldMap.get(classField.getName()));
