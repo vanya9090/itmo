@@ -9,22 +9,20 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import vanya9090.client.Client;
+import vanya9090.client.App;
 import vanya9090.client.auth.SessionManager;
-import vanya9090.client.utils.Localizator;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
 import vanya9090.common.connection.Status;
 import vanya9090.common.models.User;
 
 import java.io.IOException;
-import java.lang.ref.Cleaner;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import static vanya9090.client.Client.localeMap;
-import static vanya9090.client.Client.localizator;
+import static vanya9090.client.App.localeMap;
+import static vanya9090.client.App.localizator;
 
 public class AuthController {
     private Runnable callback;
@@ -88,7 +86,7 @@ public class AuthController {
         User user = new User(loginField.getText(), passwordField.getText());
         Map<String, Object> args = new HashMap<>();
         args.put("user", user);
-        Response response = Client.client.request(new Request("register", args));
+        Response response = App.client.request(new Request("register", args));
         if (response.getCode() == Status.CREATED) {
             SessionManager.setCurrentUser(user);
 //            DialogManager.info("Registered", localizator);
@@ -106,7 +104,7 @@ public class AuthController {
         User user = new User(loginField.getText(), passwordField.getText());
         Map<String, Object> args = new HashMap<>();
         args.put("user", user);
-        Response response = Client.client.request(new Request("authenticate", args));
+        Response response = App.client.request(new Request("authenticate", args));
         if (response.getCode() == Status.FORBIDDEN){
             if (response.getMessage().equals("Неверный пароль")) {
                 DialogManager.alert("PasswordIncorrect", localizator);

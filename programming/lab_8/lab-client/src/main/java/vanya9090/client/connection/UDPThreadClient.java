@@ -1,9 +1,7 @@
 package vanya9090.client.connection;
 
 
-import com.google.common.primitives.Bytes;
-import org.apache.commons.lang3.SerializationUtils;
-import vanya9090.client.Client;
+import vanya9090.client.App;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
@@ -12,8 +10,6 @@ import vanya9090.common.connection.ObjectIO;
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
-import java.util.Arrays;
 
 public class UDPThreadClient{
     private final int BUFFER_SIZE = 1024;
@@ -21,7 +17,7 @@ public class UDPThreadClient{
 
     private final InetSocketAddress addr;
     private final DatagramSocket socket;
-    private final ILogger logger = Client.logger;
+    private final ILogger logger = App.logger;
 
     public UDPThreadClient(InetAddress address, int port) throws IOException {
         this.socket = new DatagramSocket();

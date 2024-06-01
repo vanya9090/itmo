@@ -1,14 +1,9 @@
 package vanya9090.client.forms;
 
-import vanya9090.client.Client;
-import vanya9090.common.models.HumanBeing;
-import vanya9090.common.models.Mood;
 import vanya9090.common.models.User;
-import vanya9090.common.models.WeaponType;
 import vanya9090.common.util.ILogger;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;

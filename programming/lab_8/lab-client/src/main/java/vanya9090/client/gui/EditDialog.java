@@ -4,7 +4,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
-import vanya9090.client.Client;
+import vanya9090.client.App;
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandType;
 import vanya9090.common.exceptions.EmptyFieldException;
@@ -14,8 +14,8 @@ import vanya9090.common.handlers.Handler;
 import vanya9090.common.models.Car;
 import vanya9090.common.models.Coordinates;
 import vanya9090.common.models.HumanBeing;
+import vanya9090.common.models.User;
 
-import javax.swing.event.ChangeListener;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -29,9 +29,11 @@ public class EditDialog {
     Node okButton;
     Integer status;
     Map<String, String> regexMap;
+    Integer fieldsNum;
     public EditDialog (String commandName) {
         handlers = new HandleManager().getHandlers();
-        arguments = Client.commands.get(commandName);
+        arguments = App.commands.get(commandName);
+        fieldMap = new HashMap<>();
         dialog = new Dialog<>();
         dialog.setTitle(commandName);
         dialog.setHeaderText(null);
@@ -43,8 +45,6 @@ public class EditDialog {
         okButton.setDisable(true);
 
         root = new FlowPane(Orientation.VERTICAL);
-        fieldMap = new HashMap<>();
-        status = 0;
         regexMap = new HashMap<>() {{
             put("HumanBeing name", ".*");
             put("HumanBeing realHero", "\\b(true|false)\\b");
@@ -57,19 +57,58 @@ public class EditDialog {
             put("Coordinates y", "\\b\\d+(\\.\\d+)?\\b");
             put("Car cool", "\\b(true|false)\\b");
             put("Car name", ".*");
+            put("id", "\\b\\d+\\b");
+            put("weaponType", "(?i)\\b(HAMMER|AXE|SHOTGUN|RIFLE|KNIFE)\\b");
+            put("filename", ".*");
         }};
+        status = 0;
+        fieldsNum = 0;
     }
 
-    public Optional<Map<String, Object>> show() {
+    public Optional<Map<String, Object>> show(HumanBeing humanBeing) {
+        for (CommandArgument argument : arguments) {
+            if (argument.getType() == User.class) continue;
+            if (argument.getType() == HumanBeing.class) {
+                fieldsNum += 11;
+            } else {
+                fieldsNum ++;
+            }
+        }
         for (CommandArgument argument : arguments) {
             if (argument.getCommandType() != CommandType.CLIENT) continue;
             if (argument.getType() == HumanBeing.class) {
-                setByFields(HumanBeing.class.getDeclaredFields(), HumanBeing.class.getSimpleName());
-                setByFields(Coordinates.class.getDeclaredFields(), Coordinates.class.getSimpleName());
-                setByFields(Car.class.getDeclaredFields(), Car.class.getSimpleName());
+                setByClass(HumanBeing.class.getDeclaredFields(), HumanBeing.class.getSimpleName());
+                setByClass(Coordinates.class.getDeclaredFields(), Coordinates.class.getSimpleName());
+                setByClass(Car.class.getDeclaredFields(), Car.class.getSimpleName());
                 System.out.println(fieldMap);
             } else {
                 setField(argument);
+            }
+        }
+
+        if (humanBeing != null) {
+            for (Field humanField: HumanBeing.class.getDeclaredFields()) {
+                System.out.println(HumanBeing.class.getSimpleName() + " " + humanField.getName());
+                if (humanField.getName().equals("nextId") || humanField.getName().equals("creationDate")) continue;
+                if (humanField.getName().equals("coordinates")) {
+                    fieldMap.get("Coordinates x").setText((String) humanBeing.getHumanMap().get("Coordinates x"));
+                    fieldMap.get("Coordinates y").setText((String) humanBeing.getHumanMap().get("Coordinates y"));
+                } else if (humanField.getName().equals("car")) {
+                    fieldMap.get("Car name").setText((String) humanBeing.getHumanMap().get("Car name"));
+                    fieldMap.get("Car cool").setText((String) humanBeing.getHumanMap().get("Car cool"));
+                }else {
+                    System.out.println(fieldMap.keySet());
+                    System.out.println(humanBeing.getHumanMap().keySet());
+                    if (humanField.getName().equals("id")) {
+                        fieldMap.get(humanField.getName())
+                                .setText((String) humanBeing.getHumanMap()
+                                        .get(HumanBeing.class.getSimpleName() + " " + humanField.getName()));
+                    } else {
+                        fieldMap.get(HumanBeing.class.getSimpleName() + " " + humanField.getName())
+                                .setText((String) humanBeing.getHumanMap()
+                                        .get(HumanBeing.class.getSimpleName() + " " + humanField.getName()));
+                    }
+                }
             }
         }
 
@@ -104,10 +143,25 @@ public class EditDialog {
 
         TextField field = new TextField();
         fieldMap.put(argument.getName(), field);
+        field.textProperty().addListener((arg0, oldValue, newValue) -> {
+            if (oldValue.trim().isEmpty() && !newValue.trim().isEmpty()) {
+                status ++;
+            } else if (!oldValue.trim().isEmpty() && newValue.trim().isEmpty()) {
+                status --;
+            }
+            okButton.setDisable(status != fieldsNum);
+        });
+        field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
+            if (!newValue) { //when focus lost
+                if(!field.getText().matches(regexMap.get(argument.getName()))){
+                    field.setText("");
+                }
+            }
+        });
         root.getChildren().add(field);
     }
 
-    public void setByFields(Field[] fields, String className) {
+    public void setByClass(Field[] fields, String className) {
         for (Field classField: fields) {
             if (classField.getName().equals("nextId")
                     || classField.getName().equals("id")
@@ -127,7 +181,7 @@ public class EditDialog {
                 } else if (!oldValue.trim().isEmpty() && newValue.trim().isEmpty()) {
                     status --;
                 }
-                okButton.setDisable(status != 11);
+                okButton.setDisable(status != fieldsNum);
             });
 
             field.focusedProperty().addListener((arg0, oldValue, newValue) -> {
@@ -136,7 +190,6 @@ public class EditDialog {
                         field.setText("");
                     }
                 }
-
             });
             root.getChildren().add(field);
         }
@@ -175,5 +228,9 @@ public class EditDialog {
         carMap.put("cool", Boolean.parseBoolean(fieldMap.get("Car cool").getText()));
         carMap.put("name", fieldMap.get("Car name").getText());
         return new Car(carMap);
+    }
+
+    public void fill(HumanBeing humanBeing) {
+
     }
 }

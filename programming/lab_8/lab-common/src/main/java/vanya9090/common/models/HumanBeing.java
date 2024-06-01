@@ -4,6 +4,7 @@ package vanya9090.common.models;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -79,6 +80,23 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
 //                .mapToInt(Integer::intValue).max().orElse(0);
 //        nextId = maxId + 1;
 //    }
+    public Map<String, Object> getHumanMap() {
+        Map<String, Object> humanMap = new HashMap<>();
+        humanMap.put("HumanBeing id", id.toString());
+        humanMap.put("HumanBeing name", name);
+        humanMap.put("Coordinates x", coordinates.getX().toString());
+        humanMap.put("Coordinates y", coordinates.getY().toString());
+        humanMap.put("HumanBeing realHero", Boolean.toString(realHero));
+        humanMap.put("HumanBeing hasToothpick", Boolean.toString(hasToothpick));
+        humanMap.put("HumanBeing impactSpeed", Integer.toString(impactSpeed));
+        humanMap.put("HumanBeing minutesOfWaiting", Float.toString(minutesOfWaiting));
+        humanMap.put("HumanBeing creationDate", creationDate.toString());
+        humanMap.put("HumanBeing weaponType", weaponType.toString());
+        humanMap.put("HumanBeing mood", mood.toString());
+        humanMap.put("Car cool", car.getCool().toString());
+        humanMap.put("Car name", car.getName());
+        return humanMap;
+    }
     public int getId() {
         return this.id;
     }
@@ -89,13 +107,12 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
     public Coordinates getCoordinates() {
         return this.coordinates;
     }
-    public int getImpactSpeed() {
-        return this.impactSpeed;
-    }
+    public int getImpactSpeed() {return this.impactSpeed;}
     public WeaponType getWeaponType() {return weaponType;}
     public Mood getMood() {return this.mood;}
     public Car getCar() {return this.car;}
-
+    public LocalDate getCreationDate() {return this.creationDate;}
+//    public User getOwner() {return }
 
     public void update(HumanBeing humanBeing) {
         this.name = humanBeing.name;

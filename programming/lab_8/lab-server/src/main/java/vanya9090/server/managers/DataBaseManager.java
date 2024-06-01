@@ -297,4 +297,18 @@ public class DataBaseManager implements StorageManager{
 
         }
     }
+
+    public String getUserByHumanId(Integer humanBeingId) throws SQLException {
+        try (Connection connection = this.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Requests.SELECT_USER_HUMAN_ID.getQuery()))
+        {
+            statement.setInt(1, humanBeingId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                System.out.println(resultSet.getString("login"));
+                return resultSet.getString("login");
+            }
+        }
+        return "";
+    }
 }

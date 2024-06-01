@@ -1,15 +1,26 @@
 package vanya9090.client.controllers;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.animation.FillTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
+import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import vanya9090.client.Client;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
+import javafx.util.Duration;
+import vanya9090.client.App;
 import vanya9090.client.auth.SessionManager;
 import vanya9090.client.gui.EditDialog;
 import vanya9090.common.commands.CommandArgument;
@@ -18,15 +29,16 @@ import vanya9090.common.connection.Response;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.User;
 
-import javax.xml.stream.events.XMLEvent;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.DelayQueue;
 
-import static vanya9090.client.Client.localeMap;
-import static vanya9090.client.Client.localizator;
+import static vanya9090.client.App.localeMap;
+import static vanya9090.client.App.localizator;
 
 public class MainController {
+    private volatile boolean isRefreshing = false;
+    private HashMap<Integer, Label> infoMap;
+    Map<Integer, String> humanAuthor;
 
     @FXML
     private Button add;
@@ -70,8 +82,8 @@ public class MainController {
     @FXML
     private ComboBox<String> languageComboBox;
 
-    @FXML
-    private Button logout;
+//    @FXML
+//    private Button logout;
 
     @FXML
     private TableColumn<HumanBeing, Float> minutesColumn;
@@ -138,20 +150,24 @@ public class MainController {
     void call(ActionEvent event) throws IOException, ClassNotFoundException {
         Optional<Map<String, Object>> args = Optional.of(new HashMap<>());
         String commandName = ((Button) event.getSource()).getId();
-        CommandArgument[] commandArguments = Client.commands.get(commandName);
+        CommandArgument[] commandArguments = App.commands.get(commandName);
         if (commandArguments.length > 1) {
             EditDialog editDialog = new EditDialog(commandName);
-            args = editDialog.show();
+            args = editDialog.show(null);
             if (args.isPresent()) {
                 args.get().put("user", SessionManager.getCurrentUser());
-                Response response = Client.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
-//                String message = (String) response.getBody()[0];
-//                System.out.println(message);
-//                DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+                Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
+                if (response.getBody().length != 0) {
+                    String message;
+                    if (response.getBody().length == 1) message = (String) response.getBody()[0];
+                    else message = Arrays.toString(response.getBody());
+                    System.out.println(message);
+                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+                }
             }
         } else {
             args.get().put("user", SessionManager.getCurrentUser());
-            Response response = Client.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
+            Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
             String message = (String) response.getBody()[0];
             System.out.println(message);
             DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
@@ -162,6 +178,7 @@ public class MainController {
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
+        infoMap = new HashMap<>();
         languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
         languageComboBox.setStyle("-fx-font: 13px \"Sergoe UI\";");
         languageComboBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -172,7 +189,7 @@ public class MainController {
         languageComboBox.setValue(SessionManager.getCurrentLanguage());
 
 
-        ownerColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty("0"));
+        ownerColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanAuthor.get(humanBeing.getValue().getId())));
         nameColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanBeing.getValue().getName()));
         carNameColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanBeing.getValue().getCar().getName()));
         weaponColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanBeing.getValue().getWeaponType().toString()));
@@ -185,7 +202,7 @@ public class MainController {
         minutesColumn.setCellValueFactory(humanBeing -> new SimpleFloatProperty(humanBeing.getValue().getMinutesOfWaiting()).asObject());
         impactSpeedColumn.setCellValueFactory(humanBeing -> new SimpleIntegerProperty(humanBeing.getValue().getImpactSpeed()).asObject());
         idColumn.setCellValueFactory(humanBeing -> new SimpleIntegerProperty(humanBeing.getValue().getId()).asObject());
-        dateColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty("0"));
+        dateColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanBeing.getValue().getCreationDate().toString()));
 
         userLabel.setText("Пользователь: " + SessionManager.getCurrentUser().getLogin());
 
@@ -193,35 +210,224 @@ public class MainController {
             TableRow<HumanBeing> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    doubleClickUpdate(row.getItem());
+                    try {
+                        doubleClickUpdate(row.getItem());
+                    } catch (IOException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
             return row;
         });
+
+        tableTable.setRowFactory(tableView -> {
+            TableRow<HumanBeing> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    try {
+                        rightClickEvent(row.getItem());
+                    } catch (IOException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            return row;
+        });
+
+        visualTab.setOnSelectionChanged(event -> visualise(false));
+
         loadCollection();
     }
 
-    public void loadCollection() throws IOException, ClassNotFoundException {
+    public void visualise(boolean refresh) {
+        visualPane.getChildren().clear();
+        infoMap.clear();
+        int paneMaxX = 1080;
+        int paneMaxY = 463;
+        int maxX = tableTable.getItems().stream().map(humanBeing -> humanBeing.getCoordinates().getX()).max(Integer::compareTo).get();
+        float maxY = tableTable.getItems().stream().map(humanBeing -> humanBeing.getCoordinates().getY()).max(Float::compareTo).get();
+        int maxImpactSpeed = tableTable.getItems().stream().map(HumanBeing::getImpactSpeed).max(Integer::compareTo).get();
+        float maxMinutesOfWaiting = tableTable.getItems().stream().map(HumanBeing::getMinutesOfWaiting).max(Float::compareTo).get();
+
+        for (var human: tableTable.getItems()) {
+            float minutesOfWaiting = human.getMinutesOfWaiting();
+            int x = (int) (((float) human.getCoordinates().getX()) / maxX * paneMaxX * 0.8);
+            float y = (float) (human.getCoordinates().getY() / maxY * paneMaxY * 0.6 + 80);
+            int impactSpeed = human.getImpactSpeed();
+            double r = (double) (humanAuthor.get(human.getId()).hashCode() % 100) / 100;
+            double g = (double) (humanAuthor.get(human.getId()).hashCode() % 50) / 50;
+            double b = (double) (humanAuthor.get(human.getId()).hashCode() % 70) / 70;
+            float radius = (float) (Math.log(minutesOfWaiting) / maxMinutesOfWaiting * 10000);
+            Circle circle = new Circle(radius, Color.color(r, g, b));
+
+
+            Text id = new Text('#' + String.valueOf(human.getId()));
+            Label info = new Label(human.toString());
+
+            info.setVisible(false);
+            circle.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getClickCount() == 2) {
+                    try {
+                        doubleClickUpdate(human);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
+            circle.setOnMouseEntered(mouseEvent -> {
+                id.setVisible(false);
+                info.setVisible(true);
+//                circle.setFill(colorMap.get(creatorName).brighter());
+            });
+//
+            circle.setOnMouseExited(mouseEvent -> {
+                id.setVisible(true);
+                info.setVisible(false);
+//                circle.setFill(colorMap.get(creatorName));
+            });
+
+            id.setFont(Font.font("Segoe UI", radius*2));
+            info.setStyle("-fx-background-color: white; -fx-border-color: #c0c0c0; -fx-border-width: 2");
+            info.setFont(Font.font("Segoe UI", 12));
+
+            visualPane.getChildren().add(id);
+            visualPane.getChildren().add(circle);
+
+            infoMap.put(human.getId(), info);
+            if (!refresh) {
+                var path = new Path();
+                path.getElements().add(new MoveTo(paneMaxX/2, paneMaxY/2));
+                path.getElements().add(new HLineTo(x));
+                path.getElements().add(new VLineTo(y));
+
+                id.translateXProperty().bind(circle.translateXProperty().subtract(id.getLayoutBounds().getWidth()));
+                id.translateYProperty().bind(circle.translateYProperty().add(id.getLayoutBounds().getHeight()));
+                info.translateXProperty().bind(circle.translateXProperty().add(circle.getRadius()));
+                info.translateYProperty().bind(circle.translateYProperty().subtract(120));
+                var transition = new PathTransition();
+                transition.setDuration(Duration.millis(750));
+                transition.setNode(circle);
+                transition.setPath(path);
+                transition.setOrientation(PathTransition.OrientationType.NONE);
+                transition.play();
+            } else {
+                circle.setCenterX(x);
+                circle.setCenterY(y);
+                info.translateXProperty().bind(circle.centerXProperty().add(circle.getRadius()));
+                info.translateYProperty().bind(circle.centerYProperty().subtract(120));
+                id.translateXProperty().bind(circle.centerXProperty().subtract(id.getLayoutBounds().getWidth()));
+                id.translateYProperty().bind(circle.centerYProperty().add(id.getLayoutBounds().getHeight()));
+                var darker = new FillTransition(Duration.millis(750), circle);
+                var brighter = new FillTransition(Duration.millis(750), circle);
+                var transition = new SequentialTransition(darker, brighter);
+                transition.play();
+            }
+        }
+        for (var ids : infoMap.keySet()) {
+            visualPane.getChildren().add(infoMap.get(ids));
+        }
+    }
+
+    public void getAuthorOfHuman() {
         Map<String, Object> args = new HashMap<>();
-        Response response = Client.client.request(new Request("get_collection", args, SessionManager.getCurrentUser()));
+        Response response = null;
+        try {
+            response = App.client.request(new Request("get_collection_users", args, SessionManager.getCurrentUser()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        humanAuthor = (Map<Integer, String>) response.getBody()[0];
+    }
+
+
+    public void loadCollection()  {
+        Map<String, Object> args = new HashMap<>();
+        Response response = null;
+        try {
+            response = App.client.request(new Request("get_collection", args, SessionManager.getCurrentUser()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<HumanBeing> arrayDeque = new ArrayList<>();
         for (Object humanBeing : response.getBody()) {
             arrayDeque.add((HumanBeing) humanBeing);
         }
+        this.getAuthorOfHuman();
         setCollection(arrayDeque);
+        visualise(true);
+    }
+    public void rightClickEvent(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
+        if (!humanAuthor.get(humanBeing.getId()).toString().equals(SessionManager.getCurrentUser().getLogin().toString())) {
+            DialogManager.createAlert(localizator.getKeyString("Info"),
+                    "пользователь не может удалять записи другого пользователья",
+                    Alert.AlertType.WARNING, true);
+        } else {
+            Map<String, Object> args = new HashMap<>();
+            args.put("id", humanBeing.getId());
+            args.put("user", SessionManager.getCurrentUser());
+            Response response = App.client.request(new Request("remove_by_id", args, SessionManager.getCurrentUser()));
+            if (response.getBody().length != 0) {
+                String message;
+                if (response.getBody().length == 1) message = (String) response.getBody()[0];
+                else message = Arrays.toString(response.getBody());
+                DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+                loadCollection();
+            }
+        }
     }
 
-    public void doubleClickUpdate(HumanBeing humanBeing) {
-        System.out.println(humanBeing);
+    public void doubleClickUpdate(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
+        if (!humanAuthor.get(humanBeing.getId()).toString().equals(SessionManager.getCurrentUser().getLogin().toString())) {
+            DialogManager.createAlert(localizator.getKeyString("Info"),
+                    "пользователь не может редактировать записи другого пользователья",
+                    Alert.AlertType.WARNING, true);
+        } else {
+            Optional<Map<String, Object>> args;
+            EditDialog editDialog = new EditDialog("update");
+            args = editDialog.show(humanBeing);
+            if (args.isPresent()) {
+                args.get().put("user", SessionManager.getCurrentUser());
+                Response response = App.client.request(new Request("update", args.get(), SessionManager.getCurrentUser()));
+                if (response.getBody().length != 0) {
+                    String message;
+                    if (response.getBody().length == 1) message = (String) response.getBody()[0];
+                    else message = Arrays.toString(response.getBody());
+                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+                    loadCollection();
+                }
+        }
+        }
     }
 
     public void setCollection(List<HumanBeing> humanBeingDeque) {
-        System.out.println(FXCollections.observableArrayList(humanBeingDeque));
+        List<? extends TableColumn<HumanBeing, ?>> sortingOrder = new ArrayList<>(tableTable.getSortOrder());
         tableTable.setItems(FXCollections.observableArrayList(humanBeingDeque));
+        tableTable.getSortOrder().setAll(sortingOrder);
     }
 
     public void changeLanguage() {
 
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        isRefreshing = refreshing;
+    }
+
+    public void refresh() {
+        Thread threadRefresh = new Thread(() -> {
+            while (isRefreshing) {
+                Platform.runLater(this::loadCollection);
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+        threadRefresh.start();
     }
 
 }

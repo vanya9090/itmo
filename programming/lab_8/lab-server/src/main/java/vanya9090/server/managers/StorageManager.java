@@ -12,4 +12,5 @@ public interface StorageManager {
     void remove(int id, User user) throws Exception;
     void truncateStorage() throws Exception;
     void update(HumanBeing humanBeing, int id, User user) throws Exception;
+    String getUserByHumanId(Integer humanBeingId) throws Exception;
 }

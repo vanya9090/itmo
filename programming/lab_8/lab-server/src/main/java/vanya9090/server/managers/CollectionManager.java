@@ -33,6 +33,14 @@ public class CollectionManager {
         return this.collection;
     }
 
+    public Map<Integer, String> getUserCollection() throws Exception {
+        Map<Integer, String> res = new HashMap<>();
+        for (HumanBeing humanBeing : this.collection) {
+            res.put(humanBeing.getId(), this.storageManager.getUserByHumanId(humanBeing.getId()));
+        }
+        return res;
+    }
+
     public int getSize() {
         return this.collection.size();
     }

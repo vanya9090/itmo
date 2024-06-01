@@ -98,7 +98,11 @@ public enum Requests {
             + "TRUNCATE TABLE CAR CASCADE;"),
 
     USER_LOGIN_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ?);"),
-    USER_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ? AND password = ?);");
+    USER_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ? AND password = ?);"),
+
+    SELECT_USER_HUMAN_ID("SELECT user1.login FROM HUMAN_BEING "
+            + "JOIN user1 ON HUMAN_BEING.author = user1.login "
+            + "WHERE id = ?");
 
     private final String query;
     Requests(String query) {

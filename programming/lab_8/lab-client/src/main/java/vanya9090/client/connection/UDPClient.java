@@ -1,9 +1,7 @@
 package vanya9090.client.connection;
 
 
-import com.google.common.primitives.Bytes;
-import org.apache.commons.lang3.SerializationUtils;
-import vanya9090.client.Client;
+import vanya9090.client.App;
 import vanya9090.common.util.ILogger;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
@@ -15,7 +13,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.util.Arrays;
 
 public class UDPClient {
     private final int PACKET_SIZE = 1024;
@@ -24,7 +21,7 @@ public class UDPClient {
     private final DatagramChannel client;
     private final InetSocketAddress addr;
 
-    private final ILogger logger = Client.logger;
+    private final ILogger logger = App.logger;
 
     public UDPClient(InetAddress address, int port) throws IOException {
         this.addr = new InetSocketAddress(address, port);
