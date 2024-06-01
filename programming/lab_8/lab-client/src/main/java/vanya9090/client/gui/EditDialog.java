@@ -23,6 +23,7 @@ public class EditDialog {
     FlowPane root;
     Dialog<Map<String, Object>> dialog;
     Map<String, TextField> fieldMap;
+    Map<String, >
     Map<String, Handler<?>> handlers;
     CommandArgument[] arguments;
     ButtonType okButtonType;

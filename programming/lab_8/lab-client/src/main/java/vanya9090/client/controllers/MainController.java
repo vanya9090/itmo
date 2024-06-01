@@ -215,15 +215,7 @@ public class MainController {
                     } catch (IOException | ClassNotFoundException e) {
                         throw new RuntimeException(e);
                     }
-                }
-            });
-            return row;
-        });
-
-        tableTable.setRowFactory(tableView -> {
-            TableRow<HumanBeing> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getButton() == MouseButton.SECONDARY) {
+                } else if (event.getButton() == MouseButton.SECONDARY) {
                     try {
                         rightClickEvent(row.getItem());
                     } catch (IOException | ClassNotFoundException e) {
@@ -257,7 +249,7 @@ public class MainController {
             double r = (double) (humanAuthor.get(human.getId()).hashCode() % 100) / 100;
             double g = (double) (humanAuthor.get(human.getId()).hashCode() % 50) / 50;
             double b = (double) (humanAuthor.get(human.getId()).hashCode() % 70) / 70;
-            float radius = (float) (Math.log(minutesOfWaiting) / maxMinutesOfWaiting * 10000);
+            float radius = (float) (Math.log(minutesOfWaiting) / maxMinutesOfWaiting * 1000);
             Circle circle = new Circle(radius, Color.color(r, g, b));
 
 
@@ -269,10 +261,14 @@ public class MainController {
                 if (mouseEvent.getClickCount() == 2) {
                     try {
                         doubleClickUpdate(human);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    try {
+                        rightClickEvent(human);
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -409,7 +405,36 @@ public class MainController {
     }
 
     public void changeLanguage() {
+        userLabel.setText(localizator.getKeyString("UserLabel") + " " + SessionManager.getCurrentUser().getLogin());
 
+        exit.setText(localizator.getKeyString("Exit"));
+        remove_by_id.setText(localizator.getKeyString("RemoveByID"));
+        help.setText(localizator.getKeyString("Help"));
+        info.setText(localizator.getKeyString("Info"));
+        add.setText(localizator.getKeyString("Add"));
+        update.setText(localizator.getKeyString("Update"));
+        remove_first.setText(localizator.getKeyString("RemoveFirst"));
+        clear.setText(localizator.getKeyString("Clear"));
+        remove_head.setText(localizator.getKeyString("RemoveHead"));
+        filter_by_weapon_type.setText(localizator.getKeyString("FilterByWeaponType"));
+        add_if_min.setText(localizator.getKeyString("AddIfMin"));
+        sum_of_impact_speed.setText(localizator.getKeyString("SumOfImpactSpeed"));
+        print_field_descending_impact_speed.setText(localizator.getKeyString("PrintFieldDescendingImpactSpeed"));
+
+        tableTab.setText(localizator.getKeyString("TableTab"));
+        visualTab.setText(localizator.getKeyString("VisualTab"));
+
+        ownerColumn.setText(localizator.getKeyString("Owner"));
+        nameColumn.setText(localizator.getKeyString("Name"));
+        dateColumn.setText(localizator.getKeyString("CreationDate"));
+        realHeroColumn.setText(localizator.getKeyString("RealHero"));
+        toothPickColumn.setText(localizator.getKeyString("ToothPick"));
+        impactSpeedColumn.setText(localizator.getKeyString("ImpactSpeed"));
+        minutesColumn.setText(localizator.getKeyString("Minutes"));
+        moodColumn.setText(localizator.getKeyString("Mood"));
+        carNameColumn.setText(localizator.getKeyString("CarName"));
+        carCoolColumn.setText(localizator.getKeyString("CarCool"));
+        weaponColumn.setText(localizator.getKeyString("WeaponType"));
     }
 
     public void setRefreshing(boolean refreshing) {
