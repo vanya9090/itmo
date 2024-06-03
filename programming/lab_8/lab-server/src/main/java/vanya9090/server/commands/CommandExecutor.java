@@ -33,7 +33,7 @@ public class CommandExecutor {
                     if (request.getArgument().containsKey("user")) {
                         User user = (User) request.getArgument().get("user");
                         user.setSHAPassword();
-                        System.out.println(user.getLogin() + " " + user.getPassword());
+//                        System.out.println(user.getLogin() + " " + user.getPassword());
                         if (!Server.userManager.isUserExists(user)) {
                             throw new AuthException("Пользователь не зарегистрирован");
                         }
@@ -42,7 +42,7 @@ public class CommandExecutor {
             }
             return new Response(out, Status.OK);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return new Response(String.valueOf(e), Status.FORBIDDEN);
         }
     }

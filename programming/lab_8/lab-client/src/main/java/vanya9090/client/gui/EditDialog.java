@@ -23,7 +23,7 @@ public class EditDialog {
     FlowPane root;
     Dialog<Map<String, Object>> dialog;
     Map<String, TextField> fieldMap;
-    Map<String, >
+    Map<String, Object> fieldMap1;
     Map<String, Handler<?>> handlers;
     CommandArgument[] arguments;
     ButtonType okButtonType;
@@ -35,6 +35,7 @@ public class EditDialog {
         handlers = new HandleManager().getHandlers();
         arguments = App.commands.get(commandName);
         fieldMap = new HashMap<>();
+        fieldMap1 = new HashMap<>();
         dialog = new Dialog<>();
         dialog.setTitle(commandName);
         dialog.setHeaderText(null);
@@ -81,7 +82,6 @@ public class EditDialog {
                 setByClass(HumanBeing.class.getDeclaredFields(), HumanBeing.class.getSimpleName());
                 setByClass(Coordinates.class.getDeclaredFields(), Coordinates.class.getSimpleName());
                 setByClass(Car.class.getDeclaredFields(), Car.class.getSimpleName());
-                System.out.println(fieldMap);
             } else {
                 setField(argument);
             }
@@ -89,7 +89,6 @@ public class EditDialog {
 
         if (humanBeing != null) {
             for (Field humanField: HumanBeing.class.getDeclaredFields()) {
-                System.out.println(HumanBeing.class.getSimpleName() + " " + humanField.getName());
                 if (humanField.getName().equals("nextId") || humanField.getName().equals("creationDate")) continue;
                 if (humanField.getName().equals("coordinates")) {
                     fieldMap.get("Coordinates x").setText((String) humanBeing.getHumanMap().get("Coordinates x"));
@@ -98,8 +97,6 @@ public class EditDialog {
                     fieldMap.get("Car name").setText((String) humanBeing.getHumanMap().get("Car name"));
                     fieldMap.get("Car cool").setText((String) humanBeing.getHumanMap().get("Car cool"));
                 }else {
-                    System.out.println(fieldMap.keySet());
-                    System.out.println(humanBeing.getHumanMap().keySet());
                     if (humanField.getName().equals("id")) {
                         fieldMap.get(humanField.getName())
                                 .setText((String) humanBeing.getHumanMap()
@@ -174,7 +171,7 @@ public class EditDialog {
 
             TextField field = new TextField();
             fieldMap.put(className + " " + classField.getName(), field);
-            System.out.println(className + " " + classField.getName());
+//            System.out.println(className + " " + classField.getName());
 
             field.textProperty().addListener((arg0, oldValue, newValue) -> {
                 if (oldValue.trim().isEmpty() && !newValue.trim().isEmpty()) {
@@ -199,7 +196,7 @@ public class EditDialog {
     public HumanBeing listenHuman() {
         Map<String, Object> humanMap = new HashMap<>();
         for (Field humanField: HumanBeing.class.getDeclaredFields()) {
-            System.out.println(HumanBeing.class.getSimpleName() + " " + humanField.getName());
+//            System.out.println(HumanBeing.class.getSimpleName() + " " + humanField.getName());
             if (humanField.getName().equals("nextId") || humanField.getName().equals("id") || humanField.getName().equals("creationDate")) continue;
             if (humanField.getName().equals("coordinates")) {
                 humanMap.put("coordinates", listenCoordinates());

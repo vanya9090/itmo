@@ -93,9 +93,7 @@ public enum Requests {
             + "DROP SEQUENCE IF EXISTS car_seq;"
             + "DROP SEQUENCE IF EXISTS user_seq;"),
 
-    TRUNCATE_ALL("TRUNCATE TABLE HUMAN_BEING CASCADE;"
-            + "TRUNCATE TABLE COORDINATES CASCADE;"
-            + "TRUNCATE TABLE CAR CASCADE;"),
+    TRUNCATE_ALL("DELETE FROM HUMAN_BEING WHERE author = ?"),
 
     USER_LOGIN_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ?);"),
     USER_EXISTS("SELECT EXISTS(SELECT * FROM user1 WHERE login = ? AND password = ?);"),

@@ -8,11 +8,14 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -26,11 +29,18 @@ import vanya9090.client.gui.EditDialog;
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
+import vanya9090.common.exceptions.AccessException;
+import vanya9090.common.exceptions.NotFoundException;
 import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.User;
+import vanya9090.common.util.FakeLogger;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static vanya9090.client.App.localeMap;
 import static vanya9090.client.App.localizator;
@@ -147,14 +157,34 @@ public class MainController {
 
 
     @FXML
-    void call(ActionEvent event) throws IOException, ClassNotFoundException {
+    void call(MouseEvent event) throws IOException, ClassNotFoundException {
         Optional<Map<String, Object>> args = Optional.of(new HashMap<>());
         String commandName = ((Button) event.getSource()).getId();
         CommandArgument[] commandArguments = App.commands.get(commandName);
+        System.out.println(Arrays.stream(commandArguments).map(CommandArgument::getName).collect(Collectors.toList()));
+        if (commandName.equals("exit")) {
+            Platform.exit();
+            System.exit(0);
+        }
         if (commandArguments.length > 1) {
             EditDialog editDialog = new EditDialog(commandName);
             args = editDialog.show(null);
             if (args.isPresent()) {
+                if (commandName.equals("remove_first")) {
+                    args.get().put("id", tableTable.getItems().get(0).getId());
+                    commandName = "remove_by_id";
+                }
+                if (commandName.equals("remove_head")) {
+                    args.get().put("id", tableTable.getItems().get(0).getId());
+                    commandName = "remove_by_id";
+                }
+                if (commandName.equals("remove_by_id")) {
+                    if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+                        DialogManager.createAlert(localizator.getKeyString("Info"),
+                                "пользователь не может удалять записи другого пользователя",
+                                Alert.AlertType.WARNING, true);
+                    }
+                }
                 args.get().put("user", SessionManager.getCurrentUser());
                 Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
                 if (response.getBody().length != 0) {
@@ -206,6 +236,20 @@ public class MainController {
 
         userLabel.setText("Пользователь: " + SessionManager.getCurrentUser().getLogin());
 
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws Exception {
+                call();
+                return null;
+            }
+        };
+
+        remove_by_id.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                new Thread(call(event)).start();
+            }
+        });
+
         tableTable.setRowFactory(tableView -> {
             TableRow<HumanBeing> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -246,9 +290,9 @@ public class MainController {
             int x = (int) (((float) human.getCoordinates().getX()) / maxX * paneMaxX * 0.8);
             float y = (float) (human.getCoordinates().getY() / maxY * paneMaxY * 0.6 + 80);
             int impactSpeed = human.getImpactSpeed();
-            double r = (double) (humanAuthor.get(human.getId()).hashCode() % 100) / 100;
-            double g = (double) (humanAuthor.get(human.getId()).hashCode() % 50) / 50;
-            double b = (double) (humanAuthor.get(human.getId()).hashCode() % 70) / 70;
+            double r = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 100) / 100;
+            double g = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 50) / 50;
+            double b = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 70) / 70;
             float radius = (float) (Math.log(minutesOfWaiting) / maxMinutesOfWaiting * 1000);
             Circle circle = new Circle(radius, Color.color(r, g, b));
 
@@ -340,6 +384,9 @@ public class MainController {
 
 
     public void loadCollection()  {
+        this.getAuthorOfHuman();
+        System.out.println(humanAuthor.keySet());
+        System.out.println(humanAuthor.values());
         Map<String, Object> args = new HashMap<>();
         Response response = null;
         try {
@@ -351,10 +398,10 @@ public class MainController {
         for (Object humanBeing : response.getBody()) {
             arrayDeque.add((HumanBeing) humanBeing);
         }
-        this.getAuthorOfHuman();
         setCollection(arrayDeque);
         visualise(true);
     }
+
     public void rightClickEvent(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
         if (!humanAuthor.get(humanBeing.getId()).toString().equals(SessionManager.getCurrentUser().getLogin().toString())) {
             DialogManager.createAlert(localizator.getKeyString("Info"),
@@ -394,7 +441,7 @@ public class MainController {
                     DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
                     loadCollection();
                 }
-        }
+            }
         }
     }
 
@@ -420,6 +467,7 @@ public class MainController {
         add_if_min.setText(localizator.getKeyString("AddIfMin"));
         sum_of_impact_speed.setText(localizator.getKeyString("SumOfImpactSpeed"));
         print_field_descending_impact_speed.setText(localizator.getKeyString("PrintFieldDescendingImpactSpeed"));
+        execute_script.setText(localizator.getKeyString("ExecuteScript"));
 
         tableTab.setText(localizator.getKeyString("TableTab"));
         visualTab.setText(localizator.getKeyString("VisualTab"));
@@ -445,6 +493,7 @@ public class MainController {
         Thread threadRefresh = new Thread(() -> {
             while (isRefreshing) {
                 Platform.runLater(this::loadCollection);
+//                System.out.println(humanAuthor.keySet());
                 try {
                     Thread.sleep(5000);
                 } catch (Exception e) {

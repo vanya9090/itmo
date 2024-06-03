@@ -76,9 +76,10 @@ public class CollectionManager {
         return humanBeing;
     }
 
-    public void clear() throws Exception {
-        this.storageManager.truncateStorage();
-        this.collection.clear();
+    public void clear(User user) throws Exception {
+        this.storageManager.truncateStorage(user);
+        this.setCollection(this.storageManager.read());
+//        this.collection.clear();
     }
 
     public LocalDateTime getInitDate() {

@@ -59,6 +59,12 @@ public class UDPThreadConnection extends ConnectionManager{
                 Set<SelectionKey> keys = selector.selectedKeys();
                 Iterator<SelectionKey> iter = keys.iterator();
 
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+
                 while (iter.hasNext()) {
                     SelectionKey key = iter.next();
                     if (key.isReadable()) {
@@ -93,6 +99,10 @@ public class UDPThreadConnection extends ConnectionManager{
                         readThread.join();
                     } if (key.isWritable() && key.isValid()) {
 //                        if (readThread != null) readThread.join();
+//                        new Thread(() -> {
+//                        });
+
+
                         Runnable writeTask = () -> {
                             try {
                                 Object[] responseAndAddress = keyResponseMap.get(key);

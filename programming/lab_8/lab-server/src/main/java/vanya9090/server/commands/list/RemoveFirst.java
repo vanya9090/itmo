@@ -28,6 +28,7 @@ public class RemoveFirst extends Command {
     public Object[] apply(Map<String, Object> args) throws Exception {
         User user = (User) args.get("user");
         if (this.collectionManager.getSize() == 0) throw new EmptyCollectionException();
+        if (user.getLogin() != args.get("user")) {}
         this.collectionManager.removeFirst(user);
         return new String[]{};
     }

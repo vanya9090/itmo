@@ -289,12 +289,12 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
-    public void truncateStorage() throws SQLException{
+    public void truncateStorage(User user) throws SQLException{
         try (Connection connection = this.getConnection();
              PreparedStatement statement = connection.prepareStatement(Requests.TRUNCATE_ALL.getQuery()))
         {
+            statement.setString(1, user.getLogin());
             statement.executeUpdate();
-
         }
     }
 

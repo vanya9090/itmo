@@ -10,7 +10,7 @@ public interface StorageManager {
     Deque<HumanBeing> read() throws Exception;
     void write(Deque<HumanBeing> collection) throws Exception;
     void remove(int id, User user) throws Exception;
-    void truncateStorage() throws Exception;
+    void truncateStorage(User user) throws Exception;
     void update(HumanBeing humanBeing, int id, User user) throws Exception;
     String getUserByHumanId(Integer humanBeingId) throws Exception;
 }

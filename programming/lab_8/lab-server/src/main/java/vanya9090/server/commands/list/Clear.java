@@ -4,6 +4,7 @@ package vanya9090.server.commands.list;
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandType;
 import vanya9090.common.models.User;
+import vanya9090.server.Server;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.commands.Command;
 import vanya9090.common.exceptions.EmptyCollectionException;
@@ -32,7 +33,8 @@ public class Clear extends Command {
     @Override
     public Object[] apply(Map<String, Object> args) throws Exception {
         if (collectionManager.getSize() == 0) throw new EmptyCollectionException();
-        collectionManager.clear();
+        User user = (User) args.get("user");
+        collectionManager.clear(user);
         return new String[]{};
     }
 }

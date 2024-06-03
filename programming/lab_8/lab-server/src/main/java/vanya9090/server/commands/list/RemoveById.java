@@ -3,6 +3,8 @@ package vanya9090.server.commands.list;
 
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.commands.CommandType;
+import vanya9090.common.connection.Response;
+import vanya9090.common.connection.Status;
 import vanya9090.common.models.User;
 import vanya9090.server.managers.CollectionManager;
 import vanya9090.common.models.HumanBeing;
@@ -30,12 +32,16 @@ public class RemoveById extends Command {
     }
 
     @Override
-    public Object[] apply(Map<String, Object> args) throws Exception {
+    public Object[] apply(Map<String, Object> args) throws Exception{
         User user = (User) args.get("user");
         Integer id = (Integer) args.get("id");
         HumanBeing humanToDelete = collectionManager.getById(id);
-        if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
-        collectionManager.remove(humanToDelete, user);
+//        try {
+            if (humanToDelete == null) throw new NotFoundException("человек с таким id не найден");
+            collectionManager.remove(humanToDelete, user);
+//        } catch (Exception e) {
+//            return new Response(e, Status.FORBIDDEN).getBody();
+//        }
         return new String[]{};
     }
 }
