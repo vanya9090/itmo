@@ -71,19 +71,19 @@ public class UserManager {
         return logins;
     }
 
-    public List<User> getUsers() throws SQLException {
-        List<User> users = new ArrayList<>();
-        try (Connection connection = this.getConnection();
-             Statement statement = connection.createStatement();)
-        {
-            ResultSet rs = statement.executeQuery(Requests.SELECT_ALL_USERS.getQuery());
-            while (rs.next()) {
-                System.out.println("db password: " + rs.getString("password"));
-                users.add(new User(rs.getString("login")).setPasswordSHA(rs.getString("password")));
-            }
-        }
-        return users;
-    }
+//    public List<User> getUsers() throws SQLException {
+//        List<User> users = new ArrayList<>();
+//        try (Connection connection = this.getConnection();
+//             Statement statement = connection.createStatement();)
+//        {
+//            ResultSet rs = statement.executeQuery(Requests.SELECT_ALL_USERS.getQuery());
+//            while (rs.next()) {
+//                System.out.println("db password: " + rs.getString("password"));
+//                users.add(new User(rs.getString("login")).setPasswordSHA(rs.getString("password")));
+//            }
+//        }
+//        return users;
+//    }
 
 //    public boolean isUserExists(String login, String password) throws Exception {
 //        List<User> users = getUsers();
