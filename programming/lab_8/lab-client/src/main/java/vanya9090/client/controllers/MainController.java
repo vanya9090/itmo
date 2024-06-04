@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import org.apache.commons.lang3.concurrent.EventCountCircuitBreaker;
 import vanya9090.client.App;
 import vanya9090.client.auth.SessionManager;
 import vanya9090.client.gui.EditDialog;
@@ -157,7 +158,7 @@ public class MainController {
 
 
     @FXML
-    void call(MouseEvent event) throws IOException, ClassNotFoundException {
+    void call(Event event) throws IOException, ClassNotFoundException {
         Optional<Map<String, Object>> args = Optional.of(new HashMap<>());
         String commandName = ((Button) event.getSource()).getId();
         CommandArgument[] commandArguments = App.commands.get(commandName);
@@ -236,19 +237,19 @@ public class MainController {
 
         userLabel.setText("Пользователь: " + SessionManager.getCurrentUser().getLogin());
 
-        Task<Void> task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                call();
-                return null;
-            }
-        };
-
-        remove_by_id.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 1) {
-                new Thread(call(event)).start();
-            }
-        });
+//        Task<Void> task = new Task<Void>() {
+//            @Override
+//            public Void call() throws Exception {
+//                call();
+//                return null;
+//            }
+//        };
+//
+//        remove_by_id.setOnMouseClicked(event -> {
+//            if (event.getClickCount() == 1) {
+//                new Thread(call(event)).start();
+//            }
+//        });
 
         tableTable.setRowFactory(tableView -> {
             TableRow<HumanBeing> row = new TableRow<>();

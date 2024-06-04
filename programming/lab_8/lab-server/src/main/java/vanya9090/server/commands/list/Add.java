@@ -25,7 +25,7 @@ public class Add extends Command implements Formable {
         HumanBeing humanBeing = (HumanBeing) arg.get("human");
         humanBeing.setId(collectionManager.getNextId());
         collectionManager.add(humanBeing, user);
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
         return new String[]{};
     }
 }

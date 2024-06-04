@@ -43,13 +43,13 @@ public class UDPStupidServer extends ConnectionManager{
 
     public void send(Response response, InetAddress address, int port) {
         new Thread(() -> {
-            new Thread(() -> {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
+//            new Thread(() -> {
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }).start();
 
             try {
                 ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
