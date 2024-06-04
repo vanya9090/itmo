@@ -277,6 +277,9 @@ public class MainController {
     }
 
     public void visualise(boolean refresh) {
+        if (tableTable.getItems().isEmpty()) {
+            return;
+        }
         visualPane.getChildren().clear();
         infoMap.clear();
         int paneMaxX = 1080;
@@ -290,7 +293,6 @@ public class MainController {
             float minutesOfWaiting = human.getMinutesOfWaiting();
             int x = (int) (((float) human.getCoordinates().getX()) / maxX * paneMaxX * 0.8);
             float y = (float) (human.getCoordinates().getY() / maxY * paneMaxY * 0.6 + 80);
-            int impactSpeed = human.getImpactSpeed();
             double r = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 100) / 100;
             double g = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 50) / 50;
             double b = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 70) / 70;
