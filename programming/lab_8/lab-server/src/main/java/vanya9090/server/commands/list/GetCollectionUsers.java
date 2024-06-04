@@ -20,6 +20,9 @@ public class GetCollectionUsers extends Command {
 
     @Override
     public Object[] apply(Map<String, Object> arg) throws Exception {
+        System.out.println("get_collection_users command");
+        System.out.println(collectionManager.getUserCollection().keySet());
+        System.out.println(collectionManager.getUserCollection().values());
         return new Map[]{collectionManager.getUserCollection()};
     }
 }

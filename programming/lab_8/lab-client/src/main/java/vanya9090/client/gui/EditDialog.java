@@ -55,8 +55,8 @@ public class EditDialog {
             put("HumanBeing minutesOfWaiting", "\\b\\d+(\\.\\d+)?\\b");
             put("HumanBeing weaponType", "(?i)\\b(HAMMER|AXE|SHOTGUN|RIFLE|KNIFE)\\b");
             put("HumanBeing mood", "(?i)\\b(SADNESS|SORROW|APATHY|CALM|RAGE)\\b");
-            put("Coordinates x", "\\b\\d+\\b");
-            put("Coordinates y", "\\b\\d+(\\.\\d+)?\\b");
+            put("Coordinates x", "^(0|[1-9]\\d?|[1-8]\\d{2}|9[0-1]\\d|92[0-5])$");
+            put("Coordinates y", "(^\\d+(\\.\\d+)?$)|(^-\\d\\.\\d+$)|(^-([1-9]\\d?(\\.\\d+)?|1\\d\\d(\\.\\d+)?|20[0-7](\\.\\d+)?)$)");
             put("Car cool", "\\b(true|false)\\b");
             put("Car name", ".*");
             put("id", "\\b\\d+\\b");

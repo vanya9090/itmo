@@ -8,10 +8,7 @@ import vanya9090.server.db.Requests;
 
 import javax.swing.plaf.IconUIResource;
 import java.sql.*;
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.Objects;
+import java.util.*;
 
 public class DataBaseManager implements StorageManager{
     private final String url = "jdbc:postgresql://localhost:5432/ivanmironov";
@@ -310,5 +307,18 @@ public class DataBaseManager implements StorageManager{
             }
         }
         return "";
+    }
+
+    public Map<Integer, String> getUsersHumans() throws SQLException{
+        Map<Integer, String> res = new HashMap<>();
+        try (Connection connection = this.getConnection();
+             Statement statement = connection.createStatement())
+        {
+            ResultSet resultSet = statement.executeQuery(Requests.SELECT_HUMANS.getQuery());
+            while (resultSet.next()) {
+                res.put(resultSet.getInt("id"), resultSet.getString("author"));
+            }
+        }
+        return res;
     }
 }

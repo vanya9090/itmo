@@ -4,6 +4,7 @@ import vanya9090.common.models.HumanBeing;
 import vanya9090.common.models.User;
 
 import java.util.Deque;
+import java.util.Map;
 
 public interface StorageManager {
     void add(HumanBeing humanBeing, User user) throws Exception;
@@ -13,4 +14,5 @@ public interface StorageManager {
     void deleteByUser(User user) throws Exception;
     void update(HumanBeing humanBeing, int id, User user) throws Exception;
     String getUserByHumanId(Integer humanBeingId) throws Exception;
+    Map<Integer, String> getUsersHumans() throws Exception;
 }
