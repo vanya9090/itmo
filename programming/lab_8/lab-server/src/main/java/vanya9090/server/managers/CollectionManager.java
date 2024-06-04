@@ -45,8 +45,8 @@ public class CollectionManager {
     }
 
     public void add(HumanBeing humanBeing, User user) throws Exception {
-        System.out.println(humanBeing);
-        this.storageManager.add(humanBeing, user);
+        Integer id = this.storageManager.add(humanBeing, user);
+        humanBeing.setId(id);
         this.collection.add(humanBeing);
     }
 

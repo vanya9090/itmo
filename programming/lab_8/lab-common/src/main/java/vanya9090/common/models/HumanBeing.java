@@ -80,6 +80,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Validatable, Serializ
 //                .mapToInt(Integer::intValue).max().orElse(0);
 //        nextId = maxId + 1;
 //    }
+
     public Map<String, Object> getHumanMap() {
         Map<String, Object> humanMap = new HashMap<>();
         humanMap.put("HumanBeing id", id.toString());

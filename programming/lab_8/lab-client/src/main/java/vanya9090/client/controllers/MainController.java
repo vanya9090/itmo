@@ -199,9 +199,11 @@ public class MainController {
         } else {
             args.get().put("user", SessionManager.getCurrentUser());
             Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
-            String message = (String) response.getBody()[0];
-            System.out.println(message);
-            DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+            if (response.getBody().length != 0) {
+                String message = (String) response.getBody()[0];
+                System.out.println(message);
+                DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+            }
         }
         loadCollection();
     }
@@ -289,7 +291,7 @@ public class MainController {
         int maxImpactSpeed = tableTable.getItems().stream().map(HumanBeing::getImpactSpeed).max(Integer::compareTo).get();
         float maxMinutesOfWaiting = tableTable.getItems().stream().map(HumanBeing::getMinutesOfWaiting).max(Float::compareTo).get();
 
-        for (var human: tableTable.getItems()) {
+        for (HumanBeing human: tableTable.getItems()) {
             float minutesOfWaiting = human.getMinutesOfWaiting();
             int x = (int) (((float) human.getCoordinates().getX()) / maxX * paneMaxX * 0.8);
             float y = (float) (human.getCoordinates().getY() / maxY * paneMaxY * 0.6 + 80);

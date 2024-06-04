@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.Map;
 
 public interface StorageManager {
-    void add(HumanBeing humanBeing, User user) throws Exception;
+    Integer add(HumanBeing humanBeing, User user) throws Exception;
     Deque<HumanBeing> read() throws Exception;
     void write(Deque<HumanBeing> collection) throws Exception;
     void remove(int id, User user) throws Exception;

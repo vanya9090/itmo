@@ -207,17 +207,22 @@ public class DataBaseManager implements StorageManager{
         }
     }
 
-    public void add(HumanBeing humanBeing, User user) throws SQLException, NotFoundException {
+    public Integer add(HumanBeing humanBeing, User user) throws SQLException, NotFoundException {
         Integer coordinatesId = this.addCoordinates(humanBeing.getCoordinates());
         Integer carId = this.addCar(humanBeing.getCar());
         System.out.println(coordinatesId + " " + carId);
+        Integer id = 0;
         try (Connection connection = this.getConnection();
-            PreparedStatement statement = connection.prepareStatement(Requests.INSERT_HUMAN_BEING.getQuery()))
-        {
+             PreparedStatement statement = connection.prepareStatement(Requests.INSERT_HUMAN_BEING.getQuery(), Statement.RETURN_GENERATED_KEYS)) {
             setFieldsHumanBeing(humanBeing, coordinatesId, carId, statement);
             statement.setString(10, user.getLogin());
             statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
         }
+        return id;
     }
 
     public HumanBeing getHumanBeing(Integer id) throws SQLException {
