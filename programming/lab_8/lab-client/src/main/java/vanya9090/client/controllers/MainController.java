@@ -296,7 +296,7 @@ public class MainController {
             double r = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 100) / 100;
             double g = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 50) / 50;
             double b = (double) Math.abs(humanAuthor.get(human.getId()).hashCode() % 70) / 70;
-            float radius = (float) (Math.log(minutesOfWaiting) / maxMinutesOfWaiting * 1000);
+            float radius = (float) (Math.log(minutesOfWaiting));
             Circle circle = new Circle(radius, Color.color(r, g, b));
 
 

@@ -25,10 +25,10 @@ public class Help extends Command {
 //        return new Map[]{this.commands.values().
 //                stream().
 //                collect(Collectors.toMap(Command::getName, Command::getDescription))};
-        throw new RuntimeException();
-//        return new Object[]{this.commands.values().stream()
-//                .filter(command -> command.getCommandType() == CommandType.CLIENT)
-//                .map(command -> String.format("%s-%s%n", command.getName(), command.getDescription()))
-//                .collect(Collectors.joining())};
+//        throw new RuntimeException();
+        return new Object[]{this.commands.values().stream()
+                .filter(command -> command.getCommandType() == CommandType.CLIENT)
+                .map(command -> String.format("%s-%s%n", command.getName(), command.getDescription()))
+                .collect(Collectors.joining())};
     }
 }
