@@ -33,7 +33,6 @@ public class CommandExecutor {
                     if (request.getArgument().containsKey("user")) {
                         User user = (User) request.getArgument().get("user");
                         user.setSHAPassword();
-//                        System.out.println(user.getLogin() + " " + user.getPassword());
                         if (!Server.userManager.isUserExists(user)) {
                             throw new AuthException("Пользователь не зарегистрирован");
                         }

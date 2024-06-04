@@ -171,14 +171,6 @@ public class MainController {
             EditDialog editDialog = new EditDialog(commandName);
             args = editDialog.show(null);
             if (args.isPresent()) {
-                if (commandName.equals("remove_first")) {
-                    args.get().put("id", tableTable.getItems().get(0).getId());
-                    commandName = "remove_by_id";
-                }
-                if (commandName.equals("remove_head")) {
-                    args.get().put("id", tableTable.getItems().get(0).getId());
-                    commandName = "remove_by_id";
-                }
                 if (commandName.equals("remove_by_id")) {
                     if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
                         DialogManager.createAlert(localizator.getKeyString("Info"),
@@ -197,6 +189,25 @@ public class MainController {
                 }
             }
         } else {
+            if (commandName.equals("remove_first")) {
+                args.get().put("id", tableTable.getItems().get(0).getId());
+                commandName = "remove_by_id";
+                if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+                    DialogManager.createAlert(localizator.getKeyString("Info"),
+                            "пользователь не может удалять записи другого пользователя",
+                            Alert.AlertType.WARNING, true);
+                    return;
+                }
+            } else if (commandName.equals("remove_head")) {
+                args.get().put("id", tableTable.getItems().get(0).getId());
+                commandName = "remove_by_id";
+                if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+                    DialogManager.createAlert(localizator.getKeyString("Info"),
+                            "пользователь не может удалять записи другого пользователя",
+                            Alert.AlertType.WARNING, true);
+                    return;
+                }
+            }
             args.get().put("user", SessionManager.getCurrentUser());
             Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
             if (response.getBody().length != 0) {
@@ -390,8 +401,6 @@ public class MainController {
 
     public void loadCollection()  {
         this.getAuthorOfHuman();
-        System.out.println(humanAuthor.keySet());
-        System.out.println(humanAuthor.values());
         Map<String, Object> args = new HashMap<>();
         Response response = null;
         try {
@@ -498,7 +507,6 @@ public class MainController {
         Thread threadRefresh = new Thread(() -> {
             while (isRefreshing) {
                 Platform.runLater(this::loadCollection);
-//                System.out.println(humanAuthor.keySet());
                 try {
                     Thread.sleep(5000);
                 } catch (Exception e) {

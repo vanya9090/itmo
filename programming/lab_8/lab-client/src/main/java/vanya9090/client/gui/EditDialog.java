@@ -108,6 +108,18 @@ public class EditDialog {
                     }
                 }
             }
+        } else if (fieldsNum > 10){
+            fieldMap.get("Coordinates x").setText("298");
+            fieldMap.get("Coordinates y").setText("100");
+            fieldMap.get("HumanBeing name").setText("name");
+            fieldMap.get("HumanBeing hasToothpick").setText("true");
+            fieldMap.get("HumanBeing realHero").setText("true");
+            fieldMap.get("HumanBeing impactSpeed").setText("232");
+            fieldMap.get("HumanBeing minutesOfWaiting").setText("2878");
+            fieldMap.get("HumanBeing weaponType").setText("knife");
+            fieldMap.get("HumanBeing mood").setText("sadness");
+            fieldMap.get("Car cool").setText("true");
+            fieldMap.get("Car name").setText("sdkfjkdf");
         }
 
         dialog.setResultConverter(dialogButton -> {

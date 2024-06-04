@@ -47,11 +47,11 @@ public class DataBaseManager implements StorageManager{
             return conn;
         }
         else if (this.connection.isClosed()) {
-            System.out.println(this.connection.isClosed());
+//            System.out.println(this.connection.isClosed());
             Connection conn = DriverManager.getConnection(url, username, password);
             return conn;
         } else {
-            System.out.println(this.connection.isClosed());
+//            System.out.println(this.connection.isClosed());
             return this.connection;
         }
     }
