@@ -22,13 +22,11 @@ public enum Requests {
     CREATE_COORDINATES_TABLE("CREATE TABLE IF NOT EXISTS COORDINATES ("
             + "id BIGINT PRIMARY KEY DEFAULT nextval('coordinates_seq'),"
             + "x INT NOT NULL CHECK (x <= 925),"
-            + "y FLOAT NOT NULL CHECK (y > -208),"
-            + "UNIQUE (x,y))"),
+            + "y FLOAT NOT NULL CHECK (y > -208))"),
     CREATE_CAR_TABLE("CREATE TABLE IF NOT EXISTS CAR ("
             + "id BIGINT PRIMARY KEY DEFAULT nextval('car_seq'),"
             + "name TEXT NOT NULL,"
-            + "cool BOOLEAN NOT NULL,"
-            + "UNIQUE (name, cool))"),
+            + "cool BOOLEAN NOT NULL)"),
     CREATE_USER_TABLE("CREATE TABLE IF NOT EXISTS USER1 ("
             + "login VARCHAR(255) PRIMARY KEY CHECK (login <> ''),"
             + "password VARCHAR(255) NOT NULL CHECK (password <> ''))"),

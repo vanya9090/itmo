@@ -1,17 +1,8 @@
 package vanya9090.server.managers;
 
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import vanya9090.common.handlers.*;
 import vanya9090.common.models.*;
-import vanya9090.common.validators.*;
-import vanya9090.common.exceptions.*;
-import vanya9090.server.Server;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -77,7 +68,7 @@ public class CollectionManager {
     }
 
     public void clear(User user) throws Exception {
-        this.storageManager.truncateStorage(user);
+        this.storageManager.deleteByUser(user);
         this.setCollection(this.storageManager.read());
 //        this.collection.clear();
     }
