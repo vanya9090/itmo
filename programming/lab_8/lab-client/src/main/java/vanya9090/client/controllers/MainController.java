@@ -254,11 +254,11 @@ public class MainController {
 
     private void handleDialogResult(String commandName, Map<String, Object> args) throws IOException, ClassNotFoundException {
         args.put("user", SessionManager.getCurrentUser());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(10_000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         Response response = App.client.request(new Request(commandName, args, SessionManager.getCurrentUser()));
 
         if (response.getBody().length != 0) {
@@ -282,22 +282,35 @@ public class MainController {
                         Alert.AlertType.WARNING, true);
                 return;
             }
+        } else if (commandName.equals("exit")) {
+            Platform.exit();
+            System.exit(0);
         }
-        handleSimpleResult(commandName, args);
+
+        args.put("user", SessionManager.getCurrentUser());
+        String finalCommandName = commandName;
+        new Thread(() -> {
+            try {
+                handleSimpleResult(finalCommandName, args);
+                loadCollection();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void handleSimpleResult(String commandName, Map<String, Object> args) throws IOException, ClassNotFoundException {
-        args.put("user", SessionManager.getCurrentUser());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(10_000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         Response response = App.client.request(new Request(commandName, args, SessionManager.getCurrentUser()));
         if (response.getBody().length != 0) {
             String message = (String) response.getBody()[0];
             System.out.println(message);
-            DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+            Platform.runLater(() -> DialogManager.createAlert(localizator.getKeyString("Info"), message,
+                    Alert.AlertType.INFORMATION, true));
         }
     }
 

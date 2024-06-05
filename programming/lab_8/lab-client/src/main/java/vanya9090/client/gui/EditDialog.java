@@ -109,13 +109,13 @@ public class EditDialog {
                 }
             }
         } else if (fieldsNum > 10){
-            fieldMap.get("Coordinates x").setText("298");
-            fieldMap.get("Coordinates y").setText("100");
+            fieldMap.get("Coordinates x").setText(String.valueOf(Math.round(Math.random()*925)));
+            fieldMap.get("Coordinates y").setText(String.valueOf(Math.random()*1000));
             fieldMap.get("HumanBeing name").setText("name");
             fieldMap.get("HumanBeing hasToothpick").setText("true");
             fieldMap.get("HumanBeing realHero").setText("true");
             fieldMap.get("HumanBeing impactSpeed").setText("232");
-            fieldMap.get("HumanBeing minutesOfWaiting").setText("2878");
+            fieldMap.get("HumanBeing minutesOfWaiting").setText(String.valueOf(Math.random()*10000));
             fieldMap.get("HumanBeing weaponType").setText("knife");
             fieldMap.get("HumanBeing mood").setText("sadness");
             fieldMap.get("Car cool").setText("true");
