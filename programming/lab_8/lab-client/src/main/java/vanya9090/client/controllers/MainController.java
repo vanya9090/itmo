@@ -157,71 +157,154 @@ public class MainController {
     private TableColumn<HumanBeing, Float> yColumn;
 
 
+//    @FXML
+//    void call(Event event) throws IOException, ClassNotFoundException {
+//        Optional<Map<String, Object>> args = Optional.of(new HashMap<>());
+//        String commandName = ((Button) event.getSource()).getId();
+//        CommandArgument[] commandArguments = App.commands.get(commandName);
+//        System.out.println(Arrays.stream(commandArguments).map(CommandArgument::getName).collect(Collectors.toList()));
+//        if (commandName.equals("exit")) {
+//            Platform.exit();
+//            System.exit(0);
+//        }
+//
+//        if (commandArguments.length > 1) {
+//            EditDialog editDialog = new EditDialog(commandName);
+//            args = editDialog.show(null);
+//            if (args.isPresent()) {
+//                if (commandName.equals("remove_by_id")) {
+//                    if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+//                        DialogManager.createAlert(localizator.getKeyString("Info"),
+//                                "пользователь не может удалять записи другого пользователя",
+//                                Alert.AlertType.WARNING, true);
+//                    }
+//                }
+//
+//                args.get().put("user", SessionManager.getCurrentUser());
+//                Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
+//                try {
+//                    Thread.sleep(5000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//                if (response.getBody().length != 0) {
+//                    String message;
+//                    if (response.getBody().length == 1) message = (String) response.getBody()[0];
+//                    else message = Arrays.toString(response.getBody());
+//                    System.out.println(message);
+//                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+//                }
+//            }
+//        } else {
+//            if (commandName.equals("remove_first") || commandName.equals("remove_head")) {
+//                args.get().put("id", tableTable.getItems().get(0).getId());
+//                commandName = "remove_by_id";
+//                if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+//                    DialogManager.createAlert(localizator.getKeyString("Info"),
+//                            "пользователь не может удалять записи другого пользователя",
+//                            Alert.AlertType.WARNING, true);
+//                    return;
+//                }
+//            }
+//            args.get().put("user", SessionManager.getCurrentUser());
+//            Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
+//            if (response.getBody().length != 0) {
+//                String message = (String) response.getBody()[0];
+//                System.out.println(message);
+//                DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+//            }
+//        }
+//        loadCollection();
+//    }
+
     @FXML
     void call(Event event) throws IOException, ClassNotFoundException {
-        Optional<Map<String, Object>> args = Optional.of(new HashMap<>());
         String commandName = ((Button) event.getSource()).getId();
         CommandArgument[] commandArguments = App.commands.get(commandName);
         System.out.println(Arrays.stream(commandArguments).map(CommandArgument::getName).collect(Collectors.toList()));
-        if (commandName.equals("exit")) {
-            Platform.exit();
-            System.exit(0);
-        }
         if (commandArguments.length > 1) {
-            EditDialog editDialog = new EditDialog(commandName);
-            args = editDialog.show(null);
-            if (args.isPresent()) {
-                if (commandName.equals("remove_by_id")) {
-                    if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
-                        DialogManager.createAlert(localizator.getKeyString("Info"),
-                                "пользователь не может удалять записи другого пользователя",
-                                Alert.AlertType.WARNING, true);
-                    }
-                }
-                args.get().put("user", SessionManager.getCurrentUser());
-                Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
-                if (response.getBody().length != 0) {
-                    String message;
-                    if (response.getBody().length == 1) message = (String) response.getBody()[0];
-                    else message = Arrays.toString(response.getBody());
-                    System.out.println(message);
-                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
-                }
-            }
+            handleDialog(commandArguments, commandName);
         } else {
-            if (commandName.equals("remove_first")) {
-                args.get().put("id", tableTable.getItems().get(0).getId());
-                commandName = "remove_by_id";
+            handleSimple(commandName);
+        }
+    }
+
+    private void handleDialog(CommandArgument[] commandArguments, String commandName) {
+        EditDialog editDialog = new EditDialog(commandName);
+        Optional<Map<String, Object>> args = editDialog.show(null);
+        if (args.isPresent()) {
+            if (commandName.equals("remove_by_id")) {
                 if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
                     DialogManager.createAlert(localizator.getKeyString("Info"),
                             "пользователь не может удалять записи другого пользователя",
                             Alert.AlertType.WARNING, true);
-                    return;
-                }
-            } else if (commandName.equals("remove_head")) {
-                args.get().put("id", tableTable.getItems().get(0).getId());
-                commandName = "remove_by_id";
-                if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
-                    DialogManager.createAlert(localizator.getKeyString("Info"),
-                            "пользователь не может удалять записи другого пользователя",
-                            Alert.AlertType.WARNING, true);
-                    return;
                 }
             }
-            args.get().put("user", SessionManager.getCurrentUser());
-            Response response = App.client.request(new Request(commandName, args.get(), SessionManager.getCurrentUser()));
-            if (response.getBody().length != 0) {
-                String message = (String) response.getBody()[0];
-                System.out.println(message);
-                DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+            new Thread(() -> {
+                try {
+                    handleDialogResult(commandName, args.get());
+                    loadCollection();
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        }
+    }
+
+    private void handleDialogResult(String commandName, Map<String, Object> args) throws IOException, ClassNotFoundException {
+        args.put("user", SessionManager.getCurrentUser());
+        try {
+            Thread.sleep(10_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Response response = App.client.request(new Request(commandName, args, SessionManager.getCurrentUser()));
+
+        if (response.getBody().length != 0) {
+            String message;
+            if (response.getBody().length == 1) message = (String) response.getBody()[0];
+            else message = Arrays.toString(response.getBody());
+            System.out.println(message);
+            Platform.runLater(() -> DialogManager.createAlert(localizator.getKeyString("Info"),
+                    message, Alert.AlertType.INFORMATION, true));
+        }
+    }
+
+    private void handleSimple(String commandName) throws IOException, ClassNotFoundException {
+        Map<String, Object> args = new HashMap<>();
+        if (commandName.equals("remove_first") || commandName.equals("remove_head")) {
+            args.put("id", tableTable.getItems().get(0).getId());
+            commandName = "remove_by_id";
+            if (!humanAuthor.get(args.get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+                DialogManager.createAlert(localizator.getKeyString("Info"),
+                        "пользователь не может удалять записи другого пользователя",
+                        Alert.AlertType.WARNING, true);
+                return;
             }
         }
-        loadCollection();
+        handleSimpleResult(commandName, args);
+    }
+
+    private void handleSimpleResult(String commandName, Map<String, Object> args) throws IOException, ClassNotFoundException {
+        args.put("user", SessionManager.getCurrentUser());
+        try {
+            Thread.sleep(10_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Response response = App.client.request(new Request(commandName, args, SessionManager.getCurrentUser()));
+        if (response.getBody().length != 0) {
+            String message = (String) response.getBody()[0];
+            System.out.println(message);
+            DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
+        }
     }
 
 
     @FXML
     void initialize() throws IOException, ClassNotFoundException {
+
         infoMap = new HashMap<>();
         languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
         languageComboBox.setStyle("-fx-font: 13px \"Sergoe UI\";");
@@ -249,20 +332,6 @@ public class MainController {
         dateColumn.setCellValueFactory(humanBeing -> new SimpleStringProperty(humanBeing.getValue().getCreationDate().toString()));
 
         userLabel.setText("Пользователь: " + SessionManager.getCurrentUser().getLogin());
-
-//        Task<Void> task = new Task<Void>() {
-//            @Override
-//            public Void call() throws Exception {
-//                call();
-//                return null;
-//            }
-//        };
-//
-//        remove_by_id.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 1) {
-//                new Thread(call(event)).start();
-//            }
-//        });
 
         tableTable.setRowFactory(tableView -> {
             TableRow<HumanBeing> row = new TableRow<>();
@@ -413,7 +482,8 @@ public class MainController {
             arrayDeque.add((HumanBeing) humanBeing);
         }
         setCollection(arrayDeque);
-        visualise(true);
+        Platform.runLater(() -> visualise(true));
+//        visualise(true);
     }
 
     public void rightClickEvent(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
