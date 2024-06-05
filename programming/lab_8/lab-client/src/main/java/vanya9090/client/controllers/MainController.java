@@ -27,6 +27,7 @@ import org.apache.commons.lang3.concurrent.EventCountCircuitBreaker;
 import vanya9090.client.App;
 import vanya9090.client.auth.SessionManager;
 import vanya9090.client.gui.EditDialog;
+import vanya9090.client.utils.Localizator;
 import vanya9090.common.commands.CommandArgument;
 import vanya9090.common.connection.Request;
 import vanya9090.common.connection.Response;
@@ -69,8 +70,8 @@ public class MainController {
     @FXML
     private TableColumn<HumanBeing, String> dateColumn;
 
-    @FXML
-    private Button execute_script;
+//    @FXML
+//    private Button execute_script;
 
     @FXML
     private Button exit;
@@ -120,8 +121,8 @@ public class MainController {
     @FXML
     private Button remove_first;
 
-    @FXML
-    private Button remove_head;
+//    @FXML
+//    private Button remove_head;
 
     @FXML
     private Button sum_of_impact_speed;
@@ -224,41 +225,46 @@ public class MainController {
         CommandArgument[] commandArguments = App.commands.get(commandName);
         System.out.println(Arrays.stream(commandArguments).map(CommandArgument::getName).collect(Collectors.toList()));
         if (commandArguments.length > 1) {
-            handleDialog(commandArguments, commandName);
+            handleDialog(commandName, null);
         } else {
             handleSimple(commandName);
         }
     }
 
-    private void handleDialog(CommandArgument[] commandArguments, String commandName) {
+    private void handleDialog(String commandName, HumanBeing humanBeing) {
         EditDialog editDialog = new EditDialog(commandName);
-        Optional<Map<String, Object>> args = editDialog.show(null);
+        Optional<Map<String, Object>> args = editDialog.show(humanBeing);
         if (args.isPresent()) {
             if (commandName.equals("remove_by_id")) {
+                String message = localizator.getKeyString("DeleteWarning");
                 if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
-                    DialogManager.createAlert(localizator.getKeyString("Info"),
-                            "пользователь не может удалять записи другого пользователя",
-                            Alert.AlertType.WARNING, true);
+                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.WARNING, true);
                 }
+            } else if (commandName.equals("update")) {
+                String message = localizator.getKeyString("UpdateWarning");
+                if (!humanAuthor.get(args.get().get("id")).equals(SessionManager.getCurrentUser().getLogin())) {
+                    DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.WARNING, true);
+                }
+            } else {
+                new Thread(() -> {
+                    try {
+                        handleDialogResult(commandName, args.get());
+                        loadCollection();
+                    } catch (IOException | ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
-            new Thread(() -> {
-                try {
-                    handleDialogResult(commandName, args.get());
-                    loadCollection();
-                } catch (IOException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
         }
     }
 
     private void handleDialogResult(String commandName, Map<String, Object> args) throws IOException, ClassNotFoundException {
         args.put("user", SessionManager.getCurrentUser());
-//        try {
-//            Thread.sleep(10_000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            Thread.sleep(10_000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Response response = App.client.request(new Request(commandName, args, SessionManager.getCurrentUser()));
 
         if (response.getBody().length != 0) {
@@ -316,7 +322,7 @@ public class MainController {
 
 
     @FXML
-    void initialize() throws IOException, ClassNotFoundException {
+    void initialize() {
 
         infoMap = new HashMap<>();
         languageComboBox.setItems(FXCollections.observableArrayList(localeMap.keySet()));
@@ -481,7 +487,7 @@ public class MainController {
     }
 
 
-    public void loadCollection()  {
+    public synchronized void loadCollection()  {
         this.getAuthorOfHuman();
         Map<String, Object> args = new HashMap<>();
         Response response = null;
@@ -519,6 +525,10 @@ public class MainController {
         }
     }
 
+//    public void doubleClickUpdate(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
+//        handleDialog("update", humanBeing);
+//    }
+
     public void doubleClickUpdate(HumanBeing humanBeing) throws IOException, ClassNotFoundException {
         if (!humanAuthor.get(humanBeing.getId()).toString().equals(SessionManager.getCurrentUser().getLogin().toString())) {
             DialogManager.createAlert(localizator.getKeyString("Info"),
@@ -536,16 +546,16 @@ public class MainController {
                     if (response.getBody().length == 1) message = (String) response.getBody()[0];
                     else message = Arrays.toString(response.getBody());
                     DialogManager.createAlert(localizator.getKeyString("Info"), message, Alert.AlertType.INFORMATION, true);
-                    loadCollection();
                 }
+                loadCollection();
             }
         }
     }
 
     public void setCollection(List<HumanBeing> humanBeingDeque) {
         List<? extends TableColumn<HumanBeing, ?>> sortingOrder = new ArrayList<>(tableTable.getSortOrder());
-        tableTable.setItems(FXCollections.observableArrayList(humanBeingDeque));
-        tableTable.getSortOrder().setAll(sortingOrder);
+        Platform.runLater(() -> tableTable.setItems(FXCollections.observableArrayList(humanBeingDeque)));
+        Platform.runLater(() -> tableTable.getSortOrder().setAll(sortingOrder));
     }
 
     public void changeLanguage() {
@@ -559,12 +569,12 @@ public class MainController {
         update.setText(localizator.getKeyString("Update"));
         remove_first.setText(localizator.getKeyString("RemoveFirst"));
         clear.setText(localizator.getKeyString("Clear"));
-        remove_head.setText(localizator.getKeyString("RemoveHead"));
+//        remove_head.setText(localizator.getKeyString("RemoveHead"));
         filter_by_weapon_type.setText(localizator.getKeyString("FilterByWeaponType"));
         add_if_min.setText(localizator.getKeyString("AddIfMin"));
         sum_of_impact_speed.setText(localizator.getKeyString("SumOfImpactSpeed"));
         print_field_descending_impact_speed.setText(localizator.getKeyString("PrintFieldDescendingImpactSpeed"));
-        execute_script.setText(localizator.getKeyString("ExecuteScript"));
+//        execute_script.setText(localizator.getKeyString("ExecuteScript"));
 
         tableTab.setText(localizator.getKeyString("TableTab"));
         visualTab.setText(localizator.getKeyString("VisualTab"));
@@ -586,7 +596,7 @@ public class MainController {
         isRefreshing = refreshing;
     }
 
-    public void refresh() {
+    public synchronized void refresh() {
         Thread threadRefresh = new Thread(() -> {
             while (isRefreshing) {
                 Platform.runLater(this::loadCollection);

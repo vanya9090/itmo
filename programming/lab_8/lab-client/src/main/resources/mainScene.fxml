@@ -47,11 +47,11 @@
                             <Font name="Segoe UI" size="16.0" />
                         </font>
                     </Button>
-                    <Button fx:id="remove_head" mnemonicParsing="false" onAction="#call" prefHeight="30.0" prefWidth="140.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="remove head">
-                        <font>
-                            <Font name="Segoe UI" size="16.0" />
-                        </font>
-                    </Button>
+<!--                    <Button fx:id="remove_head" mnemonicParsing="false" onAction="#call" prefHeight="30.0" prefWidth="140.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="remove head">-->
+<!--                        <font>-->
+<!--                            <Font name="Segoe UI" size="16.0" />-->
+<!--                        </font>-->
+<!--                    </Button>-->
                <Button fx:id="remove_first" mnemonicParsing="false" onAction="#call" prefHeight="30.0" prefWidth="140.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="remove first">
                   <font>
                      <Font name="Segoe UI" size="16.0" />
@@ -62,11 +62,11 @@
                             <Font name="Segoe UI" size="16.0" />
                         </font>
                     </Button>
-                    <Button fx:id="execute_script" mnemonicParsing="false" onAction="#call" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="execute script">
-                        <font>
-                            <Font name="Segoe UI" size="16.0" />
-                        </font>
-                    </Button>
+<!--                    <Button fx:id="execute_script" mnemonicParsing="false" onAction="#call" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="execute script">-->
+<!--                        <font>-->
+<!--                            <Font name="Segoe UI" size="16.0" />-->
+<!--                        </font>-->
+<!--                    </Button>-->
                     <Button fx:id="add_if_min" mnemonicParsing="false" onAction="#call" prefHeight="30.0" style="-fx-background-radius: 10; -fx-border-radius: 10;" text="add if min">
                         <font>
                             <Font name="Segoe UI" size="16.0" />

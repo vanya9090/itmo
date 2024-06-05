@@ -37,7 +37,7 @@ public class UDPClient {
             this.client.send(buffer, this.addr);
         }
 
-        ByteBuffer buffer1 = ByteBuffer.allocate(4096);
+        ByteBuffer buffer1 = ByteBuffer.allocate(32_768);
         SocketAddress address = null;
         while (address == null) {
             address = this.client.receive(buffer1);

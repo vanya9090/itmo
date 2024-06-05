@@ -37,8 +37,9 @@ public class PrintFieldDescendingImpactSpeed extends Command {
     @Override
     public Object[] apply(Map<String, Object> args) {
         List<Integer> result = this.getFieldDescendingImpactSpeed();
-        return result.stream()
-                .map(Objects::toString).toArray();
+        return new String[]{result.stream()
+                .map(Objects::toString)
+                .collect(Collectors.joining("\n"))};
     }
 
     private List<Integer> getFieldDescendingImpactSpeed() {
